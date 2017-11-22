@@ -1,1 +1,0 @@
-All development on components in a game should be developed in the VisualTests environment. There are several advantages to doing this.
