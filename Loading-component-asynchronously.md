@@ -33,7 +33,7 @@ Asynchronous chaining with [BackgroundDependencyLoader]
 When a component is loaded, it will attempt to load all nested children that are `IsAlive`. To make use of this chaining, ensure that all loading code is either in the `ctor` or a private method marked with the `[BackgroundDependencyLoader]` attribute. The latter is recommended as it avoids a potential overhead when constructing new instances of the component that aren't nested in an asynchronous load.
 
 ```csharp
-public MainComponent : CompositeDrawable
+public class MainComponent : CompositeDrawable
 {
     [BackgroundDependencyLoader]
     private void load()
@@ -43,7 +43,7 @@ public MainComponent : CompositeDrawable
     }
 }
 
-public NestedComponent : Drawable
+public class NestedComponent : Drawable
 {
     [BackgroundDependencyLoader]
     private void load()
