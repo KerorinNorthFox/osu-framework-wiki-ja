@@ -30,7 +30,7 @@ This method returns a `Task` which can be blocked on with `Task.Wait()` if you n
 Asynchronous chaining with [BackgroundDependencyLoader]
 ========
 
-When a component is loaded, it will attempt to load all nested children that are `IsAlive`. To make use of this chaining, ensure that all loading code is either in the `ctor` or a private method marked with the `[BackgroundDependencyLoader]` attribute. The latter is recommended as it avoids a potential overhead when constructing new instances of the component that aren't nested in an asynchronous load.
+When a component is loaded, it will attempt to load all nested children that have `ShouldBeAlive == true`. To make use of this chaining, ensure that all loading code is either in the `ctor` or a private method marked with the `[BackgroundDependencyLoader]` attribute. The latter is recommended as it avoids a potential overhead when constructing new instances of the component that aren't nested in an asynchronous load.
 
 ```csharp
 public class MainComponent : CompositeDrawable
