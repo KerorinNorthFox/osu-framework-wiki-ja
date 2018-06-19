@@ -8,7 +8,7 @@ The appveyor source is `https://ci.appveyor.com/nuget/osu-framework`
 
 ## CLI
 
-`nuget sources Add -Name "appveyor osu-framework" https://ci.appveyor.com/nuget/osu-framework`
+`nuget sources Add -Name "appveyor osu-framework" -Source https://ci.appveyor.com/nuget/osu-framework`
 
 Once this is added, you will find recent appveyor builds in your versions listing as `0.0.<appveyor_build_id>`. You can find the appveyor build ID by clicking through to the appveyor results page of a PR and checking the ID in the top-right corner (or URL).
 
