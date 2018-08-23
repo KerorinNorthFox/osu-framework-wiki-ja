@@ -43,7 +43,7 @@ Assert.IsTrue(y.Value == 5); // Same as above - dual-way communication
 Observing the values of a `Bindable<T>`
 =======================================
 
-The value of a `Bindable<T>` can be observed through the `Bindable<T>.ValueChanged` event. This returns the new value.
+The value of a `Bindable<T>` can be observed through the `ValueChanged` event. This returns the new value.
 
 ```
 var x = new Bindable<int>();
