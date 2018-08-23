@@ -3,7 +3,7 @@
 Creating a `Bindable<T>`
 ========================
 
-In `public`/`protected`/`internal` scenarios, it is recommended to store a private `Bindable<T>` and re-expose it publicly as one of the read-only interfaces - `IBindable` or `IBindable<T>` interface, depending on how much access the outside objects should have. 
+In `public`/`protected`/`internal` scenarios, it is recommended to store a private `Bindable<T>` and re-expose it publicly as one of the read-only interfaces - `IBindable` or `IBindable<T>`, depending on how much access the outside objects should have. 
 
 In `private` scenarios, it is simplest to store bindables as `Bindable<T>`.
 
