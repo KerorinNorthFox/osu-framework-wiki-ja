@@ -17,7 +17,7 @@ public class MyClass
 }
 ```
 
-A few subclasses, such as `BindableDouble`, extend the default functionality of `Bindable<T>` with functions such as range-limiting for numeric values. These are available under the `osu.Framework.Configuration` namespace.
+A few subclasses, such as `BindableDouble`, extend `Bindable<T>` to provide additional functionality such as range-limiting of numeric values. These are available under the `osu.Framework.Configuration` namespace.
 
 Chaining `Bindable<T>`s together
 ===========================
