@@ -3,7 +3,7 @@
 Creating a `Bindable<T>`
 ========================
 
-In `public`/`protected`/`internal` scenarios, it is recommended to store a private `Bindable<T>` and re-expose it publicly as one of the read-only interfaces - `IBindable` or `IBindable<T>`, depending on how much access the outside objects should have. 
+In `public`/`protected`/`internal` scenarios, it is recommended to store a private `Bindable<T>` backing and re-expose it publicly as one of the read-only interfaces - `IBindable` or `IBindable<T>`, depending on how much access the outside objects should have. 
 
 In `private` scenarios, it is simplest to store bindables as `Bindable<T>`.
 
@@ -22,16 +22,16 @@ A few subclasses, such as `BindableDouble`, extend `Bindable<T>` to provide addi
 Chaining `Bindable<T>`s together
 ===========================
 
-`Bindable<T>` supports the ability to "bind" to other `Bindable<T>`s of the same generic type. When either one of the bindable's values changes, it will also set the value on the other.
+`Bindable<T>` supports the ability to "bind" to other `Bindable<T>`s. When either one of the bindable's values changes, it will also set the value on the other.
 
-This is available through the `Bindable<T>.Bind(Bindable<T> other)` method.
+This is available through the `Bindable<T>.BindTo()` method.
 
 ```
 var x = new Bindable<int>(1);
 var y = new Bindable<int>(2);
 
 x.BindTo(y);
-Assert.IsTrue(x.Value == 2); // BoundTo() immediately x's value to y's
+Assert.IsTrue(x.Value == 2); // BoundTo() immediately sets x's value to y's
 
 y.Value = 10;
 Assert.IsTrue(x.Value == 10); // The value set to y previously is propagated to x
