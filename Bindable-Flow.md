@@ -1,7 +1,6 @@
 `osu-framework` utilizes `Bindable<T>` objects to distribute data between components. They provide functionality to automatically remove communication between `Bindable<T>` objects when finalized, serving as a safer alternative to C#'s `event`.
 
-Creating a `Bindable<T>`
-========================
+## Creating a `Bindable<T>`
 
 In `public`/`protected`/`internal` scenarios, it is recommended to store a private `Bindable<T>` backing and re-expose it publicly as one of the read-only interfaces - `IBindable` or `IBindable<T>`, depending on how much access the outside objects should have. 
 
@@ -19,8 +18,7 @@ public class MyClass
 
 A few subclasses, such as `BindableDouble`, extend `Bindable<T>` to provide additional functionality such as range-limiting of numeric values. These are available under the `osu.Framework.Configuration` namespace.
 
-Chaining `Bindable<T>`s together
-===========================
+## Chaining `Bindable<T>`s together
 
 `Bindable<T>` supports the ability to "bind" to other `Bindable<T>`s. When either one of the bindable's values changes, it will also set the value on the other.
 
@@ -40,8 +38,7 @@ x.Value = 5;
 Assert.IsTrue(y.Value == 5); // Same as above - dual-way communication
 ```
 
-Observing the values of a `Bindable<T>`
-=======================================
+## Observing the values of a `Bindable<T>`
 
 The value of a `Bindable<T>` can be observed through the `ValueChanged` event. This returns the new value.
 
@@ -65,8 +62,7 @@ x.ValueChanged += myValueFunc;
 x.TriggerChange();
 ```
 
-Breaking the `Bindable<T>` chain
-================================
+## Breaking the `Bindable<T>` chain
 
 The binding chain between `Bindable<T>`s is weak. That is, bound `Bindable<T>`s will not cause each other to forego garbage collection.
 
