@@ -74,7 +74,7 @@ When a `Bindable<T>` is finalized, it will automatically unbind other `Bindable<
 
 When a `Drawable` disposes, it forces all `Bindable<T>`s contained as `private`/`protected`/`public`/`internal` fields and properties to unbind. This generally occurs as soon as the `Drawable` is removed from the draw hierarchy via `Clear(true)`/`ClearInternal(true)` or setting `InternalChildren`/`Children`, or via the garbage collector when all references to the `Drawable` are lost.
 
-It may be desired to unbind at an arbitrary point in time where garbage collection is not guaranteed by the above. A few methods are provided to achieve this:
+It may be desired to unbind at an arbitrary point in time when finalization is not guaranteed by the above. A few methods are provided to achieve this:
 
 * `UnbindEvents()` - Unbinds all subscribers bound via `ValueChanged`.
 * `UnbindBindings()` - Unbinds all `Bindable<T>`s bound via `BoundTo()`.
