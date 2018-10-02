@@ -1,14 +1,11 @@
 Input handling follows a topological model whereby the top-most (visually) `Drawable` handles input prior to anything else in the game. Hierarchically between a single parent-child relationship, the child handles input before the parent.
 
 ```
-
 Parent              < Handler #4
     Child_1         < Handler #3
     Child_2         < Handler #2
         Child_2_1   < Handler #1
 ```
-
----
 
 ## Positional vs non-positional input
 
