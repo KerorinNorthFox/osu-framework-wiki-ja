@@ -22,7 +22,7 @@ All properties for each container can be accessed using the "view properties" bu
 
 ![](https://cdn.discordapp.com/attachments/318886668889227266/538311755491835904/penis.jpg)
 
-##Frame statistics
+## Frame statistics
 
 * **Control-F11** toggles the frame statistics overlay. This displays the frame timings of the four main gameplay threads: Audio, Input, Update, and Draw. 
 
@@ -34,9 +34,9 @@ All properties for each container can be accessed using the "view properties" bu
 
 **Holding down the control key** in this state will expand the graph further, allowing you to peek at how many calls of each type are occuring within the timeframe.
 
-## Log Viewer
-
 ![](https://cdn.discordapp.com/attachments/318886668889227266/538268818951241754/unknown-2_copy.png)
+
+## Log Viewer
 
 **Control-F10** toggles the log viewer, which displays events logged by osu.Framework.Logging.Logger. This currently cannot be used in visual tests.
 
