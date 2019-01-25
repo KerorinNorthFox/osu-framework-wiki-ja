@@ -2,6 +2,8 @@
  
 osu! framework provides in-picture debugging overlays, defined in `osu.Framework.Input.FrameworkActionContainer`. 
 
+## Draw hierarchy overlay
+
 **Control-F1** toggles an overlay that allows you to access the drawable hierarchy. Selecting an object on screen will grab the instance of the drawable and display relevant information.
 
 ![](https://cdn.discordapp.com/attachments/318886668889227266/538272068764958720/Screen_Shot_2019-01-25_at_5.10.57_PM.jpg)
@@ -20,6 +22,8 @@ All properties for each container can be accessed using the "view properties" bu
 
 ![](https://cdn.discordapp.com/attachments/318886668889227266/538311755491835904/penis.jpg)
 
+##Frame statistics
+
 * **Control-F11** toggles the frame statistics overlay. This displays the frame timings of the four main gameplay threads: Audio, Input, Update, and Draw. 
 
 ![](https://cdn.discordapp.com/attachments/318886668889227266/538264876561203200/Screen_Shot_2019-01-25_at_3.31.08_PM.png)
@@ -29,6 +33,8 @@ All properties for each container can be accessed using the "view properties" bu
 ![](https://cdn.discordapp.com/attachments/318886668889227266/538266387014221824/Screen_Shot_2019-01-25_at_4.58.06_PM.png)
 
 **Holding down the control key** in this state will expand the graph further, allowing you to peek at how many calls of each type are occuring within the timeframe.
+
+## Log Viewer
 
 ![](https://cdn.discordapp.com/attachments/318886668889227266/538268818951241754/unknown-2_copy.png)
 
