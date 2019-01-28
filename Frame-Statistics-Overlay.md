@@ -19,10 +19,10 @@ osu! framework provides in-picture debugging overlays, defined in `osu.Framework
 
 The statistics for this overlay are defined in `osu.Framework.Statistics.FrameStatistics`. 
 
-* [Invalidations](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Caching/Cached.cs#L73): The amount of Invalidate() calls performed on cached objects, defined in `osu.Framework.Caching.Cached`.
-* [Refreshes](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Caching/Cached.cs#L83): The amount of Validate() calls performed on cached objects, defined in `osu.Framework.Caching.Cached`.
-* [DrawNodeCtor](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/Drawable.cs#L1691): The amount of new `osu.Framework.Graphics.DrawNode`s created.
-* [DrawNodeAppl](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/Drawable.cs#L1697): The amount of `osu.Framework.Graphics.DrawNode`s updated due to a disagreement between the Drawable's Invalidation ID and the node's Invalidation ID. See `osu.Framework.Graphics.Drawable`.
+* [Invalidations](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Caching/Cached.cs#L73): The amount of Invalidate() calls performed on [cached](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Caching/Cached.cs) objects.
+* [Refreshes](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Caching/Cached.cs#L83): The amount of Validate() calls performed on [cached](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Caching/Cached.cs) objects.
+* [DrawNodeCtor](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/Drawable.cs#L1691): The amount of new [DrawNodes](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/DrawNode.cs) created.
+* [DrawNodeAppl](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/Drawable.cs#L1697): The amount of [DrawNodes](https://github.com/ppy/osu-framework/blob/naster/osu.Framework/Graphics/DrawNode.cs) updated due to a disagreement between the Drawable's Invalidation ID and the node's Invalidation ID. See `osu.Framework.Graphics.Drawable`.
 * [ScheduleInvk](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/Containers/CompositeDrawable.cs#L721): The amount of scheduled tasks not yet performed.
 * [InputQueue](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/InputManager.cs#L288): The amount of UserInputManagers handling non-positional (keybinding specific) input. 
 
