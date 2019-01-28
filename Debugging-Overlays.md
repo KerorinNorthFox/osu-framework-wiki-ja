@@ -38,7 +38,7 @@ All properties for each container can be accessed using the "view properties" bu
 
 ## Log Viewer
 
-**Control-F10** toggles the log viewer, which displays events logged by osu.Framework.Logging.Logger. This currently cannot be used in visual tests.
+**Control-F10** toggles the log viewer, which displays events logged by `osu.Framework.Logging.Logger`. Invoking `Logger.Log` will log messages that are able to be displayed in this stream..
 
 
 
