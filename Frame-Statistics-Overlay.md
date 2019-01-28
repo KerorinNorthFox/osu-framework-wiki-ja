@@ -29,3 +29,12 @@ The statistics for this overlay are defined in `osu.Framework.Statistics.FrameSt
 * [InputQueue](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/InputManager.cs#L288): The amount of [UserInputManagers](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/UserInputManager.cs) handling non-positional (keybinding specific) input. 
 * [PositionalIQ](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/InputManager.cs#L315): The amount of [UserInputManagers](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/UserInputManager.cs) handling positional input.
 
+### Draw
+* [VBufBinds](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/OpenGL/GLWrapper.cs#L169): Amount of [OpenGL](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/OpenGL/GLWrapper.cs) [VBO](https://www.khronos.org/opengl/wiki/Vertex_Specification#Vertex_Buffer_Object) bind calls.
+* [VBufOverflow](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/Batches/VertexBatch.cs#L107): The amount of times the amount of vertices has exceeded the amount allocated for the current VBO.
+* [TextureBinds](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/OpenGL/GLWrapper.cs#L218): The amount of times [glBindTexture](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindTexture.xhtml) has been called. 
+* [DrawCalls](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/Batches/VertexBatch.cs#L139): The amount of active draw calls.
+* [ShaderBinds](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/OpenGL/GLWrapper.cs#L620): The amount of times [glUseProgram](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glUseProgram.xhtml) has been called.
+* [VerticesDraw](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/Batches/VertexBatch.cs#L140): The amount of vertices drawn.
+
+
