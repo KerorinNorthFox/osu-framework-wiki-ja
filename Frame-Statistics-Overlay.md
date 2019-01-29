@@ -1,6 +1,6 @@
 # Frame Statistics
 
-osu! framework provides in-picture debugging overlays, defined in `osu.Framework.Input.FrameworkActionContainer`. One such overlay is the Frame Statistics Overlay.
+osu! framework provides in-picture debugging overlays, defined in [`osu.Framework.Input.FrameworkActionContainer`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/FrameworkActionContainer.cs). One such overlay is the Frame Statistics Overlay.
 
 * [Overview](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay#overview)
   * [Minimized View](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay#minimized-view)
@@ -31,7 +31,7 @@ osu! framework provides in-picture debugging overlays, defined in `osu.Framework
 
 ## Statistics
 
-The statistics for this overlay are defined in `osu.Framework.Statistics.FrameStatistics`. 
+The statistics for this overlay are defined in [`osu.Framework.Statistics.FrameStatistics`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Statistics/FrameStatistics.cs). 
 
 ### Update
 
