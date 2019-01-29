@@ -1,6 +1,6 @@
 # Log Overlay
  
-osu! framework provides in-picture debugging overlays, defined in `osu.Framework.Input.FrameworkActionContainer`. One of these overlays is the Log Overlay
+osu! framework provides in-picture debugging overlays, defined in [`osu.Framework.Input.FrameworkActionContainer`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/FrameworkActionContainer.cs). One of these overlays is the Log Overlay.
 
 ## Overview
 
