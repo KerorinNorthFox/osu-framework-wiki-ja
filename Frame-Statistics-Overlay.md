@@ -44,7 +44,12 @@ The statistics for this overlay are defined in `osu.Framework.Statistics.FrameSt
 * [TasksRun](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/AudioComponent.cs#L63): The amount of actions in queue.
 * [Tracks](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/Track/Track.cs#L126): The amount of [tracks](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Audio/Track/Track.cs) being updated.
 * [Samples](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/Sample/SampleManager.cs#L64): The amount of [samples](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Audio/Sample/Sample.cs) being updated.
+* [SChannels](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/Sample/SampleChannel.cs#L46): The amount of [SampleChannels](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Audio/Sample/SampleChannel.cs) being updated.
 * [Components](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/AudioComponent.cs#L64): The amount of [AudioComponents](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Audio/AudioComponent.cs) being updated.
 
+### Input
 
+* [MouseEvents](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/Mouse/OsuTKMouseHandlerBase.cs#L57): The amount of mouse events being handled by [InputHandlers](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/InputHandler.cs).
+* [KeyEvents](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/Keyboard/OsuTKKeyboardHandler.cs#L58): The amount of keyboard events being handled by InputHandlers.
+* [JoystickEvents](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/Joystick/OsuTKJoystickHandler.cs#L43): The amount of joystick events being handled by InputHandlers.
 
