@@ -64,6 +64,6 @@ The statistics for this overlay are defined in [`osu.Framework.Statistics.FrameS
 ### Input
 
 * [MouseEvents](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/Mouse/OsuTKMouseHandlerBase.cs#L57): The amount of mouse events being handled by [InputHandlers](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/InputHandler.cs).
-* [KeyEvents](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/Keyboard/OsuTKKeyboardHandler.cs#L58): The amount of keyboard events being handled by InputHandlers.
-* [JoystickEvents](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/Joystick/OsuTKJoystickHandler.cs#L43): The amount of joystick events being handled by InputHandlers.
+* [KeyEvents](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/Keyboard/OsuTKKeyboardHandler.cs#L58): The amount of keyboard events being handled by [InputHandlers](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/InputHandler.cs).
+* [JoystickEvents](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/Joystick/OsuTKJoystickHandler.cs#L43): The amount of joystick events being handled by [InputHandlers](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/InputHandler.cs).
 
