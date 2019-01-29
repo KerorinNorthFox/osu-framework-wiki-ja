@@ -33,6 +33,8 @@ osu! framework provides in-picture debugging overlays, defined in [`osu.Framewor
 
 The statistics for this overlay are defined in [`osu.Framework.Statistics.FrameStatistics`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Statistics/FrameStatistics.cs). 
 
+These statistics are counted per frame.
+
 ### Update
 
 * [Invalidations](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Caching/Cached.cs#L73): The amount of Invalidate() calls performed on [cached](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Caching/Cached.cs) objects.
@@ -44,26 +46,26 @@ The statistics for this overlay are defined in [`osu.Framework.Statistics.FrameS
 * [PositionalIQ](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/InputManager.cs#L315): The amount of [UserInputManagers](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/UserInputManager.cs) handling positional input.
 
 ### Draw
-* [VBufBinds](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/OpenGL/GLWrapper.cs#L169): Amount of [OpenGL](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/OpenGL/GLWrapper.cs) [VBO](https://www.khronos.org/opengl/wiki/Vertex_Specification#Vertex_Buffer_Object) bind calls.
-* [VBufOverflow](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/Batches/VertexBatch.cs#L107): The amount of times the amount of vertices has exceeded the amount allocated for the current VBO.
-* [TextureBinds](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/OpenGL/GLWrapper.cs#L218): The amount of times [glBindTexture](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindTexture.xhtml) has been called. 
-* [DrawCalls](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/Batches/VertexBatch.cs#L139): The amount of active draw calls.
-* [ShaderBinds](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/OpenGL/GLWrapper.cs#L620): The amount of times [glUseProgram](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glUseProgram.xhtml) has been called.
-* [VerticesDraw](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/Batches/VertexBatch.cs#L140): The amount of vertices drawn using [glDrawElements](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawElements.xhtml).
-* [VerticesUpl](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/OpenGL/Buffers/VertexBuffer.cs#L121): The amount of vertices updated using [glBufferSubData](https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glBufferSubData.xml).
+* [VBufBinds](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/OpenGL/GLWrapper.cs#L169): The number of [OpenGL](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/OpenGL/GLWrapper.cs) [VBO](https://www.khronos.org/opengl/wiki/Vertex_Specification#Vertex_Buffer_Object) bind calls.
+* [VBufOverflow](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/Batches/VertexBatch.cs#L107): The number of times the vertex count has exceeded the number allocated for the current VBO.
+* [TextureBinds](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/OpenGL/GLWrapper.cs#L218): The number of times [glBindTexture](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glBindTexture.xhtml) has been called. 
+* [DrawCalls](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/Batches/VertexBatch.cs#L139): The number of active draw calls.
+* [ShaderBinds](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/OpenGL/GLWrapper.cs#L620): The number of times [glUseProgram](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glUseProgram.xhtml) has been called.
+* [VerticesDraw](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/Batches/VertexBatch.cs#L140): The number of vertices drawn using [glDrawElements](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawElements.xhtml).
+* [VerticesUpl](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/OpenGL/Buffers/VertexBuffer.cs#L121): The number of vertices updated using [glBufferSubData](https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glBufferSubData.xml).
 * [Pixels](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/OpenGL/Textures/TextureGLSingle.cs#L265): The amount of area covered by drawn elements.
 
 ### Audio
 
-* [TasksRun](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/AudioComponent.cs#L63): The amount of actions in queue.
-* [Tracks](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/Track/Track.cs#L126): The amount of [tracks](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Audio/Track/Track.cs) being updated.
-* [Samples](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/Sample/SampleManager.cs#L64): The amount of [samples](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Audio/Sample/Sample.cs) being updated.
-* [SChannels](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/Sample/SampleChannel.cs#L46): The amount of [SampleChannels](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Audio/Sample/SampleChannel.cs) being updated.
-* [Components](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/AudioComponent.cs#L64): The amount of [AudioComponents](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Audio/AudioComponent.cs) being updated.
+* [TasksRun](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/AudioComponent.cs#L63): The number of actions in queue.
+* [Tracks](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/Track/Track.cs#L126): The number of [tracks](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Audio/Track/Track.cs) being updated.
+* [Samples](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/Sample/SampleManager.cs#L64): The number of [samples](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Audio/Sample/Sample.cs) being updated.
+* [SChannels](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/Sample/SampleChannel.cs#L46): The number of [SampleChannels](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Audio/Sample/SampleChannel.cs) being updated.
+* [Components](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/AudioComponent.cs#L64): The number of [AudioComponents](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Audio/AudioComponent.cs) being updated.
 
 ### Input
 
-* [MouseEvents](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/Mouse/OsuTKMouseHandlerBase.cs#L57): The amount of mouse events being handled by [InputHandlers](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/InputHandler.cs).
-* [KeyEvents](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/Keyboard/OsuTKKeyboardHandler.cs#L58): The amount of keyboard events being handled by [InputHandlers](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/InputHandler.cs).
-* [JoystickEvents](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/Joystick/OsuTKJoystickHandler.cs#L43): The amount of joystick events being handled by [InputHandlers](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/InputHandler.cs).
+* [MouseEvents](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/Mouse/OsuTKMouseHandlerBase.cs#L57): The number of mouse events being handled by [InputHandlers](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/InputHandler.cs).
+* [KeyEvents](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/Keyboard/OsuTKKeyboardHandler.cs#L58): The number of keyboard events being handled by [InputHandlers](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/InputHandler.cs).
+* [JoystickEvents](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/Joystick/OsuTKJoystickHandler.cs#L43): The number of joystick events being handled by [InputHandlers](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Input/Handlers/InputHandler.cs).
 
