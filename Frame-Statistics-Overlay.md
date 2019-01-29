@@ -2,15 +2,29 @@
 
 osu! framework provides in-picture debugging overlays, defined in `osu.Framework.Input.FrameworkActionContainer`. One such overlay is the Frame Statistics Overlay.
 
+* [Overview](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay/_edit#overview)
+  * [Minimized View](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay/_edit#minimized-view)
+  * [Extended View](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay/_edit#extended-view)
+  * [Detailed View](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay/_edit#detailed-view)
+* [Statistics](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay/_edit#statistics)
+  * [Update](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay/_edit#update)
+  * [Draw](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay/_edit#draw)
+  * [Audio](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay/_edit#audio)
+  * [Input](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay/_edit#input)
+
 ## Overview
+
+### Minimized View
 **Control-F11** toggles the frame statistics overlay. The first time you toggle this overlay, you will be greeted with a minimized version of it. This view displays the frame timings of the four main gameplay threads: Audio, Input, Update, and Draw. 
 
 ![](https://cdn.discordapp.com/attachments/318886668889227266/538264876561203200/Screen_Shot_2019-01-25_at_3.31.08_PM.png)
 
+### Extended View
 **Pressing Control-F11 again** will expand the overlay, displaying a graph of the activity on each thread. 
 
 ![](https://cdn.discordapp.com/attachments/318886668889227266/538266387014221824/Screen_Shot_2019-01-25_at_4.58.06_PM.png)
 
+### Detailed View
 **Holding down the control key** in this state will expand the graph further, allowing you to peek at how many events of each type are occuring on each thread.
 
 ![](https://cdn.discordapp.com/attachments/318886668889227266/538268818951241754/unknown-2_copy.png)
