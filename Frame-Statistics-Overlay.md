@@ -37,6 +37,14 @@ The statistics for this overlay are defined in `osu.Framework.Statistics.FrameSt
 * [ShaderBinds](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/OpenGL/GLWrapper.cs#L620): The amount of times [glUseProgram](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glUseProgram.xhtml) has been called.
 * [VerticesDraw](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/Batches/VertexBatch.cs#L140): The amount of vertices drawn using [glDrawElements](https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawElements.xhtml).
 * [VerticesUpl](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/OpenGL/Buffers/VertexBuffer.cs#L121): The amount of vertices updated using [glBufferSubData](https://www.khronos.org/registry/OpenGL-Refpages/es2.0/xhtml/glBufferSubData.xml).
+* [Pixels](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Graphics/OpenGL/Textures/TextureGLSingle.cs#L265): The amount of area covered by drawn elements.
+
+### Audio
+
+* [TasksRun](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/AudioComponent.cs#L63): The amount of actions in queue.
+* [Tracks](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/Track/Track.cs#L126): The amount of [tracks](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Audio/Track/Track.cs) being updated.
+* [Samples](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/Sample/SampleManager.cs#L64): The amount of [samples](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Audio/Sample/Sample.cs) being updated.
+* [Components](https://github.com/ppy/osu-framework/blob/91ddc390d745c742a43f31cdd53d5fd25d986dc5/osu.Framework/Audio/AudioComponent.cs#L64): The amount of [AudioComponents](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Audio/AudioComponent.cs) being updated.
 
 
 
