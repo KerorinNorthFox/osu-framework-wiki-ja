@@ -75,3 +75,38 @@ It may be desired to unbind at an arbitrary point in time when finalization is n
 * `UnbindEvents()` - Unbinds all subscribers bound via `ValueChanged`.
 * `UnbindBindings()` - Unbinds all `Bindable<T>`s bound via `BoundTo()`.
 * `UnbindAll()` - Combines `UnbindEvents()` and `UnbindBindings()`.
+
+## Leasing
+
+There may be a scenario where you want to restrict updates to a high level bindable, but still allow changes by a certain component (or subset of components). Leasing exists to fulfil this goal. While a bindable is leased, it will be set to a `Disabled` state, but the special `LeasedBindable` will bypass this check and allow the bindable's value to be changed (and propagate as usual).
+
+```csharp
+var x = new Bindable<int>();
+var leased = x.BeginLease(false);
+
+// x.Value == 0
+// leased.Value == 0
+
+x.Value = 1; // invalid, will throw an exception
+leased.Value = 1; // valid
+
+// x.Value == 1
+// leased.Value == 1
+
+leased.Return();
+```
+
+Another use case for leasing is to take advantage of the reverting of value on `Return()`. This allows a subsystem to gain control over a bindable, make changes, and after that subsystem is done, return the original bindable to its original state.
+
+```csharp
+var x = new Bindable<int>(2);
+var leased = x.BeginLease(true);
+
+leased.Value = 1;
+
+// x.Value == 1
+leased.Return();
+// x.Value == 2
+```
+
+Note that during a lease, the `Disabled` state may be changed from the `LeasedBindable`. It will be restored to the value before the lease began on `Return()`.
