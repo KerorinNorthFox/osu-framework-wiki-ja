@@ -87,8 +87,11 @@ var leased = x.BeginLease(false);
 // x.Value == 0
 // leased.Value == 0
 
+// x.Disabled == true
+// leased.Disabled == true
+
 x.Value = 1; // invalid, will throw an exception
-leased.Value = 1; // valid
+leased.Value = 1; // valid, even though disabled
 
 // x.Value == 1
 // leased.Value == 1
