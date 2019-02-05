@@ -66,9 +66,9 @@ Now that our test browser is discovering tests from the specified namespace, we 
 * [AddAssert](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestCase.cs#L333) creates a step that fails if the specified value does not return true.
 
 ### Example Test
+The following code adds a simple cube to the visual test browser that we created above. The cube has a rigid body attached, and should drop to the bottom of the screen when created. From here, we can choose to check the behavior of the cube by asserting that the cube eventually reaches the bottom via AddAssert.
 
 ```
-
 namespace AwesomeGame.VisualTests
 {
     [TestFixture]
