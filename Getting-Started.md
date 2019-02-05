@@ -2,7 +2,7 @@
 
 This tutorial is designed to get you started with a new project using osu-framework. It is not meant to be a guide for contribution to the osu-framework project.
 
-## Desktop
+## Targeting desktop platforms
 You can find this code and more to help you get started in [`SampleGame`](https://github.com/ppy/osu-framework/tree/master/SampleGame) and [`SampleGame.Desktop`](https://github.com/ppy/osu-framework/tree/master/SampleGame.Desktop)
 
 1. Create a new WinExe project. 
