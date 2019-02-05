@@ -14,3 +14,4 @@
  * [Bindable Flow](https://github.com/ppy/osu-framework/wiki/Bindable-Flow)
  * [Handling Input Events](https://github.com/ppy/osu-framework/wiki/Handling-input-events)
  * [Loading Components Asynchronously](https://github.com/ppy/osu-framework/wiki/Loading-component-asynchronously)
+ * [Dependency Injection](https://github.com/ppy/osu-framework/wiki/Dependency-Injection)
