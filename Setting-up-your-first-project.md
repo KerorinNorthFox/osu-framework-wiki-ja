@@ -89,6 +89,10 @@ namespace AwesomeGame.VisualTests
 }
 ```
 
+Note that in order for you to be able to run the visual tests, you will have to switch your game instance to the visual tests. To do that, you can either create your visual tests in a separate project and run them as a build configuration, or simply apply build configuration pre-processor checks in your entry point to run the appropriate game.
+
+For example, if I have the VisualTests build configuration, rider will automatically create the pre-processor flag VISUALTESTS, which allows us to use `#if VISUALTESTS` to check the current build configuration.
+
 ### Adding tests to the test browser
 
 Now that our test browser is discovering tests from the specified namespace, we can start adding tests! To do so, create a new class that derives [TestCase](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Testing/TestCase.cs) with the [TestFixture](http://nunit.org/docs/2.6/testFixture.html) attribute. From here, we can add steps to this test of various types:
@@ -145,3 +149,6 @@ namespace AwesomeGame.VisualTests
 
 ### Test setup
 The [Setup](https://nunit.org/docs/2.2/setup.html) NUnit attribute marks a method as a setup method that runs as a step before every group of tests in a test method. The steps created by this attribute get added to the visual test browser as well.
+
+### Further reading
+For additional reading on visual tests, please refer to [Dynamic Compilation and Visual Testing](https://github.com/ppy/osu-framework/wiki/Development-and-Testing)
