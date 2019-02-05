@@ -2,6 +2,16 @@
 
 This tutorial is designed to get you started with a new project using osu-framework. It is not meant to be a guide for contribution to the osu-framework project.
 
+* [Targeting desktop platforms](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#targeting-desktop-platforms)
+  * [BackgroundDependencyLoader attribute](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#BackgroundDependencyLoader-attribute)
+
+* [Testing](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#testing)
+  * [Setting up a test browser](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#setting-up-a-test-browser)
+  * [Adding tests to the test browser](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#adding-tests-to-the-test-browser)
+  * [Example test](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#example-test)
+  * [Setup Attribute](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#setup-attribute)
+* [Further Reading](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#further-reading)
+
 ## Targeting desktop platforms
 You can find this code and more to help you get started in [`SampleGame`](https://github.com/ppy/osu-framework/tree/master/SampleGame) and [`SampleGame.Desktop`](https://github.com/ppy/osu-framework/tree/master/SampleGame.Desktop)
 
@@ -58,9 +68,6 @@ public static void Main()
 ```
 ### BackgroundDependencyLoader Attribute
 The [BackgroundDependencyLoader](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Allocation/BackgroundDependencyLoaderAttribute.cs) attribute denotes a method to be the load method of a [Drawable](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/Drawable.cs). You can specify a type in the method parameters to attempt to grab an object of that type that has been [cached](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Caching/Cached.cs).
-
-### Further reading
-For more information regarding dependency injection via the BackgroundDependencyLoader attribute, please read [Dependency Injection](https://github.com/ppy/osu-framework/wiki/Dependency-Injection)
 
 ## Testing
 ### Setting up a test browser
@@ -150,8 +157,10 @@ namespace AwesomeGame.VisualTests
 }
 ```
 
-### Test setup
+### Setup Attribute
 The [Setup](https://nunit.org/docs/2.2/setup.html) NUnit attribute marks a method as a setup method that runs as a step before every group of tests in a test method. The steps created by this attribute get added to the visual test browser as well.
 
-### Further reading
+## Further Reading
+For more information regarding dependency injection via the BackgroundDependencyLoader attribute, please read [Dependency Injection](https://github.com/ppy/osu-framework/wiki/Dependency-Injection)
+
 For additional reading on visual tests, please refer to [Dynamic Compilation and Visual Testing](https://github.com/ppy/osu-framework/wiki/Development-and-Testing)
