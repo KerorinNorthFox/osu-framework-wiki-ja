@@ -65,5 +65,48 @@ Now that our test browser is discovering tests from the specified namespace, we 
 * [AddSliderStep](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestCase.cs#L325) adds a step that creates a slider-bar that adjusts a set value.
 * [AddAssert](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestCase.cs#L333) creates a step that fails if the specified value does not return true.
 
+### Example Test
+
+```
+
+namespace AwesomeGame.VisualTests
+{
+    [TestFixture]
+    public class RigidCubeTest : TestCase
+    {
+        private RigidBodySimulation sim;
+
+        [Test]
+        public void AwesomeTestName()
+        {
+            AddStep("Drop a cube", DropCube);
+        }
+
+        private void DropCube()
+        {
+            Child = sim = new RigidBodySimulation { RelativeSizeAxes = Axes.Both };
+            
+            RigidBodyContainer<Drawable> rbc = new RigidBodyContainer<Drawable>
+            {
+                Child = new Box
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Size = new Vector2(150, 150),
+                    Colour = Color4.Tomato,
+                },
+                Position = new Vector2(500, 500),
+                Size = new Vector2(200, 200),
+                Rotation =  45,
+                Colour = Color4.Tomato,
+                Masking = true,
+            };
+            
+            sim.Add(rbc);
+        }
+    }
+}
+```
+
 ### Test setup
 The [Setup](https://nunit.org/docs/2.2/setup.html) NUnit attribute marks a method as a setup method that runs as a step before every group of tests in a test method. The steps created by this attribute get added to the visual test browser as well.
