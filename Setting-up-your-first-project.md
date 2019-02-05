@@ -59,6 +59,9 @@ public static void Main()
 ### BackgroundDependencyLoader Attribute
 The [BackgroundDependencyLoader](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Allocation/BackgroundDependencyLoaderAttribute.cs) attribute denotes a method to be the load method of a [Drawable](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/Drawable.cs). You can specify a type in the method parameters to attempt to grab an object of that type that has been [cached](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Caching/Cached.cs).
 
+### Further reading
+For more information regarding dependency injection via the BackgroundDependencyLoader attribute, please read [Dependency Injection](https://github.com/ppy/osu-framework/wiki/Dependency-Injection)
+
 ## Testing
 ### Setting up a test browser
 osu-framework has a visual testing framework that is meant to help provide tests that can be verified both visually and systematically via [NUnit](https://nunit.org/). To start using visual tests, you will need to create a [TestBrowser](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Testing/TestBrowser.cs) and add it to your screen. In order for your test browser to discover tests, you will need to specify a namespace in which for the browser to look in when constructing it.
