@@ -8,10 +8,9 @@
  * [Draw Visualizer](https://github.com/ppy/osu-framework/wiki/Debug-Overlays:-Draw-Visualizer)
  * [Frame Statistics](https://github.com/ppy/osu-framework/wiki/Debug-Overlays:-Frame-Statistics-Overlay)
  * [Logging](https://github.com/ppy/osu-framework/wiki/Debug-Overlays:-Log-Overlay)
-# Diagrams
+# Framework Components
  * [Form input handlers to events](https://github.com/ppy/osu-framework/wiki/Diagram:-From-input-handlers-to-events)
  * [Loading of a drawable](https://github.com/ppy/osu-framework/wiki/Diagram:-Loading-of-a-drawable)
-# Pages
  * [Bindable Flow](https://github.com/ppy/osu-framework/wiki/Bindable-Flow)
  * [Handling Input Events](https://github.com/ppy/osu-framework/wiki/Handling-input-events)
  * [Loading Components Asynchronously](https://github.com/ppy/osu-framework/wiki/Loading-component-asynchronously)
