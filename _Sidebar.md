@@ -1,5 +1,6 @@
 # [Getting Started](https://github.com/ppy/osu-framework/wiki/Getting-Started)
 # Testing
+ * [Dynamic Compilation and Visual Testing](https://github.com/ppy/osu-framework/wiki/Development-and-Testing)
  * [Testing framework PRs with other projects via NuGet](https://github.com/ppy/osu-framework/wiki/Testing-framework-PRs-with-other-projects-via-NuGet)
  * [Testing local framework checkout with other projects](https://github.com/ppy/osu-framework/wiki/Testing-local-framework-checkout-with-other-projects)
 # Debug Overlays
