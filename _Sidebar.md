@@ -1,4 +1,5 @@
-# [Getting Started](https://github.com/ppy/osu-framework/wiki/Getting-Started)
+# Getting Started
+[Setting up your first project](https://github.com/ppy/osu-framework/wiki/Getting-Started)
 # Testing
  * [Dynamic Compilation and Visual Testing](https://github.com/ppy/osu-framework/wiki/Development-and-Testing)
  * [Testing framework PRs with other projects via NuGet](https://github.com/ppy/osu-framework/wiki/Testing-framework-PRs-with-other-projects-via-NuGet)
