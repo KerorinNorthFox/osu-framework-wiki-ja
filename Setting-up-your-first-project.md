@@ -1,4 +1,4 @@
-# Getting Started
+# Setting up your first project
 
 This tutorial is designed to get you started with a new project using osu-framework. It is not meant to be a guide for contribution to the osu-framework project.
 
