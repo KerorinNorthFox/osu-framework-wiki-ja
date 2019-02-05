@@ -11,6 +11,41 @@ Simply set the ouput type in your .csproj file to `<OutputType>WinExe</OutputTyp
 
 2. Install the nuget package from https://www.nuget.org/packages/ppy.osu.Framework/.
 3. Create a new game class that derives osu.Framework.Game.
+
+The following code creates a cube with a rigid body container.
+```
+namespace AwesomeGame
+{
+    public class AwesomeGame : Game
+    {
+        RigidBodySimulation sim;
+        
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            Child = sim = new RigidBodySimulation { RelativeSizeAxes = Axes.Both };
+            
+            RigidBodyContainer<Drawable> rbc = new RigidBodyContainer<Drawable>
+            {
+                Child = new Box
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Size = new Vector2(150, 150),
+                    Colour = Color4.Tomato,
+                },
+                Position = new Vector2(500, 500),
+                Size = new Vector2(200, 200),
+                Rotation =  45,
+                Colour = Color4.Tomato,
+                Masking = true,
+            };
+            
+            sim.Add(rbc);            
+        }
+    }
+}
+```
 4. In your main() method, create a new instance of your game.
 ```
 [STAThread]
