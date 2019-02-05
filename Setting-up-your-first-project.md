@@ -4,7 +4,6 @@ This tutorial is designed to get you started with a new project using osu-framew
 
 * [Targeting desktop platforms](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#targeting-desktop-platforms)
   * [BackgroundDependencyLoader attribute](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#BackgroundDependencyLoader-attribute)
-
 * [Testing](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#testing)
   * [Setting up a test browser](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#setting-up-a-test-browser)
   * [Adding tests to the test browser](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#adding-tests-to-the-test-browser)
