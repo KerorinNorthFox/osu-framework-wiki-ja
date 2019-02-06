@@ -38,7 +38,7 @@ For example, to include your own Textures folder and all .png files inside of it
 ```
 
 ## Accessing resources from the resource store
-After having added your own resources, you can now access them via dependency injection. For example, if I have a texture named awesomeTexture.png inside of my Textures folder, I can load it like this:
+After having added your own resources, you can now access them via dependency injection. You will need to specify the type of store you're trying to inject in the method parameters. For example, if I have a texture named awesomeTexture.png inside of my Textures folder, I can load it like this:
 ```
 [BackgroundDependencyLoader]
 private void load(TextureStore store)
