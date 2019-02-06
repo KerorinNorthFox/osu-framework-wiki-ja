@@ -70,7 +70,7 @@ The [BackgroundDependencyLoader](https://github.com/ppy/osu-framework/blob/maste
 
 ## Testing
 ### Setting up a test browser
-osu-framework has a visual testing framework that is meant to help provide tests that can be verified both visually and systematically via [NUnit](https://nunit.org/). To start using visual tests, you will need to create a [TestBrowser](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Testing/TestBrowser.cs) and add it to your screen. In order for your test browser to discover tests, you will need to specify a namespace in which for the browser to look in when constructing it.
+osu-framework has a visual testing framework that is meant to help provide tests that can be verified both visually and systematically via [NUnit](https://nunit.org/). To start using visual tests, you will need to create a [TestBrowser](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Testing/TestBrowser.cs) and add it to your game. In order for your test browser to discover tests, you will need to specify a namespace in which for the browser to look in when constructing it.
 ```
 namespace AwesomeGame.VisualTests
 {
