@@ -6,7 +6,7 @@ This tutorial is designed to get you started with a new project using osu-framew
   * [Create a new WinExe project](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#create-a-new-winexe-project)
   * [Install the nuget package](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#install-the-nuget-package)
   * [Create a new game class that derives osu.Framework.Game](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#create-a-new-game-class-that-derives)
-  * [In your main() method, create an instance of your game](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#in-your-main)
+  * [In your main() method, create an instance of your game](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#in-your-main-method-create-a-new-instance-of-your-game)
   * [BackgroundDependencyLoader attribute](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#BackgroundDependencyLoader-attribute)
 * [Testing](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#testing)
   * [Setting up a test browser](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#setting-up-a-test-browser)
