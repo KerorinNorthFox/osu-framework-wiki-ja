@@ -6,7 +6,7 @@ The first time you set up your project, you will need to add a [DllResourceStore
 
 ## Adding your resources library to the Resource Store
 
-By default, your resources will compile a dll with your project name and copied into your output directory. This is convenient for our purposes, as all we need to do now is add a DllResourceStore to it using Resources.AddStore in our BackgroundDependencyLoader method inside of our game class.
+By default, your resources will be compiled into a dll with your project name and copied into your output directory. This is convenient for our purposes, as all we need to do now is add a DllResourceStore to it using Resources.AddStore in our BackgroundDependencyLoader method inside of our game class.
 ```
 [BackgroundDependencyLoader]
 private void load()
