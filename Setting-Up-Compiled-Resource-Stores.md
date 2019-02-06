@@ -16,8 +16,7 @@ private void load()
 ```
 
 ## Default resources structure
-
-By default, [Game](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Game.cs) will automatically create the following stores that point to the following paths for your resource store:
+[Game](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Game.cs) will automatically create the following stores that point to the respective paths for each store:
 
 * /Textures (TextureStore)
 * /Tracks 
