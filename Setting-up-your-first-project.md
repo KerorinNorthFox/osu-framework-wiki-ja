@@ -102,6 +102,26 @@ Note that in order for you to be able to run the visual tests, you will have to 
 
 For example, if I have the VisualTests build configuration, rider will automatically create the pre-processor flag VISUALTESTS, which allows us to use `#if VISUALTESTS` to check the current build configuration.
 
+```
+namespace Gale
+{
+    class Program
+    {
+        [STAThread]
+        public static void Main()
+        {
+#if VISUALTESTS
+            using (Game game = new VisualTestRunner())
+#else
+            using (Game game = new GaleGame())
+#endif
+            using (GameHost host = Host.GetSuitableHost(@"Gale"))
+                host.Run(game);
+        }
+    }
+}
+```
+
 ### Adding tests to the test browser
 
 Now that our test browser is discovering tests from the specified namespace, we can start adding tests! To do so, create a new class that derives [TestCase](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Testing/TestCase.cs) with the [TestFixture](http://nunit.org/docs/2.6/testFixture.html) attribute. From here, we can add steps to this test of various types:
