@@ -113,9 +113,9 @@ namespace Gale
 #if VISUALTESTS
             using (Game game = new VisualTestRunner())
 #else
-            using (Game game = new GaleGame())
+            using (Game game = new AwesomeGame())
 #endif
-            using (GameHost host = Host.GetSuitableHost(@"Gale"))
+            using (GameHost host = Host.GetSuitableHost(@"AwesomeGame"))
                 host.Run(game);
         }
     }
