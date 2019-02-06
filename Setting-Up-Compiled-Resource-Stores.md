@@ -2,7 +2,7 @@
 
 This tutorial assumes you have completed [setting up your first project](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project).
 
-The first time you set up your project, you will need to add a [DllResourceStore](https://github.com/ppy/osu-framework/blob/master/osu.Framework/IO/Stores/DllResourceStore.cs) with the path to a resources library. This will enable you to load resources from the specified resource library at run-time, which then in turn allows caching to occur in the [ResourceStore](https://github.com/ppy/osu-framework/blob/master/osu.Framework/IO/Stores/ResourceStore.cs). This behavior is already defined in the base [Game](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Game.cs) class which all Game instances should inherit.
+The first time you set up your project, you will need to add a [DllResourceStore](https://github.com/ppy/osu-framework/blob/master/osu.Framework/IO/Stores/DllResourceStore.cs) with the path to a resources library. This will enable you to load resources from the specified resource library at run-time, which then in turn allows caching to occur in the [ResourceStore](https://github.com/ppy/osu-framework/blob/master/osu.Framework/IO/Stores/ResourceStore.cs). A few important resource stores are already created in the base [Game](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Game.cs) class which all Game instances should inherit.
 
 ## Adding your resources library to the Resource Store
 
