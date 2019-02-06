@@ -112,7 +112,7 @@ Note that in order for you to be able to run the visual tests, you will have to 
 For example, if I have the VisualTests build configuration, rider will automatically create the pre-processor flag VISUALTESTS, which allows us to use `#if VISUALTESTS` to check the current build configuration.
 
 ```
-namespace Gale
+namespace AwesomeGame
 {
     class Program
     {
