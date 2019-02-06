@@ -25,7 +25,7 @@ By default, [Game] will automatically create the following stores that point to 
 * /Shaders
 * /Fonts/OpenSans
 
-Too add to these stores, simply add resources to the respective directories and specify them as EmbeddedResources inside your .csproj.
+To add to these stores, simply add resources to the respective directories and specify them as EmbeddedResources inside your .csproj.
 
 For example, to include your own Textures folder and all .png files inside of it:
 ```
