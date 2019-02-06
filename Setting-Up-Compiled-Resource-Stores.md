@@ -22,7 +22,7 @@ private void load()
 * /Tracks 
 * /Samples
 * /Shaders
-* /Fonts/OpenSans (FontStore)
+* /Fonts
 
 To add to these stores, simply add resources to the respective directories and specify them as EmbeddedResources inside your .csproj.
 
@@ -44,3 +44,14 @@ private void load(TextureStore store)
 ```
 
 osu! framework will then load the resources for the first time if they have not been cached yet.
+
+## Adding custom fonts into the font store
+
+osu! Framework loads OpenSans into the [FontStore](https://github.com/ppy/osu-framework/blob/master/osu.Framework/IO/Stores/FontStore.cs) by default. If you find that this is insufficient for your use, you may add your own fonts to the FontStore by adding your own [GlyphStores](https://github.com/ppy/osu-framework/blob/master/osu.Framework/IO/Stores/GlyphStore.cs). This is preferably done at the initialization of your game within the BackgroundDependencyLoader method inside your game class by invoking the following:
+```
+Fonts.AddStore(new GlyphStore(Resources, @"Fonts/AwesomeFont"));
+```
+This will cache our hypothetical "AwesomeFont" for use in any [SpriteText](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/Sprites/SpriteText.cs), which can be set using the Font property.
+
+
+
