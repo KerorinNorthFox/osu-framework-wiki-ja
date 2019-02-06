@@ -23,8 +23,8 @@ private void load()
 [Game](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Game.cs) will automatically create the following stores that point to the respective paths for each store:
 
 * /Textures (TextureStore)
-* /Tracks (AudioManager)
-* /Samples (AudioManager)
+* /Tracks (AudioManager.GetTrackManager())
+* /Samples (AudioManager.GetSampleManager())
 * /Shaders (ShaderManager)
 * /Fonts (FontStore)
 
