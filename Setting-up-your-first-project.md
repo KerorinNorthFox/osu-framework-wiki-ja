@@ -98,7 +98,7 @@ namespace AwesomeGame.VisualTests
 }
 ```
 
-Note that in order for you to be able to run the visual tests, you will have to switch your game instance to the visual tests. To do that, you can either create your visual tests in a separate project and run them as a build configuration, or simply apply build configuration pre-processor checks in your entry point to run the appropriate game.
+Note that in order for you to be able to run the visual tests, you will have to switch your game type to visual tests. To do that, you can either create your visual tests in a separate project and run them as a build configuration, or simply apply build configuration pre-processor checks in your entry point to run the appropriate game.
 
 For example, if I have the VisualTests build configuration, rider will automatically create the pre-processor flag VISUALTESTS, which allows us to use `#if VISUALTESTS` to check the current build configuration.
 
