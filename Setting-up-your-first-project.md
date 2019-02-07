@@ -26,6 +26,7 @@ In Visual Studio or Rider, simply set the project type to "Windows Application" 
 You can find the nuget package at https://www.nuget.org/packages/ppy.osu.Framework/
 
 From dotnet CLI: `dotnet add package ppy.osu.Framework`
+
 You can also add the package from the NuGet GUI. In rider, you can find this in Tools > Nuget > Manage NuGet Packages for Solution.
 
 ### Create a new game class that derives osu.Framework.Game.
