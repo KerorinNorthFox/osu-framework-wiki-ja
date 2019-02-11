@@ -47,6 +47,9 @@ For a better visual representation of these modes and how they restrict multiple
 
 ## Handling key binding actions
 
-Now that we have created our KeyBindingContainer, we can now add behavior that triggers when the key-binded action has been fired. 
+Now that we have created our KeyBindingContainer, we can add behavior that triggers when the key-binded action has been fired. The [IKeyBindingHandler<T>](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/Bindings/IKeyBindingHandler.cs) interface provides a way for bound input events to be handled by any class.
 
-### 
+The IKeyBindingHandler interface provides access to the following:
+
+* OnPressed(action) is triggered when any action is pressed. The action type depends on the type specified in the type specifier when you inherit IKeyBindingHandler<T>. Return true if this action should block the action from traversing the scene graph up to its parent.
+* OnReleased(action) is triggered when any action is released. Likewise, return true if this action should be blocked from traversing the scene graph for handling for the Drawable's parents.
