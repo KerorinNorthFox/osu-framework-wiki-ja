@@ -1,6 +1,6 @@
 # Setting up key binding containers
 
-Once you have completed [setting up your first project](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project), we are ready to start building our game! In addition to having the ability to [handle input events](https://github.com/ppy/osu-framework/wiki/Handling-input-events) of various types, you can also set up a [KeyBindingContainer](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/Bindings/KeyBindingContainer.cs) which allows you to name actions in an enum, as well as choose which key handling mode should be used in the container.
+Once you have completed [setting up your first project](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project), we are ready to start building our game! In addition to having the ability to [handle input events](https://github.com/ppy/osu-framework/wiki/Handling-input-events) of various types, you can also set up a [KeyBindingContainer](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/Bindings/KeyBindingContainer.cs) which allows you to specify default bindings for actions, as well as choose which key handling mode should be used in the container.
 
 * [Creating a new KeyBindingContainer](https://github.com/ppy/osu-framework/wiki/Setting-up-keybinding-containers#creating-a-new-keybindingcontainer)
   * [Create an enum for our custom actions](https://github.com/ppy/osu-framework/wiki/Setting-up-keybinding-containers#create-an-enum-for-our-custom-actions)
