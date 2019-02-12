@@ -8,7 +8,7 @@ Once you have completed [setting up your first project](https://github.com/ppy/o
   * [Create default keybindings for our KeyBindingContainer](https://github.com/ppy/osu-framework/wiki/Setting-up-keybinding-containers#create-default-keybindings-for-our-keybindingcontainer)
   * [Key Binding Modes](https://github.com/ppy/osu-framework/wiki/Setting-up-keybinding-containers#key-binding-modes)
 * [Handling key bound actions](https://github.com/ppy/osu-framework/wiki/Setting-up-keybinding-containers#handling-key-bound-actions)
-  # [Example](https://github.com/ppy/osu-framework/wiki/Setting-up-keybinding-containers#example)
+  * [Example](https://github.com/ppy/osu-framework/wiki/Setting-up-keybinding-containers#example)
 
 ## Creating a new KeyBindingContainer
 ### Create an enum for our custom actions
