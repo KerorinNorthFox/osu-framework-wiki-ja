@@ -4,7 +4,7 @@ osu! framework provides in-picture debugging overlays, defined in `osu.Framework
 
 **Control-F1** toggles an overlay that allows you to access the drawable hierarchy. Selecting an object on screen will grab the instance of the drawable and display relevant information.
 
-![](https://cdn.discordapp.com/attachments/318886668889227266/538272068764958720/Screen_Shot_2019-01-25_at_5.10.57_PM.jpg)
+![](https://cdn.discordapp.com/attachments/318886668889227266/544781093287493655/Feb-12-2019_16-25-01.gif)
 
 The first time you click a drawable, you will be shown the the first container that is forward facing the user that was clicked, which means it is possible the element you want to get to is not accessible in this way. In order to gain access to the other drawables, you will have to traverse the hierarchy by clicking the "up one parent" button until you reach the desired depth.
 
