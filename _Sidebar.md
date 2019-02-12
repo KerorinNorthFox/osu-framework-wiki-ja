@@ -1,7 +1,7 @@
 # Getting Started
  * [Setting up your first project](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project)
  * [Setting up compiled resource stores](https://github.com/ppy/osu-framework/wiki/Setting-Up-Compiled-Resource-Stores)
- * [Setting up key binding containers](https://github.com/ppy/osu-framework/wiki/Setting-up-keybinding-containers)
+ * [Setting up key binding containers](https://github.com/ppy/osu-framework/wiki/Setting-up-key-binding-containers)
 # Testing
  * [Dynamic Compilation and Visual Testing](https://github.com/ppy/osu-framework/wiki/Development-and-Testing)
  * [Testing framework PRs with other projects via NuGet](https://github.com/ppy/osu-framework/wiki/Testing-framework-PRs-with-other-projects-via-NuGet)
