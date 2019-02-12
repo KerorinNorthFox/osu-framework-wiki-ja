@@ -1,4 +1,4 @@
-# Handling Input
+# Setting up key binding containers
 
 Once you have completed [setting up your first project](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project), we are ready to start building our game! In addition to having the ability to [handle input events](https://github.com/ppy/osu-framework/wiki/Handling-input-events) of various types, you can also set up a [KeyBindingContainer](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/Bindings/KeyBindingContainer.cs) which allows you to name actions in an enumerator, as well as choose which key handling mode should be used in the container.
 
