@@ -32,7 +32,7 @@ You can also add the package from the NuGet GUI. In rider, you can find this in 
 ### Create a new game class that derives osu.Framework.Game.
 
 The following code creates a cube with a rigid body container.
-```
+```csharp
 namespace AwesomeGame
 {
     public class AwesomeGame : Game
@@ -66,7 +66,7 @@ namespace AwesomeGame
 }
 ```
 ### In your main() method, create a new instance of your game.
-```
+```csharp
 [STAThread]
 public static void Main()
 {
@@ -81,7 +81,7 @@ The [BackgroundDependencyLoader](https://github.com/ppy/osu-framework/blob/maste
 ## Testing
 ### Setting up a test browser
 osu-framework has a visual testing framework that is meant to help provide tests that can be verified both visually and systematically via [NUnit](https://nunit.org/). To start using visual tests, you will need to create a [TestBrowser](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Testing/TestBrowser.cs) and add it to your game. In order for your test browser to discover tests, you will need to specify a namespace in which for the browser to look in when constructing it.
-```
+```csharp
 namespace AwesomeGame.VisualTests
 {
     public class AwesomeGameTestRunner : AwesomeGame
@@ -112,7 +112,7 @@ Note that in order for you to be able to run the visual tests, you will have to 
 
 For example, if I have the VisualTests build configuration, rider will automatically create the pre-processor flag VISUALTESTS, which allows us to use `#if VISUALTESTS` to check the current build configuration.
 
-```
+```csharp
 namespace AwesomeGame
 {
     class Program
@@ -146,7 +146,7 @@ Now that our test browser is discovering tests from the specified namespace, we 
 ### Example Test
 The following code adds a simple cube to the visual test browser that we created above. The cube has a rigid body attached, and should drop to the bottom of the screen when created. From here, we can choose to check the behavior of the cube by asserting that the cube eventually reaches the bottom via AddAssert.
 
-```
+```csharp
 namespace AwesomeGame.VisualTests
 {
     [TestFixture]
