@@ -1,6 +1,14 @@
 # Handling Input
 
-Once you have completed [setting up your first project](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project), we are ready to start building our game! In addition to having the ability to [handle input events](https://github.com/ppy/osu-framework/wiki/Handling-input-events) of various types, you can also set up a [KeyBindingContainer](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/Bindings/KeyBindingContainer.cs) which allows you to name actions in an enumerator, as well as choose which key handling mode should be used in the container. 
+Once you have completed [setting up your first project](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project), we are ready to start building our game! In addition to having the ability to [handle input events](https://github.com/ppy/osu-framework/wiki/Handling-input-events) of various types, you can also set up a [KeyBindingContainer](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/Bindings/KeyBindingContainer.cs) which allows you to name actions in an enumerator, as well as choose which key handling mode should be used in the container.
+
+* [Creating a new KeyBindingContainer](https://github.com/ppy/osu-framework/wiki/Setting-up-keybinding-containers#creating-a-new-keybindingcontainer)
+  * [Create an enum for our custom actions](https://github.com/ppy/osu-framework/wiki/Setting-up-keybinding-containers#create-an-enum-for-our-custom-actions)
+  * [Create a KeyBindingContainer class](https://github.com/ppy/osu-framework/wiki/Setting-up-keybinding-containers#create-a-keybindingcontainer-class)
+  * [Create default keybindings for our KeyBindingContainer](https://github.com/ppy/osu-framework/wiki/Setting-up-keybinding-containers#create-default-keybindings-for-our-keybindingcontainer)
+  * [Key Binding Modes](https://github.com/ppy/osu-framework/wiki/Setting-up-keybinding-containers#key-binding-modes)
+* [Handling key bound actions](https://github.com/ppy/osu-framework/wiki/Setting-up-keybinding-containers#handling-key-bound-actions)
+  # [Example](https://github.com/ppy/osu-framework/wiki/Setting-up-keybinding-containers#example)
 
 ## Creating a new KeyBindingContainer
 ### Create an enum for our custom actions
@@ -43,7 +51,7 @@ There are two types of There are two modes that can be specified on the creation
 
 For a better visual representation of these modes and how they restrict multiple key press events, please see [TestCaseKeyBindings](https://github.com/ppy/osu-framework/blob/master/osu.Framework.Tests/Visual/TestCaseInput/TestCaseKeyBindings.cs).
 
-## Handling key binding actions
+## Handling key bound actions
 
 Now that we have created our KeyBindingContainer, we can add behavior that triggers when the key-binded action has been fired. The [IKeyBindingHandler<T>](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/Bindings/IKeyBindingHandler.cs) interface provides a way for bound input events to be handled by any class.
 
@@ -60,6 +68,7 @@ The IKeyBindingHandler interface provides access to the following:
 * OnPressed(action) is triggered when any action is pressed. The action type depends on the type specified in the type specifier when you inherit IKeyBindingHandler<T>. Return true if this action should block the action from traversing the scene graph up to its parent.
 * OnReleased(action) is triggered when any action is released. Likewise, return true if this action should be blocked from traversing the scene graph for handling for the Drawable's parents.
 
+### Example
 Our completed player RigidBodyContainer with keybinding handling would then look something like this:
 
 ```csharp
