@@ -132,7 +132,7 @@ public class Player : RigidBodyContainer<Drawable>, IKeyBindingHandler<InputActi
 }
 ```
 
-For this example to work as intended, we will need to change the simultaneous binding mode in our keybinding container to allow multiple bindings to be pressed at the same time:
+For this example to work as intended, we will need to change the simultaneous binding mode in our keybinding container to allow multiple bindings to be pressed at the same time. We can specify a constructor for this:
 
 ```csharp
 public AwesomeKeyBindingContainer(KeyCombinationMatchingMode keyCombinationMatchingMode = KeyCombinationMatchingMode.Any, SimultaneousBindingMode simultaneousBindingMode = SimultaneousBindingMode.All) 
