@@ -7,13 +7,14 @@ This tutorial is designed to get you started with a new project using osu-framew
   * [Install the nuget package](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#install-the-nuget-package)
   * [Create a new game class that derives osu.Framework.Game](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#create-a-new-game-class-that-derives-osuframeworkgame)
   * [In your main() method, create an instance of your game](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#in-your-main-method-create-a-new-instance-of-your-game)
-  * [BackgroundDependencyLoader attribute](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#BackgroundDependencyLoader-attribute)
 * [Testing](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#testing)
   * [Setting up a test browser](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#setting-up-a-test-browser)
   * [Adding tests to the test browser](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#adding-tests-to-the-test-browser)
   * [Example test](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#example-test)
+* [Appendix](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#appendix)
+  * [BackgroundDependencyLoader attribute](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#BackgroundDependencyLoader-attribute)
   * [Setup Attribute](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#setup-attribute)
-* [Further Reading](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#further-reading)
+  * [Further Reading](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#further-reading)
 
 ## Targeting desktop platforms
 You can find this code and more to help you get started in [`SampleGame`](https://github.com/ppy/osu-framework/tree/master/SampleGame) and [`SampleGame.Desktop`](https://github.com/ppy/osu-framework/tree/master/SampleGame.Desktop)
@@ -77,8 +78,7 @@ public static void Main()
       host.Run(game);
 }
 ```
-### BackgroundDependencyLoader Attribute
-The [BackgroundDependencyLoader](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Allocation/BackgroundDependencyLoaderAttribute.cs) attribute denotes a method to be the load method of a [Drawable](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/Drawable.cs). You can specify a type in the method parameters to attempt to grab an object of that type that has been [cached](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Caching/Cached.cs).
+
 
 ## Testing
 ### Setting up a test browser
@@ -112,7 +112,7 @@ namespace AwesomeGame.VisualTests
 
 Note that in order for you to be able to run the visual tests, you will have to switch your game type to visual tests. To do that, you can either create your visual tests in a separate project and run them as a build configuration, or simply apply build configuration pre-processor checks in your entry point to run the appropriate game.
 
-For example, if I have the VisualTests build configuration, rider will automatically create the pre-processor flag VISUALTESTS, which allows us to use `#if VISUALTESTS` to check the current build configuration.
+For the purpose of our demo, we will simply switch our game type to our VisualTestRunner instead.
 
 ```csharp
 namespace AwesomeGame
@@ -122,12 +122,9 @@ namespace AwesomeGame
         [STAThread]
         public static void Main()
         {
-#if VISUALTESTS
-            using (Game game = new VisualTestRunner())
-#else
-            using (Game game = new AwesomeGame())
-#endif
             using (GameHost host = Host.GetSuitableHost(@"AwesomeGame"))
+            using (Game game = new VisualTestRunner())
+            //using (Game game = new AwesomeGame())
                 host.Run(game);
         }
     }
@@ -188,10 +185,17 @@ namespace AwesomeGame.VisualTests
 }
 ```
 
+
+
+## Appendix
+
 ### Setup Attribute
 The [Setup](https://nunit.org/docs/2.2/setup.html) NUnit attribute marks a method as a setup method that runs as a step before every group of tests in a test method. The steps created by this attribute gets added to the visual test browser as well.
 
-## Further Reading
+### BackgroundDependencyLoader Attribute
+The [BackgroundDependencyLoader](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Allocation/BackgroundDependencyLoaderAttribute.cs) attribute denotes a method to be the load method of a [Drawable](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/Drawable.cs). You can specify a type in the method parameters to attempt to grab an object of that type that has been [cached](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Caching/Cached.cs).
+
+### Further Reading
 For information on how to load your own resources such as textures and audio, please read [Setting Up Compiled Resource Stores](https://github.com/ppy/osu-framework/wiki/Setting-Up-Compiled-Resource-Stores).
 
 For more information regarding dependency injection via the BackgroundDependencyLoader attribute, please read [Dependency Injection](https://github.com/ppy/osu-framework/wiki/Dependency-Injection)
