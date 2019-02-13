@@ -21,3 +21,13 @@ Here is an example of how this looks in practice:
 # Steps and automated testing
 
 You can use the `AddStep` function to add automatic steps which should be performed. Asserts can also be added as steps. These steps can be run in an interactive environment by the user, but also run in a headless execution, allowing for CI process testing.
+
+The types of steps available to be added are as follows: 
+
+* [AddStep](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestCase.cs#L280) creates a step that runs a method. Completes successfully if no exceptions are caught.
+* [AddRepeatStep](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestCase.cs#L293) creates a step that runs a method a specified amount of times. Completes successfully if no exceptions are caught.
+* [AddToggleStep](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestCase.cs#L301) toggles a flag.
+* [AddUntilStep](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestCase.cs#L309) adds a step that attempts to run until a condition becomes true, or fails when it times out.
+* [AddWaitStep](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestCase.cs#L317) adds a step that waits a specified amount of time before continuing to the next step.
+* [AddSliderStep](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestCase.cs#L325) adds a step that creates a slider-bar that adjusts a set value.
+* [AddAssert](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestCase.cs#L333) creates a step that fails if the specified value does not return true.
