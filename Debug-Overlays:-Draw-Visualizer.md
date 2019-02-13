@@ -2,6 +2,10 @@
  
 osu! framework provides in-picture debugging overlays, defined in `osu.Framework.Input.FrameworkActionContainer`. One such overlay is the Draw Visualizer.
 
+* [Selecting a drawable to inspect](https://github.com/ppy/osu-framework/wiki/Debug-Overlays:-Draw-Visualizer#selecting-a-drawable-to-inspect)
+* [Traversing the scene graph](https://github.com/ppy/osu-framework/wiki/Debug-Overlays:-Draw-Visualizer#traversing-the-scene-graph)
+* [View Properties](https://github.com/ppy/osu-framework/wiki/Debug-Overlays:-Draw-Visualizer#view-properties)
+
 ## Selecting a drawable to inspect
 
 **Ctrl-F1** toggles an overlay that allows you to access the drawable hierarchy. Selecting an object on screen will grab the instance of the drawable and display relevant information.
