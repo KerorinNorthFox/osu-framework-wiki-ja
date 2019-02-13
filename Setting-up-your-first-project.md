@@ -73,12 +73,11 @@ namespace AwesomeGame
 [STAThread]
 public static void Main()
 {
-   using (Game game = new AwesomeGame())
    using (GameHost host = Host.GetSuitableHost(@"awesome-game"))
+   using (Game game = new AwesomeGame())
       host.Run(game);
 }
 ```
-
 
 ## Testing
 ### Setting up a test browser
@@ -145,17 +144,23 @@ namespace AwesomeGame.VisualTests
     public class RigidCubeTest : TestCase
     {
         private RigidBodySimulation sim;
+        
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+             // Set up the simulation once before any tests are ran
+             Child = sim = new RigidBodySimulation { RelativeSizeAxes = Axes.Both };
+        ]
 
         [Test]
-        public void AwesomeTestName()
+        private void AwesomeTestName()
         {
-            AddStep("Drop a cube", DropCube);
+            AddStep("Drop a cube", performDropCube);
         }
 
-        private void DropCube()
+        private void performDropCube()
         {
-            Child = sim = new RigidBodySimulation { RelativeSizeAxes = Axes.Both };
-            
+            // Add a new cube to the simulation
             RigidBodyContainer<Drawable> rbc = new RigidBodyContainer<Drawable>
             {
                 Child = new Box
@@ -178,10 +183,7 @@ namespace AwesomeGame.VisualTests
 }
 ```
 
-
-
 ## Appendix
-
 ### Setup Attribute
 The [Setup](https://nunit.org/docs/2.2/setup.html) NUnit attribute marks a method as a setup method that runs as a step before every group of tests in a test method. The steps created by this attribute gets added to the visual test browser as well.
 
