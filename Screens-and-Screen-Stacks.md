@@ -1,5 +1,5 @@
 # Screens and Screen Stacks
-osu!framework utilizes and implements a `[Screen](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Screens/IScreen.cs)` concept. Screens let us specify single "views" that can be stacked on with other screens, or exited to reveal screens stacked underneath. Visually, imagine stacking one sheet of paper on top of another. The forward facing sheet is shown to the user, while other screens remain underneath it ready to be resumed.
+osu!framework utilizes and implements a [`Screen`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Screens/IScreen.cs) concept. Screens let us specify single "views" that can be stacked on with other screens, or exited to reveal screens stacked underneath. Visually, imagine stacking one sheet of paper on top of another. The forward facing sheet is shown to the user, while other screens remain underneath it ready to be resumed.
 
 Only one screen can be active at a time within a single screen stack. However, multiple different screen stacks may exist to layer screens on top of one another. 
 
