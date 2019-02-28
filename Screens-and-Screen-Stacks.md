@@ -3,9 +3,9 @@ osu!framework utilizes and implements a "Screen" concept. Screens let us specify
 
 Only one screen can be active at a time within a single screen stack. However, multiple different screen stacks may exist to layer screens on top of one another. 
 
-* Creating a new screen stack
-* Creating a new screen
-* Handling screen transitions
+* [Creating a new screen stack](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks#creating-a-new-screen-stack)
+* [Creating a new screen](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks#creating-a-new-screen)
+* [Handling screen transitions](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks#handling-screen-transitions)
 
 ## Creating a screen stack
 Simply add a new instance of a screen stack into your draw hierarchy.
@@ -44,7 +44,7 @@ If this screen is the first screen you are pushing to the stack, you should push
 
 ## Handling screen transitions
 Screens contain the following callbacks that are invoked whenever a screen change involving it would occur:
-* OnEntering - Invoked when the screen is added to the top of the stack using Screen.Push()
-* OnExiting - Invoked when the screen is exited for the screen under it using Screen.Exit()
+* OnEntering - Invoked when the screen is added to the top of the stack using `Screen.Push()`
+* OnExiting - Invoked when the screen is exited for the screen under it using `Screen.Exit()`
 * OnResuming - Invoked when the screen is made the active screen as a result of the current screen being exited.
 * OnSuspending - Invoked when another screen is pushed to the top of the stack, replacing this one.
