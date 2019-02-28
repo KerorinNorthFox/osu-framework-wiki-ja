@@ -42,7 +42,7 @@ public class AwesomeScreen : Screen
 }
 ```
 
-If this screen is the first screen you are pushing to the stack, you should push it to the stack directly using `ScreenStack.Push()`. Otherwise, you should only push to the current screen, using `Screen.Push()`. Pushing to a stack directly while screens already exist in the stack is unsupported.
+If this screen is the first screen you are pushing to the stack, you should push it to the stack directly using `ScreenStack.Push()`. If you already have a screen in the stack, you can also push to the screen using `Screen.Push()`.
 
 ## Handling screen transitions
 Screens contain the following methods that are invoked whenever a screen change involving it would occur:
