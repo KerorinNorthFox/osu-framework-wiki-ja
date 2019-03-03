@@ -50,3 +50,17 @@ Screens contain the following methods that are invoked whenever a screen change 
 * OnExiting - Invoked when the screen is exited for the screen under it using `Screen.Exit()`
 * OnResuming - Invoked when the screen is made the active screen as a result of the current screen being exited.
 * OnSuspending - Invoked when another screen is pushed to the top of the stack, replacing this one.
+
+### Example
+We can take care of inwards screen related transitions inside the screen we're transitioning into using the OnEntering and OnResuming methods. The FadeInFromZero method is great for fading in a new screen, where as FadeIn would let us adjust the fade from any alpha the screen may already be at.
+```csharp
+public OnEntering(IScreen next)
+{
+    FadeInFromZero<Screen>(500, Easing.OutQuint);
+}
+
+public OnSuspending(IScreen next)
+{
+    FadeIn(500, Easing.OutQuint);
+}
+```
