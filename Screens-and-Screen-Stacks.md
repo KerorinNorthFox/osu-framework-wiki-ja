@@ -8,7 +8,7 @@ Only one screen can be active at a time within a single screen stack. However, m
 * [Creating a new screen stack](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks#creating-a-new-screen-stack)
 * [Creating a new screen](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks#creating-a-new-screen)
 * [Handling screen transitions](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks#handling-screen-transitions)
- * [Example](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks#example)
+  * [Example](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks#example)
 
 ## Creating a screen stack
 Simply add a new instance of a screen stack into your draw hierarchy.
