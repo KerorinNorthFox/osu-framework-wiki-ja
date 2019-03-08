@@ -73,9 +73,9 @@ namespace AwesomeGame
 [STAThread]
 public static void Main()
 {
-   using (GameHost host = Host.GetSuitableHost(@"awesome-game"))
-   using (Game game = new AwesomeGame())
-      host.Run(game);
+    using (GameHost host = Host.GetSuitableHost(@"awesome-game"))
+    using (Game game = new AwesomeGame())
+        host.Run(game);
 }
 ```
 
@@ -87,24 +87,24 @@ namespace AwesomeGame.VisualTests
 {
     public class AwesomeGameTestRunner : AwesomeGame
     {
-         [BackgroundDependencyLoader]
-         private void load()
-         {
-             Child = new DrawSizePreservingFillContainer
-             {
-                 Children = new Drawable[]
-                 {
-                     new TestBrowser("AwesomeGame"), //Specify the namespace to discover tests from
-                     new CursorContainer(),
-                 },
-             };
-         }
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            Child = new DrawSizePreservingFillContainer
+            {
+                Children = new Drawable[]
+                {
+                    new TestBrowser("AwesomeGame"), //Specify the namespace to discover tests from
+                    new CursorContainer(),
+                },
+            };
+        }
 
-         public override void SetHost(GameHost host)
-         {
-             base.SetHost(host);
-             host.Window.CursorState |= CursorState.Hidden;
-         }
+        public override void SetHost(GameHost host)
+        {
+            base.SetHost(host);
+            host.Window.CursorState |= CursorState.Hidden;
+        }
     }
 }
 ```
