@@ -4,7 +4,7 @@
  * [Adding custom key bindings](/ppy/osu-framework/wiki/Setting-up-key-binding-containers)
 # Development
  * [Breaking Changes](/ppy/osu-framework/wiki/Breaking-changes)
- * [Loading Components Asynchronously](/ppy/osu-framework/wiki/Loading-component-asynchronously)
+ * [Asynchronous loading](/ppy/osu-framework/wiki/Asynchronous-loading)
  * [Dependency Injection](/ppy/osu-framework/wiki/Dependency-Injection)
  * [Screens and Screen Stacks](/ppy/osu-framework/wiki/Screens-and-Screen-Stacks)
 # Testing
