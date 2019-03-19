@@ -4,6 +4,8 @@
  * [Adding custom key bindings](/ppy/osu-framework/wiki/Setting-up-key-binding-containers)
 # Development
  * [Breaking Changes](/ppy/osu-framework/wiki/Breaking-changes)
+ * [Bindables](/ppy/osu-framework/wiki/Bindable-Flow)
+ * [Handling Input](/ppy/osu-framework/wiki/Handling-input-events)
  * [Asynchronous loading](/ppy/osu-framework/wiki/Asynchronous-loading)
  * [Dependency Injection](/ppy/osu-framework/wiki/Dependency-Injection)
  * [Screens and Screen Stacks](/ppy/osu-framework/wiki/Screens-and-Screen-Stacks)
@@ -18,5 +20,3 @@
 # Understanding Framework Internals
  * [Input handler event flow](/ppy/osu-framework/wiki/Diagram:-From-input-handlers-to-events)
  * [Drawable loading](/ppy/osu-framework/wiki/Diagram:-Loading-of-a-drawable)
- * [Bindable flow](/ppy/osu-framework/wiki/Bindable-Flow)
- * [Handling Input Events](/ppy/osu-framework/wiki/Handling-input-events)
