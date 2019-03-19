@@ -1,6 +1,16 @@
 Occasionally we will make changes which require consumers of the framework to make amendments to maintain compatibility. Wherever possible, we maintain compatibility via `[Obsolete]` attributes, but it is encouraged that you leave obsolete warnings turned on an deal with them sooner rather than later. Generally we aim to leave obsolete methods around for 3-6 months after obsoletion.
 
-This page serves to give a list of all breaking changes.
+This page serves to give a list of all breaking/major changes.
+
+# [2019.319.0](https://github.com/ppy/osu-framework/releases/tag/2019.319.0)
+
+## Parameter order of `AddUntilStep` / `AddWaitStep` reversed [#2256](https://github.com/ppy/osu-framework/pull/2256)
+
+In order to standardise parameter order, these two methods' parameters have been reversed. Old parameter order methods are available temporarily (as `[Obsolete]`) to ease migration.
+
+## New attribute `[SetUpSteps]` added [#2266](https://github.com/ppy/osu-framework/pull/2266)
+
+Finally allows steps to be added that will run before every `[Test]` method.
 
 # [2019.221.0](https://github.com/ppy/osu-framework/releases/tag/2019.221.0)
 
