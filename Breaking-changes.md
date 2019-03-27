@@ -2,6 +2,36 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2019.327.0](https://github.com/ppy/osu-framework/releases/tag/2019.327.0)
+
+## Font fallback order changes [#2296](https://github.com/ppy/osu-framework/pull/2296)
+
+Games adding their own fonts can now do so directly to `Game.Fonts`. Fallback (framework-side) fonts are now always at the lowest priority.
+
+Previously:
+```csharp
+// this completely overrides the framework default. will need to change once we make a proper FontStore.
+dependencies.Cache(Fonts = new FontStore(new GlyphStore(Resources, @"Fonts/FontAwesome")));
+Fonts.AddStore(new GlyphStore(Resources, @"Fonts/osuFont"));
+```
+
+now:
+```csharp
+Fonts.AddStore(new GlyphStore(Resources, @"Fonts/osuFont"));
+```
+
+## FontAwesome and SpriteIcon is provided by the framework [#2293](https://github.com/ppy/osu-framework/pull/2293)
+
+If you manually added either of these to your project, please remove them.
+
+Usage:
+```csharp
+new SpriteIcon
+{
+    Icon = FontAwesome.Refresh,
+};
+```
+
 # [2019.319.0](https://github.com/ppy/osu-framework/releases/tag/2019.319.0)
 
 ## Parameter order of `AddUntilStep` / `AddWaitStep` reversed [#2256](https://github.com/ppy/osu-framework/pull/2256)
