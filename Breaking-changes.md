@@ -2,6 +2,69 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2019.427.0](https://github.com/ppy/osu-framework/releases/tag/2019.427.0)
+
+## `Drawable.ApplyDrawNode()` has been removed
+
+The direction of application of `DrawNode` states has been inversed.
+
+Previously:
+```csharp
+class MyCustomDrawable : Drawable
+{
+    private bool state;
+
+    protected override DrawNode CreateDrawNode() => new CustomDrawNode();
+
+    protected override void ApplyDrawNode(DrawNode node)
+    {
+        base.ApplyDrawNode(node);
+
+        var n = (CustomDrawNode)n;
+        
+        n.State = state; 
+    }
+
+    private class CustomDrawNode : DrawNode
+    {
+        public bool State;
+    }
+}
+```
+
+Now:
+```csharp
+class MyCustomDrawable : Drawable
+{
+    private bool state;
+
+    protected override DrawNode CreateDrawNode() => new CustomDrawNode(this);
+
+    private class CustomDrawNode : DrawNode
+    {
+        protected new MyCustomDrawable Source => (MyCustomDrawable)base.Source;
+
+        private bool state;
+
+        public CustomDrawNode(MyCustomDrawable source)
+            : base(source)
+        {
+        }
+
+        public override void ApplyState()
+        {
+            base.ApplyState();
+
+            state = Source.state;
+        }
+    }
+}
+```
+
+## The namespace of `EdgeEffectParameters` and `EdgeEffectType` has changed
+
+They now reside in `osu.Framework.Graphics.Effects`.
+
 # [2019.327.0](https://github.com/ppy/osu-framework/releases/tag/2019.327.0)
 
 ## Font fallback order changes [#2296](https://github.com/ppy/osu-framework/pull/2296)
