@@ -16,7 +16,7 @@ Note that the `TestCase` prefix is still supported by tooling for the time being
 
 # [2019.427.0](https://github.com/ppy/osu-framework/releases/tag/2019.427.0)
 
-## `Drawable.ApplyDrawNode()` has been removed
+## `Drawable.ApplyDrawNode()` has been removed [#2314](https://github.com/ppy/osu-framework/pull/2314)
 
 The direction of application of `DrawNode` states has been inversed.
 
@@ -73,7 +73,7 @@ class MyCustomDrawable : Drawable
 }
 ```
 
-## The namespace of `EdgeEffectParameters` and `EdgeEffectType` has changed
+## The namespace of `EdgeEffectParameters` and `EdgeEffectType` has changed [#2314](https://github.com/ppy/osu-framework/pull/2314)
 
 They now reside in `osu.Framework.Graphics.Effects`.
 
