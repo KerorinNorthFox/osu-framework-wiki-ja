@@ -2,6 +2,34 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2019.523.0](https://github.com/ppy/osu-framework/releases/tag/2019.523.0)
+
+## TabControl can now select nothing [#2430](https://github.com/ppy/osu-framework/pull/2430)
+
+While this does not match most OS implementations of a tab control, this was deemed useful for o!f usage scenarios.
+
+Previously, this code would throw an exception.
+
+```csharp
+tabControl.Current.Value = null;
+```
+
+Now it is allowed.
+
+## Dropdown can now select nothing [#2428](https://github.com/ppy/osu-framework/pull/2428)
+
+Previously, this code would throw an exception.
+
+```csharp
+dropdownMenu.Current.Value = null;
+```
+
+Now it is allowed. Note that implementations of dropdown should be updated to handle this (common scenario is that the `DropdownHeader` would not correctly handle a `string.Empty` case if it was using AutoSize in the Y axis).
+
+## `TabItem.IsRemovable` is true by default [#2425](https://github.com/ppy/osu-framework/pull/2425)
+
+This felt like a more sane default. Any existing usage of custom `TabItem`s where `IsRemovable` was overridden, or any existing usage where removal is explicitly *not* wanted need to be updated.
+
 # [2019.514.0](https://github.com/ppy/osu-framework/releases/tag/2019.514.0)
 
 ## `Game.FrameStatisticsMode` is now a bindable named `Game.FrameStatistics` [#2399](https://github.com/ppy/osu-framework/pull/2399)
