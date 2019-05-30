@@ -11,6 +11,8 @@ To bring naming in-line with the purpose of audio stores, the following classes 
 `SampleManager` -> `SampleStore`  
 `TrackManager` -> `TrackStore`
 
+In line with this, return values of `GetSampleStore` and `GetTrackStore` are now `IAdjustableResourceStore<T>`, hiding the underlying manager logic.
+
 The public variables relating to these stores have been renamed to reflect this change:
 
 `AudioManager.Track` -> `AudioManager.Tracks`  
