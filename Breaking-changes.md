@@ -13,8 +13,6 @@ This nesting has been removed, so you can now only access files that are part of
 * For `TrackStore`, this will be the `Tracks` namespace. 
 * For `SampleStore`, this will be the `Samples` namespace.
 
-# [2019.529.0](https://github.com/ppy/osu-framework/releases/tag/2019.529.0)
-
 ## Audio stores have been renamed
 
 To bring naming in-line with the purpose of audio stores, the following classes have been renamed:
