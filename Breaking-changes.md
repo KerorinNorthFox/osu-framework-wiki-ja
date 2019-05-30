@@ -2,6 +2,20 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2019.529.0](https://github.com/ppy/osu-framework/releases/tag/2019.529.0)
+
+## Audio stores have been renamed
+
+To bring naming in-line with the purpose of audio stores, the following classes have been renamed:
+
+`SampleManager` -> `SampleStore`  
+`TrackManager` -> `TrackStore`
+
+The public variables relating to these stores have been renamed to reflect this change:
+
+`AudioManager.Track` -> `AudioManager.Tracks`  
+`AudioManager.Sample` -> `AudioManager.Samples`
+
 # [2019.523.0](https://github.com/ppy/osu-framework/releases/tag/2019.523.0)
 
 ## TabControl can now select nothing [#2430](https://github.com/ppy/osu-framework/pull/2430)
