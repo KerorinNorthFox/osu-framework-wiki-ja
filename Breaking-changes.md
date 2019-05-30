@@ -2,6 +2,17 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# next
+
+## Global `TrackStore` and `ResourceStore`s can no longer access resources that are out of their respective namespaces.
+
+Previously, it was possible to access any resource as a part of `TrackStore` and `SampleStore` via their `Get` methods because the entire resource store would be nested inside them. 
+
+This nesting has been removed, so you can now only access files that are part of their specified namespaces (folders). 
+
+* For `TrackStore`, this will be the `Tracks` namespace. 
+* For `SampleStore`, this will be the `Samples` namespace.
+
 # [2019.529.0](https://github.com/ppy/osu-framework/releases/tag/2019.529.0)
 
 ## Audio stores have been renamed
