@@ -2,7 +2,7 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
-# next
+# 2019.604.0
 
 ## Global `TrackStore` and `ResourceStore`s can no longer access resources that are out of their respective namespaces.
 
@@ -20,12 +20,16 @@ To bring naming in-line with the purpose of audio stores, the following classes 
 `SampleManager` -> `SampleStore`  
 `TrackManager` -> `TrackStore`
 
-In line with this, return values of `GetSampleStore` and `GetTrackStore` are now `IAdjustableResourceStore<T>`, hiding the underlying manager logic.
+In line with this, return values of `GetSampleStore` and `GetTrackStore` now return `ISampleStore` and `ITrackStore` respectively, hiding the underlying manager logic.
 
 The public variables relating to these stores have been renamed to reflect this change:
 
 `AudioManager.Track` -> `AudioManager.Tracks`  
 `AudioManager.Sample` -> `AudioManager.Samples`
+
+## Virtual tracks must be retrieved from `ITrackStore`
+
+`ITrackStore` now has a `GetVirtual` method which will create a virtual track. This will handle adding the track correctly to the audio subsystem. If one wishes to create a custom type of virtual tracks (a super-edge-case) you could implement the `ITrackStore` interface and manually add your component to `AudioManager` via `AddItem`.
 
 # [2019.523.0](https://github.com/ppy/osu-framework/releases/tag/2019.523.0)
 
