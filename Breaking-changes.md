@@ -2,7 +2,7 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
-# 2019.604.0
+# [2019.604.0](https://github.com/ppy/osu-framework/releases/tag/2019.604.0)
 
 ## Global `TrackStore` and `ResourceStore`s can no longer access resources that are out of their respective namespaces.
 
