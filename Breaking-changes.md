@@ -2,6 +2,12 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# next
+
+## `Texture.DrawTriangle()` and `Texture.DrawQuad()` have been removed ([#2475](https://github.com/ppy/osu-framework/pull/2475))
+
+Use `DrawNode.DrawTriangle()` and `DrawNode.DrawQuad()` instead.
+
 # [2019.604.0](https://github.com/ppy/osu-framework/releases/tag/2019.604.0)
 
 ## Global `TrackStore` and `ResourceStore`s can no longer access resources that are out of their respective namespaces.
