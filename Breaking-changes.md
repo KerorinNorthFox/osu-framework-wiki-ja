@@ -2,6 +2,14 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `LinearVertexBuffer` and `QuadVertexBuffer` can no longer be constructed outside of osu!framework.
+
+For existing code, `LinearBatch(size, 1)` and `QuadBatch(size, 1)` may be used to replace vertex buffer usages. Code must be updated to always invoke `batch.Add(vertex)` with the vertices that should be drawn.
+
+`VertexBuffer` may still be derived for custom implementations.
+
 # [2019.606.0](https://github.com/ppy/osu-framework/releases/tag/2019.606.0)
 
 ## `Texture.DrawTriangle()` and `Texture.DrawQuad()` have been removed ([#2475](https://github.com/ppy/osu-framework/pull/2475))
