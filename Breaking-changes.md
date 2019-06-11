@@ -2,7 +2,7 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
-# vNext
+# [2019.611.0](https://github.com/ppy/osu-framework/releases/tag/2019.611.0)
 
 ## `LinearVertexBuffer` and `QuadVertexBuffer` can no longer be constructed outside of osu!framework.
 
