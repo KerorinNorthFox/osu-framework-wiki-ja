@@ -10,6 +10,10 @@ For existing code, `LinearBatch(size, 1)` and `QuadBatch(size, 1)` may be used t
 
 `VertexBuffer` may still be derived for custom implementations.
 
+## VisibilityContainer now exposes visibility via a bindable
+
+`VisibilityContainer` no longer implements `IStateful<Visibility>`, instead exposing a single `Bindable<Visibility> State`.
+
 # [2019.606.0](https://github.com/ppy/osu-framework/releases/tag/2019.606.0)
 
 ## `Texture.DrawTriangle()` and `Texture.DrawQuad()` have been removed ([#2475](https://github.com/ppy/osu-framework/pull/2475))
