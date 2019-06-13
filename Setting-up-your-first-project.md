@@ -150,7 +150,7 @@ namespace AwesomeGame.VisualTests
         {
              // Set up the simulation once before any tests are ran
              Child = sim = new RigidBodySimulation { RelativeSizeAxes = Axes.Both };
-        ]
+        }
 
         [Test]
         public void AwesomeTestName()
