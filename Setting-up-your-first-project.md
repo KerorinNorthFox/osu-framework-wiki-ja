@@ -141,7 +141,7 @@ The following code adds a simple cube to the visual test browser that we created
 namespace AwesomeGame.VisualTests
 {
     [TestFixture]
-    public class RigidCubeTest : TestCase
+    public class RigidCubeTest : TestScene
     {
         private RigidBodySimulation sim;
         
@@ -153,7 +153,7 @@ namespace AwesomeGame.VisualTests
         ]
 
         [Test]
-        private void AwesomeTestName()
+        public void AwesomeTestName()
         {
             AddStep("Drop a cube", performDropCube);
         }
