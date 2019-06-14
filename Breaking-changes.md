@@ -2,6 +2,106 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `ScrollContainer<T>` is now abstract (and `ScrollContainer` no longer exists)
+
+In a push to make the provided framework components design agnostic, `ScrollContainer` is no longer provided. As a framework consumer you have a few options to resolve this:
+
+- Use `BasicScrollContainer`
+
+The framework now provides `BasicScrollContainer` and `BasicScrollContainer<T>`. These are drop-in replacements but come with the framework design language, so it is only recommended as a temporary solution.
+
+- Implement your own local `ScrollContainer`
+
+Here is consumable code to provide a local implementation that matches the removed one. Rename to suit your project and update your references:
+
+```csharp
+public class MyScrollContainer : ScrollContainer<Drawable>
+{
+    public MyScrollContainer(Direction scrollDirection = Direction.Vertical)
+        : base(scrollDirection)
+    {
+    }
+
+    protected override ScrollbarContainer CreateScrollbar(Direction direction) => new MyScrollbar(direction);
+
+    protected class MyScrollbar : ScrollbarContainer
+    {
+        private const float dim_size = 10;
+
+        private readonly Color4 hoverColour = Color4.White;
+        private readonly Color4 defaultColour = Color4.Gray;
+        private readonly Color4 highlightColour = Color4.Black;
+
+        private readonly Box box;
+
+        public MyScrollbar(Direction scrollDir)
+            : base(scrollDir)
+        {
+            Colour = defaultColour;
+
+            Blending = BlendingMode.Additive;
+
+            CornerRadius = 5;
+
+            const float margin = 3;
+
+            Margin = new MarginPadding
+            {
+                Left = scrollDir == Direction.Vertical ? margin : 0,
+                Right = scrollDir == Direction.Vertical ? margin : 0,
+                Top = scrollDir == Direction.Horizontal ? margin : 0,
+                Bottom = scrollDir == Direction.Horizontal ? margin : 0,
+            };
+
+            Masking = true;
+            Child = box = new Box { RelativeSizeAxes = Axes.Both };
+
+            ResizeTo(1);
+        }
+
+        public override void ResizeTo(float val, int duration = 0, Easing easing = Easing.None)
+        {
+            Vector2 size = new Vector2(dim_size)
+            {
+                [(int)ScrollDirection] = val
+            };
+            this.ResizeTo(size, duration, easing);
+        }
+
+        protected override bool OnHover(HoverEvent e)
+        {
+            this.FadeColour(hoverColour, 100);
+            return true;
+        }
+
+        protected override void OnHoverLost(HoverLostEvent e)
+        {
+            this.FadeColour(defaultColour, 100);
+        }
+
+        protected override bool OnMouseDown(MouseDownEvent e)
+        {
+            if (!base.OnMouseDown(e)) return false;
+
+            //note that we are changing the colour of the box here as to not interfere with the hover effect.
+            box.FadeColour(highlightColour, 100);
+            return true;
+        }
+
+        protected override bool OnMouseUp(MouseUpEvent e)
+        {
+            if (e.Button != MouseButton.Left) return false;
+
+            box.FadeColour(Color4.White, 100);
+
+            return base.OnMouseUp(e);
+        }
+    }
+}
+```
+
 # [2019.611.0](https://github.com/ppy/osu-framework/releases/tag/2019.611.0)
 
 ## `LinearVertexBuffer` and `QuadVertexBuffer` can no longer be constructed outside of osu!framework.
