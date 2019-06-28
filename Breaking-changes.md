@@ -9,7 +9,7 @@ This page serves to give a list of all breaking/major changes.
 For each component, there are two ways to resolve resulting errors:
 
 1. `ContextMenuContainer`
-    1. `BasicContextMenuContainer` is provided as a drop-in replacement.
+    1. `BasicContextMenuContainer` is provided as a drop-in replacement that comes with the framework design language.
     2. Implement your own local `ContextMenuContainer`. The following is consumable code that matches the removed implementation. Rename it to suit your project and update your references:  
         ```csharp
         public class MyContextMenuContainer : ContextMenuContainer
@@ -19,7 +19,7 @@ For each component, there are two ways to resolve resulting errors:
         }
         ```
 2. `Menu`
-    1. `BasicMenu` is provided as a drop-in replacement.
+    1. `BasicMenu` is provided as a drop-in replacement that comes with the framework design language.
     2. Implement your own local `Menu`. The following is consumable code that matches the removed implementation. Rename it to suit your project and update your references:  
         ```csharp
         public class MyMenu : Menu
@@ -92,7 +92,6 @@ For each component, there are two ways to resolve resulting errors:
             }
         }
         ```
-All drop-in replacements come with the framework design language.
 
 # [2019.614.0](https://github.com/ppy/osu-framework/releases/tag/2019.614.0)
 
