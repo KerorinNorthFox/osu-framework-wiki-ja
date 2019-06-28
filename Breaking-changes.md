@@ -2,6 +2,98 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `Menu` and several related components have been made abstract
+
+For each component, there are two ways to resolve resulting errors:
+
+1. `ContextMenuContainer`
+    1. `BasicContextMenuContainer` is provided as a drop-in replacement.
+    2. Implement your own local `ContextMenuContainer`. The following is consumable code that matches the removed implementation. Rename it to suit your project and update your references:  
+        ```csharp
+        public class MyContextMenuContainer : ContextMenuContainer
+        {
+            // If you have a custom menu, provide it here.
+            protected override Menu CreateMenu() => new BasicMenu(Direction.Vertical);
+        }
+        ```
+2. `Menu`
+    1. `BasicMenu` is provided as a drop-in replacement.
+    2. Implement your own local `Menu`. The following is consumable code that matches the removed implementation. Rename it to suit your project and update your references:  
+        ```csharp
+        public class MyMenu : Menu
+        {
+            public MyMenu(Direction direction, bool topLevelMenu = false)
+                : base(direction, topLevelMenu)
+            {
+            }
+        
+            protected override Menu CreateSubMenu() => new MyMenu(Direction.Vertical);
+        
+            protected override DrawableMenuItem CreateDrawableMenuItem(MenuItem item) => new MyDrawableMenuItem(item);
+        
+            // If you have a custom scroll container, provide it here.
+            protected override ScrollContainer<Drawable> CreateScrollContainer(Direction direction) => new BasicScrollContainer(direction);
+        
+            private class MyDrawableMenuItem : DrawableMenuItem
+            {
+                public MyDrawableMenuItem(MenuItem item)
+                    : base(item)
+                {
+                }
+        
+                protected override Drawable CreateContent() => new SpriteText
+                {
+                    Anchor = Anchor.CentreLeft,
+                    Origin = Anchor.CentreLeft,
+                    Padding = new MarginPadding(5),
+                    Font = new FontUsage(size: 17),
+                };
+            }
+        }
+        ```
+3. `DropdownMenu` / `DropdownMenuItem`. This is only applicable if you already implement a custom `Dropdown<T>`.
+    1. The following is consumable code that matches the removed implementation. Rename it to suit your project and update your references:
+        ```csharp
+        public class MyDropdown<T> : Dropdown<T>
+        {
+            // If you have a custom header, provide it here.
+            protected override DropdownHeader CreateHeader() => null;
+        
+            protected override DropdownMenu CreateMenu() => new MyDropdownMenu();
+        
+            private class MyDropdownMenu : DropdownMenu
+            {
+                // If you have a custom menu, provide it here.
+                protected override Menu CreateSubMenu() => new BasicMenu(Direction);
+        
+                // If you have a custom scroll container, provide it here.
+                protected override ScrollContainer<Drawable> CreateScrollContainer(Direction direction) => new BasicScrollContainer(direction);
+        
+                protected override DrawableDropdownMenuItem CreateDrawableDropdownMenuItem(MenuItem item) => new MyDrawableDropdownMenuItem(item);
+        
+                private class MyDrawableDropdownMenuItem : DrawableDropdownMenuItem
+                {
+                    public MyDrawableDropdownMenuItem(MenuItem item)
+                        : base(item)
+                    {
+                    }
+        
+                    // If you have custom content, provide it here.
+                    protected override Drawable CreateContent() => new SpriteText
+                    {
+                        Anchor = Anchor.CentreLeft,
+                        Origin = Anchor.CentreLeft,
+                        Padding = new MarginPadding(5),
+                        Font = new FontUsage(size: 17),
+                    };
+                }
+            }
+        }
+        ```
+All drop-in replacements come with the framework design language.
+
 # [2019.614.0](https://github.com/ppy/osu-framework/releases/tag/2019.614.0)
 
 ## `ScrollContainer<T>` is now abstract (and `ScrollContainer` no longer exists)
