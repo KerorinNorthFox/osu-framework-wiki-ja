@@ -93,6 +93,10 @@ For each component, there are two ways to resolve resulting errors:
         }
         ```
 
+## `DebugSetting.ActiveGCMode` no longer exists
+
+If you were manually setting this, you can do so via [.NET methods](https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/latency?view=netframework-4.8).
+
 # [2019.614.0](https://github.com/ppy/osu-framework/releases/tag/2019.614.0)
 
 ## `ScrollContainer<T>` is now abstract (and `ScrollContainer` no longer exists)
