@@ -2,6 +2,14 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `InputKey` enum names for extra mouse buttons have been renamed.
+
+```
+MouseButtonX -> ExtraMouseButtonX
+```
+
 # [2019.628.0](https://github.com/ppy/osu-framework/releases/tag/2019.628.0)
 
 ## `Menu` and several related components have been made abstract
