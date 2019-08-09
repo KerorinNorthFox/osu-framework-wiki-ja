@@ -8,6 +8,10 @@ This page serves to give a list of all breaking/major changes.
 
 Usages of `Cached` without initialising (via `new Cached()`) will need to be updated.
 
+## `Animation` no longer supports `AutoSizeAxes`
+
+`Animation` will automatically auto-size on axes which are not relative sized (via `RelativeSizeAxes`) and for which `Size` has not been set.
+
 # [2019.726.0](https://github.com/ppy/osu-framework/releases/tag/2019.726.0)
 
 ## `Path` now supports `AutoSizeAxes` and is set to auto-size in both axes by default
