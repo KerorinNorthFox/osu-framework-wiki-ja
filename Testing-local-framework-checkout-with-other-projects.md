@@ -19,3 +19,16 @@ dotnet remove $CSPROJ package ppy.osu.Framework;
 dotnet sln $SLN add ../osu-framework/osu.Framework/osu.Framework.csproj ../osu-framework/osu.Framework.NativeLibs/osu.Framework.NativeLibs.csproj;
 dotnet add $CSPROJ reference ../osu-framework/osu.Framework/osu.Framework.csproj
 ```
+
+in **addition**, for iOS:
+
+shell:
+```shell
+PROPS="osu.iOS.props";
+CSPROJ="osu.iOS/osu.iOS.csproj";
+SLN="osu.iOS.sln";
+sed -i '' -e "s/<PackageReference Include=\"ppy\.osu\.Framework.*\".*$//g" $PROPS;
+dotnet add $CSPROJ reference ../osu-framework/osu.Framework/osu.Framework.csproj;
+dotnet add $CSPROJ reference ../osu-framework/osu.Framework.iOS/osu.Framework.iOS.csproj;
+dotnet sln $SLN add ../osu-framework/osu.Framework/osu.Framework.csproj ../osu-framework/osu.Framework.iOS/osu.Framework.iOS.csproj;
+```
