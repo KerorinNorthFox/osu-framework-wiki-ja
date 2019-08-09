@@ -2,6 +2,12 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `Cached` is now a class and requires object initialisation
+
+Usages of `Cached` without initialising (via `new Cached()`) will need to be updated.
+
 # [2019.726.0](https://github.com/ppy/osu-framework/releases/tag/2019.726.0)
 
 ## `Path` now supports `AutoSizeAxes` and is set to auto-size in both axes by default
