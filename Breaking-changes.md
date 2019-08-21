@@ -2,6 +2,20 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2019.821.0](https://github.com/ppy/osu-framework/releases/tag/2019.821.0)
+
+## `SpriteText.UseFixedWidthForCharacter` has been removed
+
+Provide an array of `char`s as `SpriteText.FixedWidthExcludeCharacters` instead.
+
+## `SpriteText.GetTextureForCharacter` and `SpriteText.GetFallbackTextureForCharacter` have been removed.
+
+Glyphs must now always be retrieved through an `ITexturedGlyphLookupStore`. The `SpriteText.CreateTextBuilder()` method is provided to allow overriding the store which glyphs are retrieved from.
+
+## `BlendingModes` are now obsoleted
+
+Please switch to using `BlendingParameters` static properties instead, whcih provide the same functionality. This change was made to expose full control over blend equations and simplify the blending class structure, which previously spanned three related types.
+
 # [2019.809.0](https://github.com/ppy/osu-framework/releases/tag/2019.809.0)
 
 ## `Cached` is now a class and requires object initialisation
