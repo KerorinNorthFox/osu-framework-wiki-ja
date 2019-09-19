@@ -2,6 +2,12 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `Quad.ConservativeArea` has been removed
+
+It was inaccurate for certain `Quad`s. Use `Area` as a replacement.
+
 # [2019.821.0](https://github.com/ppy/osu-framework/releases/tag/2019.821.0)
 
 ## `SpriteText.UseFixedWidthForCharacter` has been removed
