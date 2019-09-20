@@ -4,6 +4,8 @@ This page serves to give a list of all breaking/major changes.
 
 # vNext
 
+# [2019.921.0](https://github.com/ppy/osu-framework/releases/tag/2019.921.0)
+
 ## `Quad.ConservativeArea` has been removed
 
 It was inaccurate for certain `Quad`s. Use `Area` as a replacement.
