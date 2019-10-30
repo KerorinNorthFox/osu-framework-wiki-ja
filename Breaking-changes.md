@@ -4,7 +4,7 @@ This page serves to give a list of all breaking/major changes.
 
 # vNext
 
-`Button` has been made abstract
+## `Button` has been made abstract
 
 `BasicButton` is provided as a drop-in replacement that comes with the framework design language.
 
