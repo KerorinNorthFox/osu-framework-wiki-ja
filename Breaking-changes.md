@@ -4,6 +4,10 @@ This page serves to give a list of all breaking/major changes.
 
 # vNext
 
+`Button` has been made abstract
+
+`BasicButton` is provided as a drop-in replacement that comes with the framework design language.
+
 # [2019.921.0](https://github.com/ppy/osu-framework/releases/tag/2019.921.0)
 
 ## `Quad.ConservativeArea` has been removed
