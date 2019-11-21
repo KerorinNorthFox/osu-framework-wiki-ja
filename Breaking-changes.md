@@ -2,11 +2,15 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
-# vNext
+# [2019.1121.0](https://github.com/ppy/osu-framework/releases/tag/2019.1121.0)
 
 ## .NET Standard 2.1
 
 osu!framework now targets .NET Standard 2.1. Consumers of the framework will need to install the [.NET Core 3.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.0) and change their projects to target `netstandard2.1`/`netcoreapp3.0`.
+
+## `WebRequest.ResponseString` and `WebRequest.ResponseData` properties were converted to methods
+
+`GetResponseString` and `GetResponseData` methods are provided as a replacement. This change was done in order to indicate that these operations are expensive(they do memory allocations in the heap on each call).
 
 # [2019.1104.0](https://github.com/ppy/osu-framework/releases/tag/2019.1104.0)
 
