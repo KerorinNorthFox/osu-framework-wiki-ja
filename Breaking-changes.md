@@ -4,6 +4,8 @@ This page serves to give a list of all breaking/major changes.
 
 # vNext
 
+## .NET Standard 2.1
+
 osu!framework has been changed to target .NET Standard 2.1. Consumers of the framework will need to install the [.NET Core 3.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.0) and change their projects to target `netstandard2.1`/`netcoreapp3.0`.
 
 # [2019.1104.0](https://github.com/ppy/osu-framework/releases/tag/2019.1104.0)
