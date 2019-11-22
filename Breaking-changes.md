@@ -2,6 +2,14 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## PerformanceLogging was moved to DebugConfig
+
+As seen in https://github.com/ppy/osu/issues/6795, some users are turning on performance logging and leaving it on. This is not intended, as it adds a noticeable overhead to retrieve and write the stack traces to disk.
+
+This change allows the setting to reset each game execution, rather than be saved to a user's configuration file.
+
 # [2019.1121.0](https://github.com/ppy/osu-framework/releases/tag/2019.1121.0)
 
 ## .NET Standard 2.1
