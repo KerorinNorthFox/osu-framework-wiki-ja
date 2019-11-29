@@ -71,3 +71,18 @@ var blocking = new BlockingScreen();
 LoadComponentAsync(blocking).Wait();
 screenStack.Push(blocking);
 ```
+
+Long-running load components (online retrieval etc.)
+========
+
+The special attribute `[LongRunningLoad]` exists to mark components which require loads that take a long time (generally anything >100ms). This is usually a drawable which is retrieving a texture (or other content) from a network source. By attaching this to a class, you can ensure that all usage of that class is correctly loaded in an asynchronous context.
+
+There are two important things to note about this attribute:
+
+### Marked components will run in their own segregated thread pool
+
+This avoids any potential of thread pool saturation by network requests or otherwise. Normal components loaded via `LoadComponentAsync` will be unaffected by `LongRunningLoad` components.
+
+### Marked components must be a top-level async load
+
+In order to avoid `LongRunningLoad` components accidentally ending up on the standard async load thread pool, they must always be run *directly* via `LoadComponentAsync`. An exception will be thrown if this is not the case.
