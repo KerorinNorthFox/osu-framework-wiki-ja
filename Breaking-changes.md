@@ -2,6 +2,16 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## The value provided in the constructor for `Bindable<T>` is now used as both the initial and default value
+
+The following lines of code are now identical.
+```csharp
+var bindable1 = new Bindable<int>(10) { Default = 10 };
+var bindable2 = new Bindable<int>(10);
+```
+
 # [2019.1210.1](https://github.com/ppy/osu-framework/releases/tag/2019.1210.1)
 
 ## PerformanceLogging was moved to DebugConfig
