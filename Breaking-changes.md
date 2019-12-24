@@ -2,6 +2,16 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `TextBox` and all related components are now abstract
+
+`BasicTextBox` is provided as a drop-in replacement that comes with the framework design language.
+
+## `PasswordTextBox` has been renamed 
+
+Renamed to `BasicPasswordTextBox` and comes with the framework design language.
+
 # [2019.1211.1](https://github.com/ppy/osu-framework/releases/tag/2019.1211.1)
 
 ## The value provided in the constructor for `Bindable<T>` is now used as both the initial and default value
