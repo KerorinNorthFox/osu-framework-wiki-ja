@@ -4,9 +4,9 @@ This page serves to give a list of all breaking/major changes.
 
 # vNext
 
-## The `osu.Framework.MathUtils` has been removed
+## The namespace `osu.Framework.MathUtils` has been removed
 
-All existing utility classes have been moved to `osu.Framework.Utils`.
+All existing utility classes have been moved to the namespace `osu.Framework.Utils`.
 
 # [2019.1224.0](https://github.com/ppy/osu-framework/releases/tag/2019.1224.0)
 
