@@ -4,6 +4,12 @@ This page serves to give a list of all breaking/major changes.
 
 # vNext
 
+## The `osu.Framework.MathUtils` has been removed
+
+All existing utility classes have been moved to `osu.Framework.Utils`.
+
+# [2019.1224.0](https://github.com/ppy/osu-framework/releases/tag/2019.1224.0)
+
 ## `TextBox` and all related components are now abstract
 
 `BasicTextBox` is provided as a drop-in replacement that comes with the framework design language.
