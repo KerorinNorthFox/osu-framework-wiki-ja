@@ -8,11 +8,12 @@ This page serves to give a list of all breaking/major changes.
 
 Events affected:
 ```csharp
-OnDrag()
-OnDragEnd()
-OnMouseUp()
-OnKeyUp()
-OnJoystickRelease()
+Drawable.OnDrag()
+Drawable.OnDragEnd()
+Drawable.OnMouseUp()
+Drawable.OnKeyUp()
+Drawable.OnJoystickRelease()
+IKeyBindingHandler<T>.OnReleased()
 ```
 
 A drawable may return `false` for an input "begin" event to allow the event to propagate further through the hierarchy. Previously, such a drawable could then return `true` for the input "end" event and prevent the event from propagating to the drawables which the input "begin" event was propagated to.  
@@ -28,6 +29,7 @@ The following table illustrates the events for which the relationship is satisfi
 | `OnMouseDown()`     | `OnMouseUp()`             |
 | `OnKeyDown()`       | `OnKeyUp()`               |
 | `OnJoystickPress()` | `OnJoystickRelease()`     |
+| `OnPressed()`       | `OnReleased()`            |
 
 # [2020.109.0](https://github.com/ppy/osu-framework/releases/tag/2020.109.0)
 
