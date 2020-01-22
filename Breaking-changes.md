@@ -4,6 +4,10 @@ This page serves to give a list of all breaking/major changes.
 
 # [2020.122.0](https://github.com/ppy/osu-framework/releases/tag/2020.122.0)
 
+## InputManager.CreateButtonManagerFor was renamed to InputManager.CreateButtonEventManagerFor
+
+Changed to match other methods and the class name it was creating.
+
 ## Various input "end" events now return `void` and can no longer block propagation
 
 Events affected:
