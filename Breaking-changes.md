@@ -14,7 +14,7 @@ OnMouseUp()
 OnKeyUp()
 ```
 
-These events can no longer be blocked by other `Drawable`s in the hierarchy such that they are guaranteed to be invoked if their respective "begin" event has been previously invoked, as illustrated by the relationship table:
+These events can no longer be blocked by other `Drawable`s in the hierarchy such that they are guaranteed to be invoked if their respective "begin" event was previously invoked, as illustrated by the relationship table:
 
 |   begin event   |        end event(s)       |
 | --------------- | ------------------------- |
