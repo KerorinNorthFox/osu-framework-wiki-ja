@@ -15,7 +15,12 @@ OnKeyUp()
 OnJoystickRelease()
 ```
 
-These events can no longer be blocked by other Drawables in the hierarchy such that they are guaranteed to be invoked if their respective "begin" event was previously invoked, as illustrated by the relations:
+A drawable may return `false` for an input "begin" event to allow the event to propagate further through the hierarchy. Previously, such a drawable could then return `true` for the input "end" event and prevent the event from propagating to the drawables which the input "begin" event was propagated to.  
+This could lead to incorrect implementations where drawables were left in weird states after handling input events.
+
+By returning `void`, the input "end" events can no longer be blocked by other drawables in the hierarchy and are guaranteed to be invoked if their respective input "begin" event was previously invoked.
+
+The following table illustrates the events for which the relationship is satisfied:
 
 |     begin event     |        end event(s)       |
 | ------------------- | ------------------------- |
