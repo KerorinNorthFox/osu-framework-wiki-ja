@@ -2,6 +2,14 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `OnDrag`, `OnDragEnd`, and `OnMouseUp` now return `void`
+
+These events can no longer be blocked by other `Drawable`s in the hierarchy.
+
+This guarantees that `Drawable`s that have received the respective `OnDragStart` and `OnMouseDown` events will receive accompanying `OnDrag`, `OnDragEnd` and `OnMouseUp` events
+
 # [2020.109.0](https://github.com/ppy/osu-framework/releases/tag/2020.109.0)
 
 ## The namespace `osu.Framework.MathUtils` has been removed
