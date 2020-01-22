@@ -4,11 +4,23 @@ This page serves to give a list of all breaking/major changes.
 
 # vNext
 
-## `OnDrag`, `OnDragEnd`, and `OnMouseUp` now return `void`
+## Various input "end" events now return `void` and can no longer block propagation
 
-These events can no longer be blocked by other `Drawable`s in the hierarchy.
+Events affected:
+```csharp
+OnDrag()
+OnDragEnd()
+OnMouseUp()
+OnKeyUp()
+```
 
-This guarantees that `Drawable`s that have received the respective `OnDragStart` and `OnMouseDown` events will receive accompanying `OnDrag`, `OnDragEnd` and `OnMouseUp` events.
+These events can no longer be blocked by other `Drawable`s in the hierarchy such that they are guaranteed to be invoked if their respective "begin" event has been previously invoked, as illustrated by the relationship table:
+
+|   begin event   |        end event(s)       |
+| --------------- | ------------------------- |
+| `OnDragStart()` | `OnDrag()`, `OnDragEnd()` |
+| `OnMouseDown()` | `OnMouseUp()`             |
+| `OnKeyDown()`   | `OnKeyUp()`               |
 
 # [2020.109.0](https://github.com/ppy/osu-framework/releases/tag/2020.109.0)
 
