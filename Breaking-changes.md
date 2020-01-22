@@ -12,15 +12,17 @@ OnDrag()
 OnDragEnd()
 OnMouseUp()
 OnKeyUp()
+OnJoystickRelease()
 ```
 
-These events can no longer be blocked by other `Drawable`s in the hierarchy such that they are guaranteed to be invoked if their respective "begin" event was previously invoked, as illustrated by the relationship table:
+These events can no longer be blocked by other Drawables in the hierarchy such that they are guaranteed to be invoked if their respective "begin" event was previously invoked, as illustrated by the relations:
 
-|   begin event   |        end event(s)       |
-| --------------- | ------------------------- |
-| `OnDragStart()` | `OnDrag()`, `OnDragEnd()` |
-| `OnMouseDown()` | `OnMouseUp()`             |
-| `OnKeyDown()`   | `OnKeyUp()`               |
+|     begin event     |        end event(s)       |
+| ------------------- | ------------------------- |
+| `OnDragStart()`     | `OnDrag()`, `OnDragEnd()` |
+| `OnMouseDown()`     | `OnMouseUp()`             |
+| `OnKeyDown()`       | `OnKeyUp()`               |
+| `OnJoystickPress()` | `OnJoystickRelease()`     |
 
 # [2020.109.0](https://github.com/ppy/osu-framework/releases/tag/2020.109.0)
 
