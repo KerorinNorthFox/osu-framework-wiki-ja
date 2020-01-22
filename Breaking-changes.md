@@ -8,6 +8,7 @@ This page serves to give a list of all breaking/major changes.
 
 Events affected:
 ```csharp
+Drawable.OnDoubleClick()
 Drawable.OnDrag()
 Drawable.OnDragEnd()
 Drawable.OnMouseUp()
