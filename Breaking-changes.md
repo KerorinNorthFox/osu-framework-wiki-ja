@@ -16,7 +16,7 @@ OnJoystickRelease()
 ```
 
 A drawable may return `false` for an input "begin" event to allow the event to propagate further through the hierarchy. Previously, such a drawable could then return `true` for the input "end" event and prevent the event from propagating to the drawables which the input "begin" event was propagated to.  
-This could lead to incorrect implementations where drawables were left in weird states after handling input events.
+This could lead to incorrect implementations where drawables are left in weird states after handling input events.
 
 By returning `void`, the input "end" events can no longer be blocked by other drawables in the hierarchy and are guaranteed to be invoked if their respective input "begin" event was previously invoked.
 
