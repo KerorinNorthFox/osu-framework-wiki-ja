@@ -1,4 +1,4 @@
-`osu-framework` utilizes `Bindable<T>` objects to distribute data between components. They provide functionality to automatically remove communication between `Bindable<T>` objects when finalized, serving as a safer alternative to C#'s `event`.
+`osu-framework` utilizes `Bindable<T>` objects to distribute data between components. In conjuncation with Drawable comopnents, they provide functionality to automatically remove communication between `Bindable<T>` objects when finalized, serving as a safer alternative to C#'s `event`.
 
 ## Creating a `Bindable<T>`
 
@@ -18,13 +18,13 @@ public class MyClass
 
 A few subclasses, such as `BindableDouble`, extend `Bindable<T>` to provide additional functionality such as range-limiting of numeric values. These are available under the `osu.Framework.Configuration` namespace.
 
-## Chaining `Bindable<T>`s together
+## Binding `Bindable<T>`s together
 
 `Bindable<T>` supports the ability to "bind" to other `Bindable<T>`s. When either one of the bindable's values changes, it will also set the value on the other.
 
-This is available through the `Bindable<T>.BindTo()` method.
+This is available through the `.BindTo()` and `.GetBoundCopy()` methods.
 
-```
+```csharp
 var x = new Bindable<int>(1);
 var y = new Bindable<int>(2);
 
@@ -38,6 +38,22 @@ x.Value = 5;
 Assert.IsTrue(y.Value == 5); // Same as above - dual-way communication
 ```
 
+```csharp
+var x = new Bindable<int>(1);
+var y = x.GetBoundCopy();
+
+x.BindTo(y);
+Assert.IsTrue(x.Value == 2); // BoundTo() immediately sets x's value to y's
+
+y.Value = 10;
+Assert.IsTrue(x.Value == 10); // The value set to y previously is propagated to x
+
+x.Value = 5;
+Assert.IsTrue(y.Value == 5); // Same as above - dual-way communication
+```
+
+Generally, when interacting with a bindable exposed by another class, one should always make a local bindable to track changes. **Binding to another class instance's bindable events should be avoided**, as it bypasses the reference safety provided by bindables.
+
 ## Observing the values of a `Bindable<T>`
 
 The value of a `Bindable<T>` can be observed through the `ValueChanged` event. This returns the new value.
@@ -45,11 +61,11 @@ The value of a `Bindable<T>` can be observed through the `ValueChanged` event. T
 ```
 var x = new Bindable<int>();
 
-x.ValueChanged += newValue => Assert.IsTrue(newValue == 2);
+x.ValueChanged += val => Assert.IsTrue(val.NewValue == 2);
 x.Value = 2;
 ```
 
-In some scenarios it may be desirable to have the `ValueChanged` delegate invoked once after being set. It is possible to achieve this in two ways:
+In some scenarios it may be desirable to have the `ValueChanged` delegate invoked once after being set up. It is possible to achieve this in two ways:
 
 ```
 var x = new Bindable<int>();
