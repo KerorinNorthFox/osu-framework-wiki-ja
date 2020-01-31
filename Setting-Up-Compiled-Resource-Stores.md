@@ -30,10 +30,10 @@ private void load()
 
 To add to these stores, simply add resources to the respective directories and specify them as EmbeddedResources inside your .csproj.
 
-For example, to include your own Textures folder and all .png files inside of it:
+For example, to include your own Textures folder and all .png files inside of it recursively:
 ```csharp
 <ItemGroup>
- <EmbeddedResource Include="Textures\*.png" />
+ <EmbeddedResource Include="Textures\**\*.png" />
 </ItemGroup>
 ```
 
