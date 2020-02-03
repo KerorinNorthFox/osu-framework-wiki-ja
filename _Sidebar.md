@@ -9,7 +9,7 @@
  * [Asynchronous loading](/ppy/osu-framework/wiki/Asynchronous-loading)
  * [Dependency Injection](/ppy/osu-framework/wiki/Dependency-Injection)
  * [Screens and Screen Stacks](/ppy/osu-framework/wiki/Screens-and-Screen-Stacks)
- * [Graphics Coordinate System](/ppy/osu-framework/wiki/Graphics-Coordinate-and-Layout-Systems)
+ * [Coordinate and Layout System](/ppy/osu-framework/wiki/Graphics-Coordinate-and-Layout-Systems)
 # Testing
  * [Dynamic Compilation and Visual Testing](/ppy/osu-framework/wiki/Development-and-Testing)
  * [Testing framework PRs with other projects via NuGet](/ppy/osu-framework/wiki/Testing-framework-PRs-with-other-projects-via-NuGet)
