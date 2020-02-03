@@ -2,17 +2,15 @@ Once added to a parent `Container` hierarchy, `Drawable` objects will adopt the 
 
 In order to help automate laying elements out in common positions, `Drawable` implements 2 properties that will help  determine its initial position.
 
-* `Anchor` will determine its origin’s position relative to the parent container. `Centre` will place the element in the middle of the container, whereas other options, such as `TopLeft` will position it along the outer edges of the container.
-* `Origin` will determine the offset of the element’s content from its own origin. For example `Centre` will mean the origin of the element will be located in the middle of its content. `TopLeft` will make the origin the top left corner of the content.
+### `Anchor`
+`Anchor` will determine its origin’s position relative to the parent container. `Centre` will place the element in the middle of the container, whereas other options, such as `TopLeft` will position it along the outer edges of the container.
 
-```csharp
-box = new Box
-{
-	Anchor = Anchor.TopLeft,
-	Origin = Anchor.TopLeft
-}
-```
+### `Origin` 
+`Origin` will determine the offset of the element’s content from its own origin. For example `Centre` will mean the origin of the element will be located in the middle of its content. `TopLeft` will make the origin the top left corner of the content.
 
+<p align="center">
+<img src="https://puu.sh/F6BMJ/23b52dcfcf.jpg" height="350" alt="Drawable" /><img src="https://puu.sh/nnjI6/6a7db36ade.png" height="350" alt="osu! Drawable" />
+</p>
 Once these two properties have been set, they can be further customized with additional properties.
 
 * Setting `Position` on a `Drawable` will offset it from its initial position. This supports both positive and negative values to offset the element in any direction.
