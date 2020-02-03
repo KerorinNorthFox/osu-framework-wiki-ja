@@ -9,7 +9,7 @@ In order to help automate laying elements out in common positions, `Drawable` im
 `Origin` will determine the offset of the element’s content from its own origin. For example `Centre` will mean the origin of the element will be located in the middle of its content. `TopLeft` will make the origin the top left corner of the content.
 
 <p align="center">
-<img src="https://puu.sh/F6BMJ/23b52dcfcf.jpg" height="350" alt="Drawable" /><img src="https://puu.sh/nnjI6/6a7db36ade.png" height="350" alt="osu! Drawable" />
+<a href="https://puu.sh/F6BMJ/23b52dcfcf.jpg"><img src="https://puu.sh/F6BMJ/23b52dcfcf.jpg" height="250" alt="Drawable" /><a/><a href="https://puu.sh/nnjI6/6a7db36ade.png"><img src="https://puu.sh/nnjI6/6a7db36ade.png" height="250" alt="osu! Drawable" /></a>
 </p>
 Once these two properties have been set, they can be further customized with additional properties.
 
