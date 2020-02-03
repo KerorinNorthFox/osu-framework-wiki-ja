@@ -1,5 +1,3 @@
-# Graphics Coordinate and Layout Systems
-
 Once added to a parent `Container` hierarchy, `Drawable` objects will adopt the pixel coordinate space of that container. By default, all positioning and sizing is static via absolute pixel values regardless of the container size. That being said, a variety of mechanisms exist to allow relative sizing in order to properly scale to different window sizes and device screens.
 
 In order to help automate laying elements out in common positions, `Drawable` implements 2 properties that will help  determine its initial position.
