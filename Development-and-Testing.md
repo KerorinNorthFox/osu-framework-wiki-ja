@@ -24,10 +24,10 @@ You can use the `AddStep` function to add automatic steps which should be perfor
 
 The types of steps available to be added are as follows: 
 
-* [AddStep](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestScene.cs#L280) creates a step that runs a method. Completes successfully if no exceptions are caught.
-* [AddRepeatStep](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestScene.cs#L293) creates a step that runs a method a specified amount of times. Completes successfully if no exceptions are caught.
-* [AddToggleStep](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestScene.cs#L301) toggles a flag.
-* [AddUntilStep](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestScene.cs#L309) adds a step that attempts to run until a condition becomes true, or fails when it times out.
-* [AddWaitStep](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestScene.cs#L317) adds a step that waits a specified amount of time before continuing to the next step.
-* [AddSliderStep](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestScene.cs#L325) adds a step that creates a slider-bar that adjusts a set value.
-* [AddAssert](https://github.com/ppy/osu-framework/blob/d2d47c58585e6ceb8fcf4d296bc4a993753c2a1d/osu.Framework/Testing/TestScene.cs#L333) creates a step that fails if the specified value does not return true.
+* [AddStep](https://github.com/ppy/osu-framework/blob/b4c2a61f7e40d288611d587294a78fbcf68342fd/osu.Framework/Testing/TestScene.cs#L290) creates a step that runs a method. Completes successfully if no exceptions are caught.
+* [AddRepeatStep](https://github.com/ppy/osu-framework/blob/b4c2a61f7e40d288611d587294a78fbcf68342fd/osu.Framework/Testing/TestScene.cs#L322) creates a step that runs a method a specified amount of times. Completes successfully if no exceptions are caught.
+* [AddToggleStep](https://github.com/ppy/osu-framework/blob/b4c2a61f7e40d288611d587294a78fbcf68342fd/osu.Framework/Testing/TestScene.cs#L330) toggles a flag.
+* [AddUntilStep](https://github.com/ppy/osu-framework/blob/b4c2a61f7e40d288611d587294a78fbcf68342fd/osu.Framework/Testing/TestScene.cs#L338) adds a step that attempts to run until a condition becomes true, or fails when it times out.
+* [AddWaitStep](https://github.com/ppy/osu-framework/blob/b4c2a61f7e40d288611d587294a78fbcf68342fd/osu.Framework/Testing/TestScene.cs#L346) adds a step that waits a specified amount of time before continuing to the next step.
+* [AddSliderStep](https://github.com/ppy/osu-framework/blob/b4c2a61f7e40d288611d587294a78fbcf68342fd/osu.Framework/Testing/TestScene.cs#L354) adds a step that creates a slider-bar that adjusts a set value.
+* [AddAssert](https://github.com/ppy/osu-framework/blob/b4c2a61f7e40d288611d587294a78fbcf68342fd/osu.Framework/Testing/TestScene.cs#L362) creates a step that fails if the specified value does not return true.
