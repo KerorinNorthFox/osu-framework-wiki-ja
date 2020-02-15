@@ -2,15 +2,15 @@
 
 osu! framework provides in-picture debugging overlays, defined in [`osu.Framework.Input.FrameworkActionContainer`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/FrameworkActionContainer.cs). One such overlay is the Frame Statistics Overlay.
 
-* [Overview](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay#overview)
-  * [Minimized View](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay#minimized-view)
-  * [Extended View](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay#extended-view)
-  * [Detailed View](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay#detailed-view)
-* [Statistics](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay#statistics)
-  * [Update](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay#update)
-  * [Draw](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay#draw)
-  * [Audio](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay#audio)
-  * [Input](https://github.com/ppy/osu-framework/wiki/Frame-Statistics-Overlay#input)
+* [Overview](#overview)
+  * [Minimized View](#minimized-view)
+  * [Extended View](#extended-view)
+  * [Detailed View](#detailed-view)
+* [Statistics](#statistics)
+  * [Update](#update)
+  * [Draw](#draw)
+  * [Audio](#audio)
+  * [Input](#input)
 
 ## Overview
 
