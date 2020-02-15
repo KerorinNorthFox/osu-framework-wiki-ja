@@ -1,4 +1,4 @@
-# Framework key bindings
+# Framework Key Bindings
 **osu!framework** has framework key bindings for specific actions listed below:
 | Key binding | Framework action |
 |:-----------:|:-------------------- |
