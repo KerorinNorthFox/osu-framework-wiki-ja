@@ -1,5 +1,5 @@
 # Framework Key Bindings
-**osu!framework** has framework key bindings for specific actions listed below:
+**osu!framework** has framework key bindings in [`FrameworkActionContainer`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/FrameworkActionContainer.cs) for specific actions listed below:
 | Key binding | Framework action |
 |:-----------:|:-------------------- |
 | <kbd>Ctrl</kbd>+<kbd>F1</kbd> | Toggles the [draw visualiser](/ppy/osu-framework/wiki/Debug-Overlays:-Draw-Visualizer). |
