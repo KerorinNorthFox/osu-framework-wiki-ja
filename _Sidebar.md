@@ -1,10 +1,10 @@
-# Getting Started
+### Getting Started
  * [Create your first project](/ppy/osu-framework/wiki/Setting-up-your-first-project)
  * [Learning framework key bindings](/ppy/osu-framework/wiki/Framework-Key-Bindings)
  * [Adding resource stores](/ppy/osu-framework/wiki/Setting-Up-Compiled-Resource-Stores)
  * [Adding custom key bindings](/ppy/osu-framework/wiki/Setting-up-key-binding-containers)
  * [Adding custom fonts](/ppy/osu-framework/wiki/Setting-Up-Fonts)
-# Development
+### Development
  * [Breaking Changes](/ppy/osu-framework/wiki/Breaking-changes)
  * [Bindables](/ppy/osu-framework/wiki/Bindable-Flow)
  * [Handling Input](/ppy/osu-framework/wiki/Handling-input-events)
