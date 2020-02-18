@@ -2,6 +2,81 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `BindableList<T>.ItemsAdded` is now obsolete
+
+The `ItemsAdded` event failed to provide enough context when items are moved around or inserted into the list.
+
+It has been replaced by the `CollectionChanged` [NotifyCollectionChangedEventHandler](https://docs.microsoft.com/en-au/dotnet/api/system.collections.specialized.notifycollectionchangedeventhandler?view=netframework-4.8), which provides context such as the newly-added items and the indices at which the addition took place.
+
+This event is triggered by the following methods with `Action = NotifyCollectionChangedAction.Add`:
+```csharp
+BindableList<T>.Add(T item)
+BindableList<T>.Insert(int index, T item)
+BindableList<T>.AddRange(IEnumerable<T> items)
+```
+
+The following is an example migration utilising the new `CollectionChanged` event:
+```diff
+BindableList<int> list = new BindableList<int>();
+
+- list.ItemsAdded += items =>
+- {
+-     foreach (var item in items)
+-         Console.WriteLine($"Added: {item}");
+- }
+
++ list.CollectionChanged += (_, args) =>
++ {
++     switch (args.Action)
++     {
++         case NotifyCollectionChangedAction.Add:
++             foreach (var item in args.NewItems.Cast<int>())
++                 Console.WriteLine($"Added: {item});
++             break;
++     }
++ }
+```
+
+Note that `CollectionChanged` should _not_ be used in conjunction with the `ItemsAdded` event.
+
+## `BindableList<T>.ItemsRemoved` is now obsolete
+
+As above, the `ItemsRemoved` revent has also been replaced by the `CollectionChanged` [NotifyCollectionChangedEventHandler](https://docs.microsoft.com/en-au/dotnet/api/system.collections.specialized.notifycollectionchangedeventhandler?view=netframework-4.8).
+
+This event is triggered by the following methods with `Action = NotifyCollectionChangedAction.Remove`:
+```csharp
+BindableList<T>.Clear()
+BindableList<T>.Remove(T item)
+BindableList<T>.RemoveRange(int index, int count)
+BindableList<T>.RemoveAt(int index)
+BindableList<T>.RemoveAll(Predicate<T> match)
+```
+
+The following is an example migration utilising the new `CollectionChanged` event:
+```diff
+BindableList<int> list = new BindableList<int>();
+
+- list.ItemsRemoved += items =>
+- {
+-     foreach (var item in items)
+-         Console.WriteLine($"Removed: {item}");
+- }
+
++ list.CollectionChanged += (_, args) =>
++ {
++     switch (args.Action)
++     {
++         // Handles both clear and remove events
++         case NotifyCollectionChangedAction.Remove:
++             foreach (var item in args.OldItems.Cast<int>())
++                 Console.WriteLine($"Removed: {item});
++             break;
++     }
++ }
+```
+
 # [2020.122.0](https://github.com/ppy/osu-framework/releases/tag/2020.122.0)
 
 ## InputManager.CreateButtonManagerFor was renamed to InputManager.CreateButtonEventManagerFor
