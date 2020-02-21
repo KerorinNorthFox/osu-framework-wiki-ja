@@ -31,7 +31,7 @@ shell:
 ```shell
 PROPS="osu.iOS.props";
 CSPROJ="osu.iOS/osu.iOS.csproj";
-SLN="osu.iOS.sln";
+SLN="osu.sln";
 sed -i "" -e "s/<PackageReference Include=\"ppy\.osu\.Framework\".*$/<ProjectReference Include=\"..\/..\/osu-framework\/osu.Framework\/osu.Framework.csproj\" \/>/g" $PROPS;
 sed -i "" -e "s/<PackageReference Include=\"ppy\.osu\.Framework\.iOS\".*$/<ProjectReference Include=\"..\/..\/osu-framework\/osu.Framework.iOS\/osu.Framework.iOS.csproj\" \/>/g" $PROPS;
 dotnet sln $SLN add ../osu-framework/osu.Framework/osu.Framework.csproj ../osu-framework/osu.Framework.iOS/osu.Framework.iOS.csproj ../osu-framework/osu.Framework.NativeLibs/osu.Framework.NativeLibs.csproj;
