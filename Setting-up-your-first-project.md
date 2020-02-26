@@ -19,12 +19,14 @@ This tutorial will show you how to create a new project integrating osu-framewor
 ## Getting started
 ### Creating a new project
 
-Using the available template packs in the .NET Core command line interface, it is possible to quickly and easily create a new project using `osu-framework` automatically.
+To get started, a custom osu! game base project has been made available as a template pack in the .NET Core command line interface. Using this template, it is possible to quickly and easily generate a new project using `osu-framework` as a starting point for creating your own game.
 
 1. In your command line utility of choice, navigate to the folder in which you want to create the project.
 2. Make sure the `osu-framework`  project template is downloaded by running `dotnet new -i ppy.osu.Framework.Templates`.
 3. Run `dotnet new osu-framework-game -n <MyNewProjectName>` to generate a new folder containing the project.
 4. Open the folder, and open `MyNewProjectName.sln` to begin!
+
+> In addition to the `osu-framework-game` template, a template named `osu-framework-flappy-game` is also available which serves as an example of creating a basic, but feature complete game with `osu-framework`.
 
 ### Project structure
 
