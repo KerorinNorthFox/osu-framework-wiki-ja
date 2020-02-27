@@ -2,6 +2,12 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `FrameworkDebugConfig` no longer exposes `PerformanceLogging`
+
+Performance logging is now toggled by opening "Global Statistics" overlay via Ctrl+F2. To manually toggle it, you may access `GameHost.PerformanceLogging`, but note that a change to this bindable will be overridden by toggling the statistics overlay.
+
 # [2020.218.0](https://github.com/ppy/osu-framework/releases/tag/2020.218.0)
 
 ## `BindableList<T>.ItemsAdded` is now obsolete
