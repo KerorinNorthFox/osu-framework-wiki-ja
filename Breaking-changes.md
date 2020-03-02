@@ -2,11 +2,156 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
-# vNext
+# 2019.302.0
 
 ## `FrameworkDebugConfig` no longer exposes `PerformanceLogging`
 
 Performance logging is now toggled by opening "Global Statistics" overlay via Ctrl+F2. To manually toggle it, you may access `GameHost.PerformanceLogging`, but note that a change to this bindable will be overridden by toggling the statistics overlay.
+
+## Layout validation and invalidation has been reworked
+
+To better cover edge-case scenarios where layout wasn't properly refreshed, the process of layout invalidation has changed.
+
+### In cases where `Invalidate()` affected a `Cached` member, the following adjustment is necessary:
+
+```diff
+public class MyDrawable : Drawable
+{
+-    private readonly Cached myLayoutValue = new Cached();
+-
+-    protected override bool OnInvalidate(Invalidation invalidation, Drawable source, bool shallPropagate)
+-    {
+-        var result = base.OnInvalidate(invalidation, source, shallPropagate);
+-
+-        if ((invalidation & (Invalidation.DrawSize | Invalidation.Presence)) > 0) /* any invalidation type of your choice */
+-            result &= !myLayoutValue.Invalidate();
+-
+-        return result;
+-    }
+
++    /* can also be a LayoutValue<T> */
++    private readonly LayoutValue myLayoutValue = new LayoutValue(Invalidation.DrawSize | Invalidation.Presence);
++
++    public MyDrawable()
++    {
++        AddLayout(myLayoutValue);
++    }
+}
+```
+
+### In cases where `InvalidateFromChild()` affected a `Cached` member, the following adjustment is necessary:
+
+```diff
+public class MyDrawable : Drawable
+{
+-    private readonly Cached myLayoutValue = new Cached();
+-
+-    protected override void InvalidateFromChild(Invalidation invalidation, Drawable source)
+-    {
+-        if ((invalidation & (Invalidation.DrawSize | Invalidation.Presence)) > 0) /* any invalidation type of your choice */
+-            myLayoutValue.Invalidate();
+-    }
+
++    /* can also be a LayoutValue<T> */
++    private readonly LayoutValue myLayoutValue = new LayoutValue(Invalidation.DrawSize | Invalidation.Presence, InvalidationSource.Child);
++
++    public MyDrawable()
++    {
++        AddLayout(myLayoutValue);
++    }
+}
+```
+
+### In cases where _both_ `Invalidate()` and `InvalidateFromChild()` affected the same `Cached` member, the following adjustment is required:
+
+```diff
+public class MyDrawable : Drawable
+{
+-    private readonly Cached myLayoutValue = new Cached();
+-
+-    protected override bool OnInvalidate(Invalidation invalidation, Drawable source, bool shallPropagate)
+-    {
+-        var result = base.OnInvalidate(invalidation, source, shallPropagate);
+-
+-        if ((invalidation & Invalidation.DrawSize) > 0) /* any invalidation type of your choice */
+-            result &= !myLayoutValue.Invalidate();
+-
+-        return result;
+-    }
+-
+-    protected override void InvalidateFromChild(Invalidation invalidation, Drawable source)
+-    {
+-        if ((invalidation & Invalidation.Presence) > 0) /* any invalidation type of your choice */
+-            myLayoutValue.Invalidate();
+-    }
+
++    /* can also be a LayoutValue<T> */
++    private readonly LayoutValue myLocalLayoutValue = new LayoutValue(Invalidation.DrawSize);
++    private readonly LayoutValue myChildLayoutValue = new LayoutValue(Invalidation.Presence, InvalidationSource.Child);
++
++    public MyDrawable()
++    {
++        AddLayout(myLocalLayoutValue);
++        AddLayout(myChildLayoutValue);
++    }
++
++    protected override void Update()
++    {
++        base.Update();
++
++        /* wherever your re-validation was previously done */
++        if (!myChildLayoutValue.IsValid)
++        {
++            myLocalLayoutValue.Invalidate();
++            myChildLayoutValue.Validate();
++        }
++
++        if (!myLocalLayoutValue.IsValid)
++        {
++            /* your custom validation */
++            myLocalLayoutValue.Validate();
++        }
++    }
+}
+```
+
+### In cases where custom logic that can't be described as layout was done in `Invalidate()`, the following adjustment is necessary:
+
+```diff
+public class MyDrawable : Drawable
+{
+-    protected override bool OnInvalidate(Invalidation invalidation, Drawable source, bool shallPropagate)
+-    {
+-        var result = base.OnInvalidate(invalidation, source, shallPropagate);
+-
+-        if ((invalidation & (Invalidation.DrawSize | Invalidation.Presence)) > 0) /* any invalidation type of your choice */
+-        {
+-            performCustomAction();
+-            result = true;
+-        }
+-
+-        return result;
+-    }
+
++    protected override bool OnInvalidate(Invalidation invalidation, InvalidationSource source)
++    {
++        var result = base.OnInvalidate(invalidation, source);
++
++        if ((invalidation & (Invalidation.DrawSize | Invalidation.Presence)) > 0) /* any invalidation type of your choice */
++        {
++            performCustomAction();
++            result = true;
++        }
++
++        return result;
++    }
+
+    private void performCustomAction()
+    {
+        /* custom invalidation logic here */
+    }
+}
+```
 
 # [2020.218.0](https://github.com/ppy/osu-framework/releases/tag/2020.218.0)
 
