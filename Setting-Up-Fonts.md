@@ -9,7 +9,7 @@ In this tutorial, you will learn how to add custom fonts into your game and use 
 ## Converting to binary font and texture files
 For the custom font to be recognized inside osu!framework, you will have to convert it into a binary font with texture files alongside it.
 
-To start off, you'll need to download and install [BMFont by AngelCode](https://www.angelcode.com/products/bmfont) for converting the font, then run it and load [this configuration]() for selecting required character range:
+To start off, you'll need to download and install [BMFont by AngelCode](https://www.angelcode.com/products/bmfont) for converting the font, then run it and load [this configuration](/ppy/osu-framework/blob/master/osu.Framework/Resources/Fonts/bmfont.bmfc) for selecting required character range:
 
 | ![Load the required configurations #1](https://i.imgur.com/bnl9Eqk.png) | ![Load the required configurations #2](https://i.imgur.com/dhUJnK7.png)
 |---|---|
