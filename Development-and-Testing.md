@@ -6,13 +6,7 @@ TestScenes support a limited dynamic compilation engine. This allows for automat
 
 - This only works with editors that do atomic file writes (ie. if using Rider, you need to [turn off safe file writes](https://puu.sh/yr5bk/43a073a194.png)).
 - You must have the TestScene you are interested in currently displayed before making file changes.
-- By default, changes are only tracked in the current TestScene and its target class. If you are in `TestSceneGraph`, you will be able to make changes in `TestSceneGraph.cs` and `Graph.cs`.
-
-If you wish to make changes to more classes, for instance if your TestScene is testing multiple tightly coupled classes, please use the `RequiredTypes` property to specify the required classes. Note that you can do this in real-time as you are going to be adding the override in the TestScene itself.
-
-```csharp
-public override IReadOnlyList<Type> RequiredTypes => new[] { typeof(GraphBar), typeof(GraphContainer) };
-```
+- The first time a dynamic compilation is initialised will take a while to process the dependency graph. Further compilations will be almost instant.
 
 Here is an example of how this looks in practice:
 
