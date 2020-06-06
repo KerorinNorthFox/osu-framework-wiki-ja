@@ -52,8 +52,35 @@ namespace MyAwesomeProject.Game
             // Add the DLL resource store of this game project into the global resources store.
             Resources.AddStore(new DllResourceStore(@"MyAwesomeProject.dll"));
 
-            // Add the custom font to the font store.
+            // Add the custom font to the global font store (Fonts).
             AddFont(Resources, @"Resources/Fonts/MyAwesomeFont");
+        }
+    }
+}
+```
+
+If you have specified a custom size for the font you've exported, you'll need to apply scale adjustments for its font store to match text sizing with different added fonts, can be done by:
+```csharp
+namespace MyAwesomeProject.Game
+{
+    public class MyAwesomeGame : osu.Framework.Game
+    {
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            // Add the DLL resource store of this game project into the global resources store.
+            Resources.AddStore(new DllResourceStore(@"MyAwesomeProject.dll"));
+
+            // Create a font store with providing a specific font size (200px for this example) 
+            // to adjust scaling for matching up with different fonts.
+            var scaleAdjustedFontStore = new FontStore(scaleAdjust: 200);
+
+            // Nest the scale-adjusted font store inside the global font store 
+            // for components such as sprite texts be able to retrieve the custom font.
+            Fonts.AddStore(scaleAdjustedFontStore);
+
+            // Add fonts of a same custom size (200px for this example) to the scale-adjusted font store.
+            AddFont(Resources, @"Resources/Fonts/MyAwesomeFont", scaleAdjustedFontStore);
         }
     }
 }
