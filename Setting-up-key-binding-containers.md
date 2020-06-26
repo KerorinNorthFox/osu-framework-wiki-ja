@@ -121,7 +121,6 @@ public class Player : RigidBodyContainer<Drawable>, IKeyBindingHandler<InputActi
                 constantXForce -= PLAYER_VELOCITY;
                 break;
         }
-        return true;
     }
         
     protected override void Update()
