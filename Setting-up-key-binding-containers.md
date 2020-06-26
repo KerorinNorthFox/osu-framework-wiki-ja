@@ -110,7 +110,7 @@ public class Player : RigidBodyContainer<Drawable>, IKeyBindingHandler<InputActi
         return true;
     }
         
-    public bool OnReleased(InputAction action)
+    public void OnReleased(InputAction action)
     {
         switch (action)
         {
