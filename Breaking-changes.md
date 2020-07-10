@@ -4,6 +4,10 @@ This page serves to give a list of all breaking/major changes.
 
 # vNext
 
+## `TextBox` will no longer trigger sound effects
+
+This is a fringe use-case, as the samples were never included with the framework, but if you happened to be providing them in your game resources, you will need to update your `TextBox` implementation to trigger them again. Check the [osu!-side changes](https://github.com/ppy/osu/pull/9216) for an example of how to do this.
+
 ## `CachedModelDependencyContainer` models must now only contain read-only fields
 
 Mutating bindables of models attached to a `CachedModelDependencyContainer` can lead to crashes or otherwise unexpected behaviour, and is now disallowed.
