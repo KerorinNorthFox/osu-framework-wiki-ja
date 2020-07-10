@@ -2,6 +2,12 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `CachedModelDependencyContainer` models must now only contain read-only fields
+
+Mutating bindables of models attached to a `CachedModelDependencyContainer` can lead to crashes or otherwise unexpected behaviour, and is now disallowed.
+
 # [2020.302.0](https://github.com/ppy/osu-framework/releases/tag/2020.302.0)
 
 ## `FrameworkDebugConfig` no longer exposes `PerformanceLogging`
