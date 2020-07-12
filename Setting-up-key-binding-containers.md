@@ -53,7 +53,7 @@ For a better visual representation of these modes and how they restrict multiple
 
 ## Handling key bound actions
 
-Now that we have created our KeyBindingContainer, we can add behavior that triggers when the key-binded action has been fired. The [IKeyBindingHandler<T>](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/Bindings/IKeyBindingHandler.cs) interface provides a way for bound input events to be handled by any class.
+Now that we have created our KeyBindingContainer, we can add behavior that triggers when the key-binded action has been fired. The [IKeyBindingHandler<T>](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/Bindings/IKeyBindingHandler.cs) interface provides a way for bound input events to be handled by any drawable, as long as it is a child of our KeyBindingContainer.
 
 For example, to create a player class that inherits RigidBodyContainer and implements IKeybindingHandler, we would do this:
 
