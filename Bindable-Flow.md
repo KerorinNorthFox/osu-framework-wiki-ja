@@ -1,4 +1,4 @@
-`osu-framework` utilizes `Bindable<T>` objects to distribute data between components. In conjuncation with Drawable comopnents, they provide functionality to automatically remove communication between `Bindable<T>` objects when finalized, serving as a safer alternative to C#'s `event`.
+`osu-framework` utilizes `Bindable<T>` objects to distribute data between components. In conjuncation with Drawable components, they provide functionality to automatically remove communication between `Bindable<T>` objects when finalized, serving as a safer alternative to C#'s `event`.
 
 ## Creating a `Bindable<T>`
 
