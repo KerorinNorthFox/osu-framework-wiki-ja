@@ -25,3 +25,7 @@ The types of steps available to be added are as follows:
 * [AddWaitStep](https://github.com/ppy/osu-framework/blob/b4c2a61f7e40d288611d587294a78fbcf68342fd/osu.Framework/Testing/TestScene.cs#L346) adds a step that waits a specified amount of time before continuing to the next step.
 * [AddSliderStep](https://github.com/ppy/osu-framework/blob/b4c2a61f7e40d288611d587294a78fbcf68342fd/osu.Framework/Testing/TestScene.cs#L354) adds a step that creates a slider-bar that adjusts a set value.
 * [AddAssert](https://github.com/ppy/osu-framework/blob/b4c2a61f7e40d288611d587294a78fbcf68342fd/osu.Framework/Testing/TestScene.cs#L362) creates a step that fails if the specified value does not return true.
+
+# Caveats
+
+* Dynamic compilation is disabled if the application is _started_ with a debugger attached. Attaching a debugger during execution does not disable dynamic compilation.
