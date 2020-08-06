@@ -13,7 +13,7 @@ osuTK classes include:
 
 The new windowing classes take in the backend, of which `Sdl2WindowBackend` provides the SDL-specific implementation. The following classes are using a newer structure (not enabled by default, yet).
 
-new windowing classes include:
+New windowing classes include:
 - `Window`
 - `DesktopWindow`
 
