@@ -2,6 +2,12 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# next
+
+### `TextBox` events only trigger on user input
+
+The events were specifically exposed to provide feedback on user input, but were triggering on programmatic manipulation of the textbox's text. See https://github.com/ppy/osu-framework/pull/3839/files.
+
 # [2020.710.0](https://github.com/ppy/osu-framework/releases/tag/2020.710.0)
 
 ## `TextBox` will no longer trigger sound effects
