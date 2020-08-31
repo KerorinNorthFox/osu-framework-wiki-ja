@@ -3,6 +3,13 @@ Occasionally we will make changes which require consumers of the framework to ma
 This page serves to give a list of all breaking/major changes.
 
 # next
+## `IAggregateAudioAdjustment.GetAggregate()` has been made an extension method
+
+To avoid aggregate adjustment implementations from having to implement both `Aggregate{Volume,Balance,Frequency,Tempo}` and `GetAggregate()`, the latter has been made an extension method returning one of the aforementioned four values for the appropriate property of the adjustment.
+
+Possible compilation failures related to `GetAggregate()` should be resolved by adding a using statement for the `osu.Framework.Audio` namespace to the files affected. 
+
+# [2020.819.0](https://github.com/ppy/osu-framework/releases/tag/2020.710.0)
 
 ### `TextBox` events only trigger on user input
 
