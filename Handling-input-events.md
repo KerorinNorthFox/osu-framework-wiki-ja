@@ -26,14 +26,14 @@ protected virtual bool OnHover(HoverEvent e);
 protected virtual void OnHoverLost(HoverLostEvent e);
 
 protected virtual bool OnMouseDown(MouseDownEvent e);
-protected virtual bool OnMouseUp(MouseUpEvent e);
+protected virtual void OnMouseUp(MouseUpEvent e);
 
 protected virtual bool OnClick(ClickEvent e);
 protected virtual bool OnDoubleClick(DoubleClickEvent e);
 
 protected virtual bool OnDragStart(DragStartEvent e);
-protected virtual bool OnDrag(DragEvent e);
-protected virtual bool OnDragEnd(DragEndEvent e);
+protected virtual void OnDrag(DragEvent e);
+protected virtual void OnDragEnd(DragEndEvent e);
 
 protected virtual bool OnScroll(ScrollEvent e);
 ```
@@ -41,10 +41,18 @@ protected virtual bool OnScroll(ScrollEvent e);
 ##### Non-positional
 ```csharp
 protected virtual bool OnKeyDown(KeyDownEvent e);
-protected virtual bool OnKeyUp(KeyUpEvent e);
+protected virtual void OnKeyUp(KeyUpEvent e);
+
+protected virtual bool OnTouchDown(TouchDownEvent e);
+protected virtual void OnTouchMove(TouchMoveEvent e);
+protected virtual void OnTouchUp(TouchUpEvent e);
 
 protected virtual bool OnJoystickPress(JoystickPressEvent e);
-protected virtual bool OnJoystickRelease(JoystickReleaseEvent e);
+protected virtual void OnJoystickRelease(JoystickReleaseEvent e);
+protected virtual bool OnJoystickAxisMove(JoystickAxisMoveEvent e);
+
+protected virtual bool OnMidiDown(MidiDownEvent e);
+protected virtual void OnMidiUp(MidiUpEvent e);
 ```
 
 These event handlers should be used when singular events are to be handled.
@@ -62,6 +70,8 @@ protected override bool OnClick(ClickEvent e)
     return true;
 }
 ```
+
+Input handlers that correspond to continuations/resolutions of previous input, such as `OnMouseUp`, `OnDragEnd`, `OnKeyUp`, etc., will only fire on drawables that registered to handle the original input by returning `true` - for the examples above, that would be `OnMouseDown`, `OnDragStart`, `OnKeyDown`, etc. Those events cannot be suppressed.
 
 ## Aggregate event handler
 ```csharp
