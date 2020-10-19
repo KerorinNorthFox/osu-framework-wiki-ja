@@ -2,9 +2,7 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
-
-
-# next
+# [2020.909.0](https://github.com/ppy/osu-framework/releases/tag/2020.909.0)
 
 ## `WaveformGraph.BaseColour` should be used instead of `Colour` for the default frequency colour
 
