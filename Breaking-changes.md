@@ -2,6 +2,12 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2021.107.0](https://github.com/ppy/osu-framework/releases/tag/2021.107.0)
+
+## Games will now throw (and crash) immediately on performing cross-thread transform operations
+
+This may mean that as a framework consumer you need to re-think how you are performing operations between drawables. The easiest way to avoid issue is to use `Schedule` to force the target code to be on the correct thread.
+
 # [2020.1009.0](https://github.com/ppy/osu-framework/releases/tag/2020.1009.0)
 
 ## `WaveformGraph.BaseColour` should be used instead of `Colour` for the default frequency colour
