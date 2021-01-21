@@ -52,7 +52,7 @@ x.Value = 5;
 Assert.IsTrue(y.Value == 5); // Same as above - dual-way communication
 ```
 
-Generally, when interacting with a bindable exposed by another class, one should always make a local bindable to track changes. **Binding to another class instance's bindable events should be avoided**, as it bypasses the reference safety provided by bindables.
+Generally, when interacting with a bindable exposed by another object, one should always make a local bindable to track changes. **Binding to another object instance's bindable events should be avoided**, as it bypasses the reference safety provided by bindables.
 
 ## Observing the values of a `Bindable<T>`
 
