@@ -142,7 +142,7 @@ namespace MyNewProject.Game.Tests
 
 ### Adding tests to the Test Browser
 
-Now that our Test Browser is discovering tests from the specified namespace, we can start adding tests! To do so, create a new class that derives [TestCase](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Testing/TestCase.cs) with the [TestFixture](http://nunit.org/docs/2.6/testFixture.html) attribute. From here, we can add steps to this test of various types. For information on what types of steps are available, please refer to [Dynamic Compilation and Visual Testing](https://github.com/ppy/osu-framework/wiki/Development-and-Testing#steps-and-automated-testing).
+Now that our Test Browser is discovering tests from the specified namespace, we can start adding tests! To do so, create a new class that derives [TestScene](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Testing/TestScene.cs) with the [TestFixture](http://nunit.org/docs/2.6/testFixture.html) attribute. From here, we can add steps to this test of various types. For information on what types of steps are available, please refer to [Dynamic Compilation and Visual Testing](https://github.com/ppy/osu-framework/wiki/Development-and-Testing#steps-and-automated-testing).
 
 ### Example Test
 The following code adds a simple cube to the visual test browser that we created above. The cube has a rigid body attached, and should drop to the bottom of the screen when created. From here, we can choose to check the behavior of the cube by asserting that the cube eventually reaches the bottom via AddAssert.
