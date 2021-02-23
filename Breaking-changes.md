@@ -2,6 +2,13 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+
+# vNext
+
+## The regular weight of OpenSans has been renamed to OpenSans-Regular
+
+Until now this font wasn't following the convention we use everywhere else. If you are referencing it directly, please update your strings to point to the new name.
+
 # [2021.106.0](https://github.com/ppy/osu-framework/releases/tag/2021.106.0)
 
 ## Games will now throw (and crash) immediately on performing cross-thread transform operations
