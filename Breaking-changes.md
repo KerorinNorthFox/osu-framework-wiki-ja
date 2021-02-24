@@ -9,6 +9,19 @@ This page serves to give a list of all breaking/major changes.
 
 Until now this font wasn't following the convention we use everywhere else. If you are referencing it directly, please update your strings to point to the new name.
 
+
+## LocalisedString no longer exists
+
+For strings which have romanisable content, `RomanisableString` should be used instead. Note that the order of arguments has been reversed.
+
+## Multiple UI Components now use `LocalisableString` in place of `string`
+
+If you have custom implementations, you will need to update the overridden signatures.
+
+## Explicit `ToString` may be required where previous not
+
+Getting the current value of some strings (ie. on UI Components) will now require an explicit call to `.ToString()`.
+
 # [2021.106.0](https://github.com/ppy/osu-framework/releases/tag/2021.106.0)
 
 ## Games will now throw (and crash) immediately on performing cross-thread transform operations
