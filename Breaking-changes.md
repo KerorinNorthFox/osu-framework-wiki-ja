@@ -12,7 +12,7 @@ Until now this font wasn't following the convention we use everywhere else. If y
 
 ## LocalisedString no longer exists
 
-For strings which have romanisable content, `RomanisableString` should be used instead. Note that the order of arguments has been reversed.
+For strings which have romanisable content, `RomanisableString` should be used instead.
 
 ## Multiple UI Components now use `LocalisableString` in place of `string`
 
