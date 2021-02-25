@@ -3,7 +3,7 @@ Occasionally we will make changes which require consumers of the framework to ma
 This page serves to give a list of all breaking/major changes.
 
 
-# vNext
+# [2021.225.0](https://github.com/ppy/osu-framework/releases/tag/2021.225.0)
 
 ## The regular weight of OpenSans has been renamed to OpenSans-Regular
 
