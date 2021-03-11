@@ -36,16 +36,16 @@ protected virtual void OnDrag(DragEvent e);
 protected virtual void OnDragEnd(DragEndEvent e);
 
 protected virtual bool OnScroll(ScrollEvent e);
+
+protected virtual bool OnTouchDown(TouchDownEvent e);
+protected virtual void OnTouchMove(TouchMoveEvent e);
+protected virtual void OnTouchUp(TouchUpEvent e);
 ```
 
 ##### Non-positional
 ```csharp
 protected virtual bool OnKeyDown(KeyDownEvent e);
 protected virtual void OnKeyUp(KeyUpEvent e);
-
-protected virtual bool OnTouchDown(TouchDownEvent e);
-protected virtual void OnTouchMove(TouchMoveEvent e);
-protected virtual void OnTouchUp(TouchUpEvent e);
 
 protected virtual bool OnJoystickPress(JoystickPressEvent e);
 protected virtual void OnJoystickRelease(JoystickReleaseEvent e);
