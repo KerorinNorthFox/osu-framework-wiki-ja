@@ -11,12 +11,6 @@ Parent              < Handler #4
 
 "Positional" input refers to any input that depends on a screen-space position (e.g. hover). "Non-positional" input refers to any other input (e.g. a button press).
 
-## Input events
-
-![input system](https://user-images.githubusercontent.com/1329837/43699274-188d8126-9989-11e8-9e39-a2079a4ea42b.png)
-
-[source](https://www.lucidchart.com/documents/view/9bffbf73-0c99-4c38-b0f1-2f3f80c47a49/0)
-
 ## Individual event handlers
 ##### Positional
 ```csharp
@@ -170,3 +164,10 @@ class MyDrawable : CompositeDrawable
     protected override void OnFocusLost(FocusLostEvent e) => this.ScaleTo(1f, 50);
 }
 ```
+
+## Input event hierarchy
+
+The following hierarchical relationship of input events can be useful to know when drilling down with the [aggregate event handler](#Aggregate-event-handler).
+
+![Input Events](https://user-images.githubusercontent.com/1329837/110738365-7e31af00-8272-11eb-8cae-36ba96724db7.png)
+[source](https://drive.google.com/file/d/1sNpncJJsD4YKk5vkTEN88E51IbUhChUI/view?usp=sharing)
