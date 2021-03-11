@@ -40,6 +40,9 @@ protected virtual bool OnScroll(ScrollEvent e);
 protected virtual bool OnTouchDown(TouchDownEvent e);
 protected virtual void OnTouchMove(TouchMoveEvent e);
 protected virtual void OnTouchUp(TouchUpEvent e);
+
+protected virtual bool OnTabletPenButtonPress(TabletPenButtonPressEvent e);
+protected virtual void OnTabletPenButtonRelease(TabletPenButtonReleaseEvent e);
 ```
 
 ##### Non-positional
@@ -53,6 +56,9 @@ protected virtual bool OnJoystickAxisMove(JoystickAxisMoveEvent e);
 
 protected virtual bool OnMidiDown(MidiDownEvent e);
 protected virtual void OnMidiUp(MidiUpEvent e);
+
+protected virtual bool OnTabletAuxiliaryButtonPress(TabletAuxiliaryButtonPressEvent e);
+protected virtual void OnTabletAuxiliaryButtonRelease(TabletAuxiliaryButtonReleaseEvent e);
 ```
 
 These event handlers should be used when singular events are to be handled.
