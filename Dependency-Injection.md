@@ -147,11 +147,9 @@ public class MyGame : Game
         };
     }
 
-    private DependencyContainer dependencies;
-
     protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
     {
-        dependencies = new DependencyContainer(parent);
+        var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
         dependencies.Cache(Store = new MyStore());
         return dependencies;
     }
