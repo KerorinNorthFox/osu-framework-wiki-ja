@@ -2,6 +2,26 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2021.317.0](https://github.com/ppy/osu-framework/releases/tag/2021.317.0)
+
+## ConfigManager.Set is now protected and renamed to `SetDefault`
+
+Previously this method was `public` for convenience, but as it implicitly set the `Default` value of bindables it touched, could cause unexpected behaviour.
+
+- For initialising defaults, switch to using `SetDefault` from `InitialiseDefaults`
+- For changing configuration values externally, use `SetValue` instead of `Set`
+
+```csharp
+// previously
+config.Set(ConfigType.Name, true);
+
+// now
+config.SetValue(ConfigType.Name, true);
+```
+
+## osuTK support has been removed in most places
+
+If you were supporting it via `GameHost` initialisation, you may need to remove a parameter. Internally, we still support it in a minimal way for Xamarin platforms.
 
 # [2021.225.0](https://github.com/ppy/osu-framework/releases/tag/2021.225.0)
 
