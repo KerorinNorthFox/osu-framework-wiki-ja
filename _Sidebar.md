@@ -12,6 +12,7 @@
  * [Dependency Injection](/ppy/osu-framework/wiki/Dependency-Injection)
  * [Screens and Screen Stacks](/ppy/osu-framework/wiki/Screens-and-Screen-Stacks)
  * [Coordinate and Layout System](/ppy/osu-framework/wiki/Coordinate-and-Layout-System)
+ * [Frequently Asked Questions / Common Scenarios](/ppy/osu-framework/wiki/Common-Scenarios)
 ## Testing
  * [Dynamic Compilation and Visual Testing](/ppy/osu-framework/wiki/Development-and-Testing)
  * [Testing framework PRs with other projects via NuGet](/ppy/osu-framework/wiki/Testing-framework-PRs-with-other-projects-via-NuGet)
