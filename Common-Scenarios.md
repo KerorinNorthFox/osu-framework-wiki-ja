@@ -11,21 +11,16 @@ This can be achieved by setting `Depth` on cell content. Constructing a later ce
 ```csharp
 public class RoundedLine : CompositeDrawable
 {
-    private readonly CircularContainer content;
+    private readonly Circle content;
 
     public override Quad ScreenSpaceDrawQuad => content.ScreenSpaceDrawQuad;
 
     public ExtendableCircle()
     {
         Padding = new MarginPadding { Horizontal = -circle_size / 2f };
-        InternalChild = content = new CircularContainer
+        InternalChild = content = new Circle
         {
-            RelativeSizeAxes = Axes.Both,
-            Masking = true,
-            Child = new Box
-            {
-                RelativeSizeAxes = Axes.Both
-            }
+            RelativeSizeAxes = Axes.Both
         };
     }
 }
