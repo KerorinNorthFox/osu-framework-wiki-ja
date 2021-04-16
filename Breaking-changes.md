@@ -2,6 +2,12 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `IBindable`, `IBindable<T>`, and `IBindableList<>` are no longer `IParseable`
+
+`IParseable` is only implemented on the `Bindable<>` and `BindableList<>` classes. Code that relied on this functionality should instead cast to `IParseable`.
+
 # [2021.330.0](https://github.com/ppy/osu-framework/releases/tag/2021.330.0)
 
 ## InputHandler no longer has a Priority property
