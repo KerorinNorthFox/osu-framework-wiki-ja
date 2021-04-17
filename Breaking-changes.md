@@ -2,6 +2,12 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `RotationDirection.CounterClockwise` has been renamed to `Counterclockwise`
+
+As it appears to be often one word, the enum member `CounterClockwise` has been renamed to `Counterclockwise`.
+
 # [2021.416.0](https://github.com/ppy/osu-framework/releases/tag/2021.416.0)
 
 ## `IBindable`, `IBindable<T>`, and `IBindableList<>` are no longer `IParseable`
