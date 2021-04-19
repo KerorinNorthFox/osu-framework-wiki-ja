@@ -4,6 +4,8 @@ This page serves to give a list of all breaking/major changes.
 
 # vNext
 
+# [2021.419.0](https://github.com/ppy/osu-framework/releases/tag/2021.419.0)
+
 ## `RotationDirection.CounterClockwise` has been renamed to `Counterclockwise`
 
 As it appears to be often one word, the enum member `CounterClockwise` has been renamed to `Counterclockwise`.
