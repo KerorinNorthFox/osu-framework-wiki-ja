@@ -63,6 +63,8 @@ public class MyStore
 }
 ```
 
+Members marked with either of these attributes are cached or resolved in their respective classes before the [`[BackgroundDependencyLoader]`](#using-[BackgroundDependencyLoader]-to-resolve) method is run.
+
 ## Using `[BackgroundDependencyLoader]` to resolve
 
 This can be useful if you want to ensure everything happens in the (potentially asynchronous) `load` method.
