@@ -4,7 +4,7 @@ All initial development of (and further improvements applied) to components in a
 
 TestScenes support a limited dynamic compilation engine. This allows for automatic compilation when a `.cs` file is changed, followed by reloading of the TestScene. Keep in mind a few limitations:
 
-- This only works with editors that do atomic file writes (ie. if using Rider, you need to [turn off safe file writes](https://puu.sh/yr5bk/43a073a194.png)).
+- This only works with editors that do atomic file writes (ie. if using Rider, you need to [turn off "back up files before saving"](https://i.imgur.com/nDw4Yvt.png)).
 - You must have the TestScene you are interested in currently displayed before making file changes.
 - The first time a dynamic compilation is initialised will take a while to process the dependency graph. Further compilations will be almost instant.
 
