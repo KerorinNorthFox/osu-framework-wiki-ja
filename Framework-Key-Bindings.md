@@ -16,5 +16,5 @@ In addition, `TestBrowser` implementation also allow for the following key bindi
 | Key binding | Action |
 |:-----------:|:-------------------- |
 | <kbd>Ctrl</kbd>+<kbd>H</kbd> | Hide the tests list sidebar |
-| <kbd>Ctrl</kbd>+<kbd>F</kbd> / Cmd</kbd>+<kbd>F</kbd> | Focus the search box |
-| <kbd>Ctrl</kbd>+<kbd>R</kbd> / Cmd</kbd>+<kbd>R</kbd>| Reload the currently displayed test scene |
+| <kbd>Ctrl</kbd>+<kbd>F</kbd> / <kbd>Cmd</kbd>+<kbd>F</kbd> | Focus the search box |
+| <kbd>Ctrl</kbd>+<kbd>R</kbd> / <kbd>Cmd</kbd>+<kbd>R</kbd>| Reload the currently displayed test scene |
