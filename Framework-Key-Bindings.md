@@ -17,3 +17,4 @@ In addition, `TestBrowser` implementation also allow for the following key bindi
 |:-----------:|:-------------------- |
 | <kbd>Ctrl</kbd>+<kbd>H</kbd> | Hide the tests list sidebar |
 | <kbd>Ctrl</kbd>+<kbd>F</kbd> | Focus the search box |
+| <kbd>Ctrl</kbd>+<kbd>R</kbd> | Reload the currently displayed test scene |
