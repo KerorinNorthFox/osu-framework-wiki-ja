@@ -106,11 +106,6 @@ namespace MyNewProject.Game.Tests.Visual
     {
         private MyNewProjectGame game;
 
-        public override IReadOnlyList<Type> RequiredTypes => new[]
-        {
-            typeof(MyNewProjectGame),
-        };
-
         [BackgroundDependencyLoader]
         private void load(GameHost host)
         {
