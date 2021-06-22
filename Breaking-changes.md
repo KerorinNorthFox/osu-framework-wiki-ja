@@ -2,6 +2,12 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `MarkdownHeading.GetFontSizeByLevel` now specifies absolute sizes
+
+If you were overriding this method, please multiply your returned values by `20` to maintain sizing compatibility.
+
 # [2021.419.0](https://github.com/ppy/osu-framework/releases/tag/2021.419.0)
 
 ## `RotationDirection.CounterClockwise` has been renamed to `Counterclockwise`
