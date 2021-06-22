@@ -8,6 +8,12 @@ This page serves to give a list of all breaking/major changes.
 
 The result of this method is now more correctly applied to headers via `FontSize` rather than `Scale`. If you were overriding this method, please multiply your returned values by `20` to maintain sizing compatibility.
 
+## "OpenSans" is no longer provided, with the default font now being "Roboto"
+
+We were already using Roboto in the visual tests contexts, but fallback to OpenSans could be seen for tool windows in both framework and consumer projects. In an effort to consolidate this visually, all framework components now use Roboto, the chosen font for osu!framework design logic.
+
+This means that if you were previously relying on the presence of OpenSans and do not want to switch to Roboto, you will need to re-add the font resources in your project. Instructions on doing this can be found [here](https://github.com/ppy/osu-framework/wiki/Setting-Up-Fonts).
+
 # [2021.419.0](https://github.com/ppy/osu-framework/releases/tag/2021.419.0)
 
 ## `RotationDirection.CounterClockwise` has been renamed to `Counterclockwise`
