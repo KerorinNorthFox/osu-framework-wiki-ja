@@ -2,6 +2,12 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `IHasTooltip.Text` is now a `LocalisableString`
+
+`IHasTooltip.Text` now takes a `LocalisableString` instead of  regular string. Users of custom tooltip containers may also have to change checks in the `SetContent()` method of their tooltip type to check if content is a `LocalisableString` instead of a regular string.
+
 # [2021.622.0](https://github.com/ppy/osu-framework/releases/tag/2021.622.0)
 
 ## `MarkdownHeading.GetFontSizeByLevel` now specifies absolute sizes
