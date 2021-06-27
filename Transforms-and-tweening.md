@@ -1,0 +1,99 @@
+A relatively extensive toolchain exists for applying transforms to `Drawable`s. This includes not only the ability to perform common visual adjustments (fade, scale, rotate, colour), but also the ability to arbitrarily perform transforms on any property.
+
+Internally, transforms are a state machine which is build using `TransformSequence`. Multiple transforms can be chained and nested. This page attempts to provide a starting point for understanding how transforms can be used, but there should be plenty of room for exploration beyond this guide via experimentation.
+
+## Basic operations
+
+A simple example which will fade a box into existence:
+
+```csharp
+var box = new Box { Size = new Vector2(50); }
+
+Add(box); // the target of transforms must always be in the draw hierarchy and loaded before operating on it.
+
+box.FadeInFromZero(500);
+```
+
+## Chaining
+
+Transforms can be chained in various ways. To run multiple transforms of different types at the same time value, simply chain the calls:
+
+```csharp
+var box = new Box { Size = new Vector2(50); }
+
+Add(box); // the target of transforms must always be in the draw hierarchy and loaded before operating on it.
+
+box.FadeInFromZero(500)
+   .ScaleTo(new Vector2(2))
+   .RotateTo(90); // all three of these will be run in parallel.
+```
+
+To play one transform after another finishes, use `.Then()`:
+
+```csharp
+var box = new Box { Size = new Vector2(50); }
+
+Add(box); // the target of transforms must always be in the draw hierarchy and loaded before operating on it.
+
+box.FadeInFromZero(500).Then().FadeOut(500); // fade in then out, over 1 second.
+```
+
+## Offsets and delays
+
+To add a delay to a sequence, you can use `.Delay(ms)`:
+
+```csharp
+var box = new Box { Size = new Vector2(50); }
+
+Add(box); // the target of transforms must always be in the draw hierarchy and loaded before operating on it.
+
+box.FadeInFromZero(500).Then().Delay(200).FadeOut(500); // fade in then out, over 1.2 seconds, with a pause at full opacity.
+```
+
+For more complex cases, `BeginDelayedSequence` and `BeginAbsoluteSequence` can help to organise things:
+
+```csharp
+var box = new Box { Size = new Vector2(50); }
+
+using (box.BeginAbsoluteSequence(2000)) // nested calls will run from absolute clock time of 2000ms. by default this applies to all children too.
+{
+    box.FadeIn(1000); 
+
+    using (box.BeginDelayedSequence(1000)) // nested calls will be delayed by 1000ms. by default this applies to all children too.
+        box.FadeOut(1000); 
+}
+```
+
+## Applying to arbitrary properties
+
+// TODO
+
+
+## Manual interpolation
+
+In cases where transforms are to be run every frame, it is highly recommended to use interpolation instead:
+
+```csharp
+public override void Update()
+{
+    // useful if targetWidth is a moving target which need to be tracked, for example.
+    box.Width = Interpolation.ValueAt(Clock.ElapsedFrameTime, box.Width, targetWidth, 0, 200, Easing.OutQuint);
+}
+```
+
+## Interrupting transforms
+
+// TODO
+
+## Rewinding support
+
+// TODO
+
+## Best practices
+
+Some basic things to note:
+
+- Transforming before a drawable is loaded (ie. `LoadComplete`) will cause the transforms to play out immediately. This is due to the drawable not yet having a clock to work with. If you must queue transforms before load, make sure to use a `Schedule(() => {})` call.
+- Transforms are not free and should not be run every frame. Please use interpolation for such cases.
+- Generally, we recommend not operating on oneself with transforms (ie. `this.FadeIn()`). This is due to the potential of conflicts between internal and external calls, which could overwrite or cause unexpected behaviour. Create a private nested container and operate on that instead.
+
