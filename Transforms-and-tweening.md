@@ -70,9 +70,7 @@ using (box.BeginAbsoluteSequence(2000)) // nested calls will run from absolute c
 
 All specific transform methods such as `.FadeIn(...)`/`.FadeColour(...)` are [methods defined in extension classes](https://github.com/ppy/osu-framework/blob/4dbdb0039c1a1e802dfdaab94698f6d9485e6325/osu.Framework/Graphics/TransformableExtensions.cs#L487-L741) that delegate to the core method `.TransformTo()`, which accepts the name of the member to transform/tween, and the remaining arguments for transforming (duration, easing, etc.).
 
-And that doesn't apply only to the `Drawable` base class, you can apply transforms to any member belonging to your class as long as it inherits `Drawable`, and as long as the member is not `static`, and not a `readonly` field or getter-only/setter-only property.
-
-Example usage of `TransformTo`:
+And that doesn't apply only to the `Drawable` base class, you can apply transforms to any member belonging to your class as long as it inherits `Drawable`, and as long as the member is not `static`, and not a `readonly` field or getter-only/setter-only property:
 
 ```csharp
 public class SpecialBox : Box
@@ -87,16 +85,38 @@ Add(box); // the target of transforms must always be in the draw hierarchy and l
 box.TransformTo(nameof(SpecialProperty), 10.0, 1000); // transform SpecialProperty from current value to value 10.0, in 1 second.
 ```
 
-Example extension class defining specific transforms for ease of applying:
+For wrapping it in an extensions class:
 
 ```csharp
 public static class SpecialBoxExtensions
 {
-    public static TransformSequence<T> TweenSpecialPropertyTo(this T specialBox, double newValue, double duration, Easing easing = Easing.None)
+    public static TransformSequence<T> TweenSpecialPropertyTo<T>(this T specialBox, double newValue, double duration, Easing easing = Easing.None)
+        where T : SpecialBox
+        => specialBox.TweenSpecialPropertyTo(newValue, duration, new DefaultEasingFunction(easing));
+
+    public static TransformSequence<T> TweenSpecialPropertyTo<T>(this TransformSequence<T> t, double newValue, double duration, Easing easing = Easing.None)
+        where T : SpecialBox
+        => specialBox.TweenSpecialPropertyTo(newValue, duration, new DefaultEasingFunction(easing));
+
+    public static TransformSequence<T> TweenSpecialPropertyTo<T, TEasing>(this T specialBox, double newValue, double duration, in TEasing easing)
+        where T : SpecialBox
+        where TEasing : IEasingFunction
         => specialBox.TransformTo(nameof(SpecialProperty), newValue, duration, easing);
 
-    public static 
+    public static TransformSequence<T> TweenSpecialPropertyTo<T, TEasing>(this TransformSequence<T> t, double newValue, double duration, in TEasing easing)
+        where T : SpecialBox
+        where TEasing : IEasingFunction
+        => t.Append(o => o.TweenSpecialPropertyTo(newValue, duration, easing);
 }
+```
+
+```csharp
+box.TweenSpecialPropertyTo(10.0, 1000);
+```
+```csharp
+box.FadeInFromZero(500)
+   .TweenSpecialPropertyTo(10.0, 1000)
+   .Then().FadeOut(500);
 ```
 
 ## Manual interpolation
@@ -116,6 +136,10 @@ public override void Update()
 // TODO
 
 ## Rewinding support
+
+// TODO
+
+## Custom Easing functions
 
 // TODO
 
