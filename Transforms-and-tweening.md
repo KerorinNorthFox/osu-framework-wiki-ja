@@ -141,7 +141,13 @@ public override void Update()
 
 ## Custom Easing functions
 
-// TODO
+In cases the default `Easing` functions aren't what you want for some transforms, you can define your own `IEasingFunction` and use it on the transform:
+
+```csharp
+public class SpecialEasingFunction : IEasingFunction
+{
+    public double ApplyEasing(double time)
+}
 
 ## Best practices
 
