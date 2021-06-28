@@ -2,11 +2,15 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
-# vNext
+# [2021.628.0](https://github.com/ppy/osu-framework/releases/tag/2021.628.0)
 
 ## `IHasTooltip.Text` is now a `LocalisableString`
 
 `IHasTooltip.Text` now takes a `LocalisableString` instead of  regular string. Users of custom tooltip containers may also have to change checks in the `SetContent()` method of their tooltip type to check if content is a `LocalisableString` instead of a regular string.
+
+## Recently added `GameThread.ThreadPausing` has been removed
+
+This was only added in the previous release, but has since been replaced with the bindable `GameThread.State`, which gives more detail about the current state of the thread.
 
 # [2021.622.0](https://github.com/ppy/osu-framework/releases/tag/2021.622.0)
 
