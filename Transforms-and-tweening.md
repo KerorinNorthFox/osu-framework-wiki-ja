@@ -189,7 +189,7 @@ Scheduler.AddDelay(() =>
 }
 ```
 
-- Note that `ClearTransformsAfter(time)` actually removes transforms starting at the given time (`>=`), not after it (`>`). This was a mistake in naming and will be resolved soon.
+- Note that `ClearTransformsAfter(time)` actually removes transforms starting at the given time, not after it. This was a mistake in naming and will be resolved soon.
 
 ### Applying transforms to the drawable from a different time before removing
 
