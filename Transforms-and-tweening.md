@@ -135,7 +135,7 @@ public override void Update()
 
 Transforms can be interrupted during their application, by finishing them immediately on current time, or removing them and leaving the transformed property at its current state, or rewinding it back to the beginning of the transform.
 
-### Finishing transform immediately
+### Finishing transforms immediately
 
 To finish transforms immediately, use `FinishTransforms` on the drawable whose transforms are still being processed.
 
