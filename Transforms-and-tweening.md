@@ -1,4 +1,4 @@
-A relatively extensive toolchain exists for applying transforms to `Drawable`s. This includes not only the ability to perform common visual adjustments (fade, scale, rotate, colour), but also the ability to arbitrarily perform transforms on any property.
+A relatively extensive toolchain exists for applying transforms to `Drawable`s. This includes not only the ability to perform common visual adjustments (fade, scale, rotate, colour), but also the ability to arbitrarily perform transforms on any field/property belonging to the `Drawable`.
 
 Internally, transforms are a state machine which is build using `TransformSequence`. Multiple transforms can be chained and nested. This page attempts to provide a starting point for understanding how transforms can be used, but there should be plenty of room for exploration beyond this guide via experimentation.
 
@@ -7,7 +7,7 @@ Internally, transforms are a state machine which is build using `TransformSequen
 A simple example which will fade a box into existence:
 
 ```csharp
-var box = new Box { Size = new Vector2(50); }
+var box = new Box { Size = new Vector2(50) }
 
 Add(box); // the target of transforms must always be in the draw hierarchy and loaded before operating on it.
 
@@ -19,7 +19,7 @@ box.FadeInFromZero(500);
 Transforms can be chained in various ways. To run multiple transforms of different types at the same time value, simply chain the calls:
 
 ```csharp
-var box = new Box { Size = new Vector2(50); }
+var box = new Box { Size = new Vector2(50) }
 
 Add(box); // the target of transforms must always be in the draw hierarchy and loaded before operating on it.
 
@@ -31,7 +31,7 @@ box.FadeInFromZero(500)
 To play one transform after another finishes, use `.Then()`:
 
 ```csharp
-var box = new Box { Size = new Vector2(50); }
+var box = new Box { Size = new Vector2(50) }
 
 Add(box); // the target of transforms must always be in the draw hierarchy and loaded before operating on it.
 
@@ -43,7 +43,7 @@ box.FadeInFromZero(500).Then().FadeOut(500); // fade in then out, over 1 second.
 To add a delay to a sequence, you can use `.Delay(ms)`:
 
 ```csharp
-var box = new Box { Size = new Vector2(50); }
+var box = new Box { Size = new Vector2(50) }
 
 Add(box); // the target of transforms must always be in the draw hierarchy and loaded before operating on it.
 
@@ -53,7 +53,9 @@ box.FadeInFromZero(500).Then().Delay(200).FadeOut(500); // fade in then out, ove
 For more complex cases, `BeginDelayedSequence` and `BeginAbsoluteSequence` can help to organise things:
 
 ```csharp
-var box = new Box { Size = new Vector2(50); }
+var box = new Box { Size = new Vector2(50) }
+
+Add(box); // the target of transforms must always be in the draw hierarchy and loaded before operating on it.
 
 using (box.BeginAbsoluteSequence(2000)) // nested calls will run from absolute clock time of 2000ms. by default this applies to all children too.
 {
@@ -64,10 +66,38 @@ using (box.BeginAbsoluteSequence(2000)) // nested calls will run from absolute c
 }
 ```
 
-## Applying to arbitrary properties
+## Applying to arbitrary members (fields/properties)
 
-// TODO
+All specific transform methods such as `.FadeIn(...)`/`.FadeColour(...)` are [methods defined in extension classes](https://github.com/ppy/osu-framework/blob/4dbdb0039c1a1e802dfdaab94698f6d9485e6325/osu.Framework/Graphics/TransformableExtensions.cs#L487-L741) that delegate to the core method `.TransformTo()`, which accepts the name of the member to transform/tween, and the remaining arguments for transforming (duration, easing, etc.).
 
+And that doesn't apply only to the `Drawable` base class, you can apply transforms to any member belonging to your class as long as it inherits `Drawable`, and as long as the member is not `static`, and not a `readonly` field or getter-only/setter-only property.
+
+Example usage of `TransformTo`:
+
+```csharp
+public class SpecialBox : Box
+{
+    public double SpecialProperty { get; set }
+}
+
+var box = new SpecialBox { Size = new Vector2(50), SpecialProperty = 1.0 }
+
+Add(box); // the target of transforms must always be in the draw hierarchy and loaded before operating on it.
+
+box.TransformTo(nameof(SpecialProperty), 10.0, 1000); // transform SpecialProperty from current value to value 10.0, in 1 second.
+```
+
+Example extension class defining specific transforms for ease of applying:
+
+```csharp
+public static class SpecialBoxExtensions
+{
+    public static TransformSequence<T> TweenSpecialPropertyTo(this T specialBox, double newValue, double duration, Easing easing = Easing.None)
+        => specialBox.TransformTo(nameof(SpecialProperty), newValue, duration, easing);
+
+    public static 
+}
+```
 
 ## Manual interpolation
 
