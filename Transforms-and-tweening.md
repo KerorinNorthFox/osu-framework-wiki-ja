@@ -133,7 +133,85 @@ public override void Update()
 
 ## Interrupting transforms
 
-// TODO
+Transforms can be interrupted during their application, by finishing them immediately on current time, or removing them and leaving the transformed property at its current state, or rewinding it back to the beginning of the transform.
+
+### Finishing transform immediately
+
+To finish transforms immediately, use `FinishTransforms` on the drawable whose transforms are still being processed.
+
+```csharp
+var box = new Box { Size = new Vector2(50) }
+
+Add(box); // the target of transforms must always be in the draw hierarchy and loaded before operating on it.
+
+box.FadeInFromZero(1000);
+
+// after 0.5 seconds, finish transforms applied to the box.
+Scheduler.AddDelay(() => 
+{
+    // by default, this only applies to transforms applied to the box itself,
+    // pass `true` to finish transforms of children as well.
+    box.FinishTransforms();
+}, 500);
+```
+
+### Removing transforms
+
+To remove transforms, use `ClearTransforms` on the drawable whose transforms are still being processed.
+
+```csharp
+var box = new Box { Size = new Vector2(50) }
+
+Add(box); // the target of transforms must always be in the draw hierarchy and loaded before operating on it.
+
+box.FadeInFromZero(1000);
+
+// after 0.5 seconds, remove transforms from the box.
+Scheduler.AddDelay(() => 
+{
+    // by default, this only applies to transforms applied to the box itself,
+    // pass `true` to clear transforms of children as well.
+    box.ClearTransforms();
+}, 500);
+```
+
+To remove transforms starting at a certain time, use `ClearTransformsAfter` instead.
+
+```csharp
+box.FadeInFromZero(500).Then().FadeOut(500);
+
+// after 0.5 seconds, remove transforms at current time from the box.
+Scheduler.AddDelay(() =>
+{
+    // by default, this only applies to transforms applied to the box itself,
+    // pass `true` to clear transforms of children as well.
+    box.ClearTransformsAfter(Time.Current);
+}
+```
+
+- Note that `ClearTransformsAfter(time)` actually removes transforms starting at the given time (`>=`), not after it (`>`). This was a mistake in naming and will be resolved soon.
+
+### Applying transforms to the drawable from a different time before removing
+
+Removing transforms will not revert them, the drawable will remain at its current state.
+
+To revert the transform applied to the `Drawable`, or apply them from a given absolute clock time before removing, use `ApplyTransformsAt`.
+```csharp
+var box = new Box { Size = new Vector2(50) }
+
+Add(box); // the target of transforms must always be in the draw hierarchy and loaded before operating on it.
+
+box.FadeInFromZero(1000);
+
+// after 0.5 seconds, revert the transform and remove it from the box.
+Scheduler.AddDelay(() => 
+{
+    // by default, this only applies to transforms applied to the box itself,
+    // pass `true` to clear transforms of children as well.
+    box.ApplyTransformsAt(Time.Current - 500);
+    box.ClearTransforms();
+}, 500);
+```
 
 ## Rewinding support
 
