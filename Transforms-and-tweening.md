@@ -101,12 +101,12 @@ public static class SpecialBoxExtensions
     public static TransformSequence<T> TweenSpecialPropertyTo<T, TEasing>(this T specialBox, double newValue, double duration, in TEasing easing)
         where T : SpecialBox
         where TEasing : IEasingFunction
-        => specialBox.TransformTo(nameof(SpecialProperty), newValue, duration, easing);
+        => specialBox.TransformTo(nameof(SpecialBox.SpecialProperty), newValue, duration, easing);
 
     public static TransformSequence<T> TweenSpecialPropertyTo<T, TEasing>(this TransformSequence<T> t, double newValue, double duration, in TEasing easing)
         where T : SpecialBox
         where TEasing : IEasingFunction
-        => t.Append(o => o.TweenSpecialPropertyTo(newValue, duration, easing);
+        => t.Append(o => o.TweenSpecialPropertyTo(newValue, duration, easing));
 }
 ```
 
