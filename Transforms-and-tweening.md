@@ -139,15 +139,24 @@ public override void Update()
 
 // TODO
 
-## Custom Easing functions
+## Using custom easing functions
 
-In cases the default `Easing` functions aren't what you want for some transforms, you can define your own `IEasingFunction` and use it on the transform:
+In cases the [default `Easing` functions](https://github.com/ppy/osu-framework/blob/fb3029668d12ef14dd43ed9ac71395765daf9efe/osu.Framework/Graphics/Easing.cs) aren't what you want for some transforms, you can define your own `IEasingFunction` and pass it to the transforms:
 
 ```csharp
-public class SpecialEasingFunction : IEasingFunction
+public readonly struct SpecialEasingFunction : IEasingFunction
 {
-    public double ApplyEasing(double time)
+    public double ApplyEasing(double time) => time;
 }
+
+var box = new Box { Size = new Vector2(50) }
+
+Add(box); // the target of transforms must always be in the draw hierarchy and loaded before operating on it.
+
+box.FadeInFromZero(1000, new SpecialEasingFunction());
+```
+
+- `IEasingFunction.ApplyEasing` accepts a time value in the range [0-1], and returns an eased value of it. For examples, you can refer to the [`DefaultEasingFunction`](https://github.com/ppy/osu-framework/blob/d284856a6a7a341ab12f1f1169cac30f4aec8caa/osu.Framework/Graphics/Transforms/DefaultEasingFunction.cs) implementation.
 
 ## Best practices
 
