@@ -68,7 +68,33 @@ using (box.BeginAbsoluteSequence(2000)) // nested calls will run from absolute c
 
 ## Looping
 
-// TODO
+To loop a certain transform sequence, append either of `.Loop(millisecondsPause)`, or `.Loop(millisecondsPause, times)`, depending on how you want the loop to behave:
+
+### `.Loop(millisecondsPause)`
+
+This will loop the transform sequence indefinitely, with a defined pause between each iteration of the loop, until it's [interrupted by one of the interruption methods](wiki/Transforms-and-tweening#interrupting-transforms).
+
+```csharp
+var box = new Box { Size = new Vector2(50) }
+
+Add(box); // the target of transforms must always be in the draw hierarchy and loaded before operating on it.
+
+// indefinitely resizes the box to 75px, then to 50px, with a pause of 250ms at the end of each iteration
+box.ResizeTo(new Vector2(75), 500).Then().ResizeTo(new Vector2(50), 250).Loop(250);
+```
+
+### `.Loop(millisecondsPause, times)`
+
+Just like the above, except that it will loop for a defined number of times, not indefinitely.
+
+```csharp
+var box = new Box { Size = new Vector2(50) }
+
+Add(box); // the target of transforms must always be in the draw hierarchy and loaded before operating on it.
+
+// for 5 times, resize the box to 75px, then to 50px, with a pause of 250ms at the end of each iteration
+box.ResizeTo(new Vector2(75), 500).Then().ResizeTo(new Vector2(50), 250).Loop(250, 5);
+```
 
 ## Applying to arbitrary members (fields/properties)
 
