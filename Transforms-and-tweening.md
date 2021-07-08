@@ -66,6 +66,10 @@ using (box.BeginAbsoluteSequence(2000)) // nested calls will run from absolute c
 }
 ```
 
+## Looping
+
+// TODO
+
 ## Applying to arbitrary members (fields/properties)
 
 All specific transform methods such as `.FadeIn(...)`/`.FadeColour(...)` are [methods defined in extension classes](https://github.com/ppy/osu-framework/blob/4dbdb0039c1a1e802dfdaab94698f6d9485e6325/osu.Framework/Graphics/TransformableExtensions.cs#L487-L741) that delegate to the core method `.TransformTo()`, which accepts the name of the member to transform/tween, and the remaining arguments for transforming (duration, easing, etc.).
