@@ -2,6 +2,31 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2021.721.0](https://github.com/ppy/osu-framework/releases/tag/2021.721.0)
+
+## `PlatformAction` type is changed to an enum type
+
+If `PlatformAction.ActionType` was matched, change to a matching of `PlatformAction` itself like:
+
+```diff
+bool OnPressed(PlatformAction action) {
+-    switch (action.ActionType)
++    switch (action)
+    {
+-        case PlatformActionType.Cut:
++        case PlatformAction.Cut:
+```
+
+For `PlatformActionMethod.Delete`, and if only the Delete key should be handled (not Backspace etc.), change to `PlatformAction.Delete`:
+
+```diff
+-    switch (action.ActionMethod)
++    switch (action)
+    {
+-        case PlatformActionMethod.Delete:
++        case PlatformAction.Delete:
+```
+
 # [2021.628.0](https://github.com/ppy/osu-framework/releases/tag/2021.628.0)
 
 ## `IHasTooltip.Text` is now a `LocalisableString`
