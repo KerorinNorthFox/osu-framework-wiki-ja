@@ -2,6 +2,63 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2021.803.0](https://github.com/ppy/osu-framework/releases/tag/2021.803.0)
+
+## `EnumLocalisationMapper` for enum localisation has been replaced with per-member `LocalisableDescription` attributes
+
+As the current way for localising `enum`s require a side-class for the mapping, it became a tedious procedure to localise enums and lengthens a lot of files for supporting such.
+
+Therefore a new `LocalisableDescription` attribute has been added allowing for localisation in a more performant and single-lined way.
+
+```diff
+-    [LocalisableEnum(typeof(SearchEnumLocalisationMapper))]
+     public enum Search
+     {
++        [LocalisableDescription(typeof(Strings), nameof(Strings.SearchHide))]
+         Hide,
+-        Show
+-    }
+-
+-    public class SearchEnumLocalisationMapper : EnumLocalisationMapper<Search>
+-    {
+-        public override LocalisableString Map(Search value)
+-        {
+-            switch (value)
+-            {
+-                case Search.Hide:
+-                    return Strings.SearchHide;
+-
+-                case Search.Show:
+-                    return Strings.SearchShow;
+
+-                default:
+-                    throw new ArgumentOutOfRangeException(nameof(value), value, null);
+-            }
+-        }
++        [LocalisableDescription(typeof(Strings), nameof(Strings.SearchShow))]
++        Show
+     }
+```
+
+This however require from all consumers to store the `LocalisableString`s in static providing classes, similar to [osu!'s `Strings` classes](https://github.com/ppy/osu/tree/master/osu.Game/Localisation).
+
+Benchmarks:
+- `EnumLocalisationMapper`:
+    |                    Method | Times |          Mean |       Error |       StdDev |        Median |
+    |-------------------------- |------ |--------------:|------------:|-------------:|--------------:|
+    | GetLocalisableDescription |     1 |      6.866 us |   0.5021 us |     1.383 us |      6.316 us |
+    | GetLocalisableDescription |    10 |     93.360 us |   4.9223 us |    13.883 us |     92.744 us |
+    | GetLocalisableDescription |   100 |    817.775 us |  31.0268 us |    90.996 us |    812.132 us |
+    | GetLocalisableDescription |  1000 | 10,794.319 us | 820.1783 us | 2,392.498 us | 10,718.182 us |
+
+- `LocalisableDescription`:
+    |                    Method | Times |         Mean |       Error |      StdDev |       Median |
+    |-------------------------- |------ |-------------:|------------:|------------:|-------------:|
+    | GetLocalisableDescription |     1 |     4.631 us |   0.1148 us |   0.3331 us |     4.514 us |
+    | GetLocalisableDescription |    10 |    54.555 us |   1.3511 us |   3.9412 us |    54.440 us |
+    | GetLocalisableDescription |   100 |   540.643 us |  15.9231 us |  45.6864 us |   539.138 us |
+    | GetLocalisableDescription |  1000 | 7,218.708 us | 270.7659 us | 768.1179 us | 7,192.596 us |
+
 # [2021.721.0](https://github.com/ppy/osu-framework/releases/tag/2021.721.0)
 
 ## `PlatformAction` type is changed to an enum type
