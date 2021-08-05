@@ -35,6 +35,8 @@ private void load(ITrackStore tracks)
     track.Volume.Value = 0.8;
 }
 
+// The following examples demonstrate usage of the raw Track object, but DrawableTrack can be used interchangeably.
+
 private bool playing;
 
 protected override bool OnClick(ClickEvent e)
