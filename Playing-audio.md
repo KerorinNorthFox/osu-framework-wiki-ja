@@ -74,7 +74,7 @@ protected override void Dispose(bool isDisposing)
 
 In order to retrieve tracks from a different location than the default `Resources/Tracks/` directory, a custom track store is required.
 
-To create a custom track store, pass a `ResourceStore` to `AudioManager.GetTrackStore()`. This will return an `ITrackStore` to be used for future lookups. The custom track store will have its audio (e.g. volume) adjusted by the global sample store
+To create a custom track store, pass a `ResourceStore` to `AudioManager.GetTrackStore()`. This will return an `ITrackStore` to be used for future lookups. The custom track store will have its audio (e.g. volume) adjusted by the global track store.
 
 ```csharp
 [BackgroundDependencyLoader]
@@ -173,7 +173,7 @@ protected override void Dispose(bool isDisposing)
 
 In order to retrieve samples from a different location than the default `Resources/Samples/` directory, a custom sample store is required.
 
-To create a custom sample store, pass a `ResourceStore` to `AudioManager.GetSampleStore()`. This will return an `ISampleStore` to be used for future lookups. The custom sample store will have its audio (e.g. volume) adjusted by the global sample store
+To create a custom sample store, pass a `ResourceStore` to `AudioManager.GetSampleStore()`. This will return an `ISampleStore` to be used for future lookups. The custom sample store will have its audio (e.g. volume) adjusted by the global sample store.
 
 ```csharp
 [BackgroundDependencyLoader]
