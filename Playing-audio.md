@@ -10,6 +10,8 @@ Samples are a mechanism for fast and concurrent playback of short audio clips. T
 - **`Sample`**: The sample, which is typically stored by the `Drawable` object in some fashion - either as the raw `Sample` or nested inside a `DrawableSample` object. Used in order to retrieve and play one or more `SampleChannel`s.
 - **`SampleChannel`**: The object which plays audio. This is typically fired-and-forgotten, with special cases in-case looping, adjusting volume/balance/frequency, or stopping audio playback is required.
 
+The global sample store provides access to all `.wav` and `.mp3` files placed in the application's `Resources/Samples/` directory.
+
 The following is a typical usage pattern:
 ```cs
 private Sample sample;
