@@ -10,7 +10,7 @@
  * [Handling Input](/ppy/osu-framework/wiki/Handling-input-events)
  * [Asynchronous loading](/ppy/osu-framework/wiki/Asynchronous-loading)
  * [Dependency Injection](/ppy/osu-framework/wiki/Dependency-Injection)
- * [Playing Audio](https://github.com/ppy/osu-framework/wiki/Playing-Audio)
+ * [Playing audio](https://github.com/ppy/osu-framework/wiki/Playing-audio)
  * [Screens and Screen Stacks](/ppy/osu-framework/wiki/Screens-and-Screen-Stacks)
  * [Transforms and tweening](/ppy/osu-framework/wiki/Transforms-and-Tweening)
  * [Coordinate and Layout System](/ppy/osu-framework/wiki/Coordinate-and-Layout-System)
