@@ -80,6 +80,10 @@ protected override void Dispose(bool isDisposing)
 }
 ```
 
+## Virtual samples
+
+`SampleVirtual` can be used as a sane fallback value for cases where a non-null `Sample` is always required.
+
 # Mixing
 
 All `SampleChannel` and `Track` audio (hereby referred to as a "channel") is routed through an `AudioMixer`. DSP effects can be applied to the `AudioMixer` to change the resultant audio of channels routed through it independent of other `AudioMixers` in the game.
