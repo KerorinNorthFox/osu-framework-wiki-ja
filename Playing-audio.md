@@ -86,6 +86,21 @@ protected override void Dispose(bool isDisposing)
 
 `SampleVirtual` can be used as a sane fallback value for cases where a non-null `Sample` is always required.
 
+## Custom sample stores
+
+In order to retrieve samples from a different location than the default `Resources/Samples/` directory, a custom sample store is required.
+
+To create a custom sample store, pass a `ResourceStore` to `AudioManager.GetSampleStore()`. This will return an `ISampleStore` to be used for future lookups. The custom sample store will have its audio (e.g. volume) adjusted by the global sample store
+
+```csharp
+[BackgroundDependencyLoader]
+private void load(AudioManager audio)
+{
+    var sampleStore = audio.GetSampleStore(new ResourceStore<byte[]>(...));
+    sampleStore.Get("test-sample.mp3");
+}
+```
+
 # Mixing
 
 All `SampleChannel` and `Track` audio (hereby referred to as a "channel") is routed through an `AudioMixer`. DSP effects can be applied to the `AudioMixer` to change the resultant audio of channels routed through it independent of other `AudioMixers` in the game.
