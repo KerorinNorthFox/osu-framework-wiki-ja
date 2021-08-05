@@ -2,7 +2,7 @@
 
 Tracks are for playing single-instanced long-form audio. They offer the widest variety of adjustments possible, but are expensive and not recommended to be used for quick-fire or concurrent audio playback.
 
-- **`ITrackStore`**: Used to retrieve `Track` objects. The global track store is accessible through either `AudioManager.Tracks` or by resolving an `ITrackStore` dependency into the `Drawable` object.
+- **`ITrackStore`**: Used to retrieve `Track` objects. The global track store is accessible through either `AudioManager.Tracks` or by [resolving](/ppy/osu-framework/wiki/Dependency-Injection) an `ITrackStore` dependency into the `Drawable` object.
 - **`Track`**: The track, which is usually stored at a somewhat global level and played as required.
 
 The global track store provides access to all `.mp3` files placed in the application's `Resources/Tracks/` directory.
@@ -87,7 +87,7 @@ private void load(AudioManager audio)
 
 Samples are for fast and concurrent playback of short audio clips. They feature automatic memory management with the intention of being fired-and-forgotten, but lack some notable features of `Track` such as time tracking, seeking, tempo adjustments, and on-demand restarting of playback.
 
-- **`ISampleStore`**: Used to retrieve `Sample` objects. The global sample store is accessible through either `AudioManager.Samples` or by resolving an `ISampleStore` dependency into the `Drawable` object.
+- **`ISampleStore`**: Used to retrieve `Sample` objects. The global sample store is accessible through either `AudioManager.Samples` or by [resolving](/ppy/osu-framework/wiki/Dependency-Injection) an `ISampleStore` dependency into the `Drawable` object.
 - **`Sample`**: The sample, which is typically stored by the `Drawable` object in some fashion - either as the raw `Sample` or nested inside a `DrawableSample` object. Used in order to retrieve and play one or more `SampleChannel`s.
 - **`SampleChannel`**: The object which plays audio. This is typically fired-and-forgotten, with special cases in-case looping, adjusting volume/balance/frequency, or stopping audio playback is required.
 
