@@ -2,6 +2,33 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2021.818.0](https://github.com/ppy/osu-framework/releases/tag/2021.818.0)
+
+## All custom implementations of `IBindable` must implement `CreateInstance()`
+
+Bindables previously used `Activator.CreateInstance()` to implement the `GetBoundCopy()` call. In profiling this has turned out to be a bottleneck in some scenarios, so in order to reduce the associated runtime overhead to about half, all implementors of `IBindable` now must implement `CreateInstance()`.
+
+This also applies to all inheritors of framework-provided bindable types, who must instead override `CreateInstance()` from their base types.
+
+For a given leaf bindable type in the inheritance hierarchy, the method should return a new constructed instance of the leaf type. The recommended pattern to use is as follows:
+
+```csharp
+public class BaseBindable : IBindable
+{
+    IBindable IBindable.CreateInstance() => CreateInstance();
+    protected virtual BaseBindable CreateInstance() => new BaseBindable();
+
+    IBindable IBindable.GetBoundCopy() => GetBoundCopy();
+    public BaseBindable GetBoundCopy()
+        => IBindable.GetBoundCopyImplementation(this); // automatically calls CreateInstance()
+}
+
+public sealed class CustomBindable : BaseBindable
+{
+    protected override BaseBindable CreateInstance() => new CustomBindable();
+}
+```
+
 # [2021.803.0](https://github.com/ppy/osu-framework/releases/tag/2021.803.0)
 
 ## `EnumLocalisationMapper` for enum localisation has been replaced with per-member `LocalisableDescription` attributes
