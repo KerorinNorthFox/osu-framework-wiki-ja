@@ -2,6 +2,37 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2021.830.0](https://github.com/ppy/osu-framework/releases/tag/2021.830.0)
+
+## `ITooltip.SetContent` no longer require returning `bool` value
+
+Until now, the method of reusing tooltip instances was problematic (two tooltips handling the same data type could not exist). Instance sharing is now based on the constructed tooltip's `Type`, rather than the data type.
+
+An example of how you should update your code follows.
+
+Before:
+
+```csharp
+public override bool SetContent(object content)
+{
+    if (!(content is CustomContent custom))
+        return false;
+
+    text.Text = content.ToString(); // whatever you need to do here.
+    return true;
+}
+```
+
+After:
+
+```csharp
+public override void SetContent(object content)
+{
+    text.Text = content.ToString(); // whatever you need to do here.
+}
+```
+
+
 # [2021.818.0](https://github.com/ppy/osu-framework/releases/tag/2021.818.0)
 
 ## All custom implementations of `IBindable` must implement `CreateInstance()`
