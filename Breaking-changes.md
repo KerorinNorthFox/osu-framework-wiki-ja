@@ -4,7 +4,7 @@ This page serves to give a list of all breaking/major changes.
 
 # [2021.907.0](https://github.com/ppy/osu-framework/releases/tag/2021.907.0)
 
-## `AnimationClockComposite.PlaybackPosition` can no longer go below 0 (https://github.com/ppy/osu-framework/pull/4751)
+## `AnimationClockComposite.PlaybackPosition` can no longer go below 0
 
 This is not a change to actual playback behaviour - it only affects the return value of the playback position, which now matches the underlying playback behaviour.
 
