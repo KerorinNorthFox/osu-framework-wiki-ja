@@ -2,6 +2,12 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2021.907.0](https://github.com/ppy/osu-framework/releases/tag/2021.907.0)
+
+## `AnimationClockComposite.PlaybackPosition` can no longer go below 0 (https://github.com/ppy/osu-framework/pull/4751)
+
+This is not a change to actual playback behaviour - it only affects the return value of the playback position, which now matches the underlying playback behaviour.
+
 # [2021.830.0](https://github.com/ppy/osu-framework/releases/tag/2021.830.0)
 
 ## `ITooltip.SetContent` no longer require returning `bool` value
