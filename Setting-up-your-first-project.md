@@ -23,7 +23,7 @@ To get started, a custom osu! game base project has been made available as a tem
 
 1. In your command line utility of choice, navigate to the folder in which you want to create the project.
 2. Make sure the `osu-framework`  project template is downloaded by running `dotnet new -i ppy.osu.Framework.Templates`.
-3. Run `dotnet new osu-framework-game -n <MyNewProjectName>` to generate a new folder containing the project.
+3. Run `dotnet new osu-framework-game -n <MyNewProjectName>` to generate a new folder containing the project. **IMPORTANT: Do not use spaces or hyphens in your project name. This does not play nice with the templating system.**
 4. Open the folder, and open `MyNewProjectName.sln` to begin!
 
 > In addition to the `osu-framework-game` template, a template named `osu-framework-flappy-game` is also available which serves as an example of creating a basic, but feature complete game with `osu-framework`.
