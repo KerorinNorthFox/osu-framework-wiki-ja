@@ -169,5 +169,5 @@ class MyDrawable : CompositeDrawable
 
 The following hierarchical relationship of input events can be useful to know when drilling down with the [aggregate event handler](#Aggregate-event-handler).
 
-![Input Events](https://user-images.githubusercontent.com/1329837/110741022-4d07ad80-8277-11eb-9205-568b26740ff1.png)
+![Input Events](https://user-images.githubusercontent.com/1329837/133580446-af8066f8-06ac-43e9-8545-c330543a3a5a.png)
 [source](https://drive.google.com/file/d/1sNpncJJsD4YKk5vkTEN88E51IbUhChUI/view?usp=sharing)
