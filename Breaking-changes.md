@@ -17,7 +17,7 @@ To allow for more arguments without changing the signature of the handling metho
 + public void OnReleased(KeyBindingReleaseEvent<T> e) { }
 ```
 
-The following regex replacements can be used for easy migration:
+The following regex replacements can be used to simplify migration:
 ```
 Find: bool OnPressed\((\w+)\s+(\w+)\)
 Replace: bool OnPressed(KeyBindingPressEvent<$1> e)
