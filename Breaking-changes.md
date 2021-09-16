@@ -2,6 +2,21 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `IKeyBindingHandler<T>` and `IScrollBindingHandler<T>` now provide `UIEvent`s
+
+To allow for more arguments without changing the signature of the handling methods, and also for consistency with the input flow in general, both interfaces now provide `UIEvent`s rather than placing each parameter directly on the methods.
+
+```diff
+- public bool OnPressed(T action) { }
+- public bool OnScroll(T action, float amount, bool isPrecise) { }
+- public void OnReleased(T action) { }
++ public bool OnPressed(KeyBindingPressEvent<T> e) { }
++ public bool OnScroll(KeyBindingScrollEvent<T> e) { }
++ public void OnReleased(KeyBindingReleaseEvent<T> e) { }
+```
+
 # [2021.907.0](https://github.com/ppy/osu-framework/releases/tag/2021.907.0)
 
 ## `AnimationClockComposite.PlaybackPosition` can no longer go below 0
