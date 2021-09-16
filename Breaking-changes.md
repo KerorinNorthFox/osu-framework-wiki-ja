@@ -17,6 +17,18 @@ To allow for more arguments without changing the signature of the handling metho
 + public void OnReleased(KeyBindingReleaseEvent<T> e) { }
 ```
 
+The following regex replacements can be used for easy migration:
+```
+Find: bool OnPressed\((\w+)\s+(\w+)\)
+Replace: bool OnPressed(KeyBindingPressEvent<$1> e)
+
+Find: void OnReleased\((\w+)\s+(\w+)\)
+Replace: void OnReleased(KeyBindingReleaseEvent<$1> e)
+
+Find: bool OnScroll\((\w+) (\w+), float \w+, bool \w+\)
+Replace: bool OnScroll(KeyBindingScrollEvent<$1> e)
+```
+
 # [2021.907.0](https://github.com/ppy/osu-framework/releases/tag/2021.907.0)
 
 ## `AnimationClockComposite.PlaybackPosition` can no longer go below 0
