@@ -24,6 +24,7 @@
  * [Frame Statistics](/ppy/osu-framework/wiki/Debug-Overlays:-Frame-Statistics-Overlay)
  * [Logging](/ppy/osu-framework/wiki/Debug-Overlays:-Log-Overlay)
 ## Understanding Framework Internals
+ * [Threading](/ppy/osu-framework/wiki/Threading)
  * [Input handler event flow](/ppy/osu-framework/wiki/Diagram:-From-input-handlers-to-events)
  * [Drawable loading](/ppy/osu-framework/wiki/Diagram:-Loading-of-a-drawable)
  * [Window backends and classes](/ppy/osu-framework/wiki/Window-classes-and-alternate-backends)
