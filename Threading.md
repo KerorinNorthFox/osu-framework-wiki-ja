@@ -55,6 +55,10 @@ While the above use case is to be considered the primary one for schedulers, the
 In general schedulers are a powerful tool, but ones that should be used carefully, as they change the usual flow of operations and therefore delay their effects.
 Nesting schedules, or having chains of scheduled operations will complicate debugging significantly.
 
+## Audio components
+
+Note that when using `AudioComponent` and its derived classes (`SampleChannel`, `Track`) there is no inherent need to schedule operations like `Play()` or `Stop()`. The components themselves internally ensure that the operations to be executed are correctly enqueued onto the audio thread.
+
 # Asynchronous disposal
 
 All drawables/components in a game, upon being removed from their parent `CompositeDrawable`s, are enqueued onto a game-global async disposal queue.
