@@ -36,3 +36,15 @@ sed -i "" -e "s/<PackageReference Include=\"ppy\.osu\.Framework\".*$/<ProjectRef
 sed -i "" -e "s/<PackageReference Include=\"ppy\.osu\.Framework\.iOS\".*$/<ProjectReference Include=\"..\/..\/osu-framework\/osu.Framework.iOS\/osu.Framework.iOS.csproj\" \/>/g" $PROPS;
 dotnet sln $SLN add ../osu-framework/osu.Framework/osu.Framework.csproj ../osu-framework/osu.Framework.iOS/osu.Framework.iOS.csproj ../osu-framework/osu.Framework.NativeLibs/osu.Framework.NativeLibs.csproj;
 ```
+
+in **addition**, for Android:
+
+powershell:
+
+```powershell
+$PROPS="osu.Android.props"
+$SLN="osu.sln"
+
+dotnet sln $SLN add ../osu-framework/osu.Framework.Android/osu.Framework.Android.csproj;
+((Get-Content -Path $PROPS) -replace '<PackageReference Include="ppy\.osu\.Framework\.Android" .*',"<ProjectReference Include=`"../../osu-framework/osu.Framework/osu.Framework.csproj`" />`n    <ProjectReference Include=`"../../osu-framework/osu.Framework.Android/osu.Framework.Android.csproj`" />") | Set-Content -Path $PROPS
+```
