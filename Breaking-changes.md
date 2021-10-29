@@ -2,6 +2,16 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2021.1029.0](https://github.com/ppy/osu-framework/releases/tag/2021.1029.0)
+
+## `TextFlowContainer` no longer returns raw `SpriteText`s, returning `ITextPart`s instead
+
+In preparation for adding localisation support to `TextFlowContainer`s, the various `AddText()`/`AddLine()` overloads will no longer return raw `SpriteText`s. Instead, an `ITextPart` structure will be returned.
+
+Via `ITextPart`, the consumer can both access all `Drawables` associated with a given piece of text, as well as react to any future changes in representation of the text by subscribing to `DrawablePartsRecreated`. In the future, with more localisation changes, this event will be invoked once a `LocalisableString`'s displayable content changes, which will trigger a recreation of all parts' drawables, upon which any manual adjustments applied to `Drawables` can be re-applied again.
+
+For consumers wanting to implement their own `ITextPart`s to extend the functionality of `TextFlowContainer`, an abstract `TextPart` is also provided which implements the typical flow of handling `Drawables` and `DrawablePartsRecreated`. The only thing that a consumer has to do when inheriting that class is to implement `CreateDrawablesFor(TextFlowContainer)`.
+
 # [2021.916.1](https://github.com/ppy/osu-framework/releases/tag/2021.916.1)
 
 ## `IKeyBindingHandler<T>` and `IScrollBindingHandler<T>` now provide `UIEvent`s
