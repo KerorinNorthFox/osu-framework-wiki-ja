@@ -2,6 +2,22 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2021.1106.0](https://github.com/ppy/osu-framework/releases/tag/2021.1106.0)
+
+## `BufferedContainer.CacheDrawnFrameBuffer` has been moved to a constructor argument
+
+```csharp
+// old code:
+var bufferedContainer = new BufferedContainer() { CacheDrawnFrameBuffer = true };
+
+// new code:
+var bufferedContainer = new BufferedContainer(cachedFrameBuffer: true);
+```
+
+## `IEffect.CacheDrawnEffect` has been removed
+
+We had no usages of this. If you were using it, nest the effected content in a `BufferedContainer` with `cachedFrameBuffer` set to `true`.
+
 # [2021.1029.0](https://github.com/ppy/osu-framework/releases/tag/2021.1029.0)
 
 ## `TextFlowContainer` no longer returns raw `SpriteText`s, returning `ITextPart`s instead
