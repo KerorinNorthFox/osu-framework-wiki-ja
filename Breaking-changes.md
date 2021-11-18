@@ -2,6 +2,36 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2021.1118.0](https://github.com/ppy/osu-framework/releases/tag/2021.1118.0)
+
+## `KeyBindingContainer` now sends key repeat events by default
+
+`KeyBindingContainers` are commonly used in UI, where we expect to be able to receive key repeats. Historically this was controlled by the `SendRepeats` flag, but now that all events send `KeyBindingPressEvent` with a repeat argument, handling this legacy mode of operation was causing more issues that it was worth. The default expectation should be that repeats arrive.
+
+For cases where key repeat may not be wanted (ie. gameplay, where your code is in complete control of user input and doesn't want to receive arbitrary key repeat events), you may opt out of receiving them by creating a subclass of `KeyBindingContainer`:
+
+```csharp
+public class NoRepeatKeyBindingContainer : KeyBindingContainer<T>
+{
+    protected override bool HandleRepeats => false;
+}
+```
+
+Alternatively, if you have only certain cases which you wish to opt out of, you can early return in your `OnPressed` implementation:
+
+```csharp
+public bool OnPressed(KeyBindingPressEvent<MyAction> e)
+{
+    if (e.Repeat)
+        return false;
+
+    if (e.Action == MyAction.Action)
+    {
+       ...
+    }
+}
+```
+
 # [2021.1106.0](https://github.com/ppy/osu-framework/releases/tag/2021.1106.0)
 
 ## `BufferedContainer.CacheDrawnFrameBuffer` has been moved to a constructor argument
