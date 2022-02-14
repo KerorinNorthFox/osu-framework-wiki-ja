@@ -2,6 +2,20 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2022.214.0](https://github.com/ppy/osu-framework/releases/tag/2022.214.0)
+
+## `InputManager.ChangeFocus()` will no longer switch focus to drawables that are not alive, not present or do not have a parent
+
+To avoid unusual scenarios concerning `ChangeFocus()`, wherein a drawable could potentially request focus and have focus automatically taken away from it every frame, `ChangeFocus()` now checks whether a drawable is alive, present and has a parent before switching focus to the requested target.
+
+This potentially breaks scenarios such as calling `ChangeFocus()` in `LoadComplete()` on a child drawable with the expectation that the child drawable should receive focus as soon as its ancestor is added to the draw hierarchy. In such scenarios, the suggested fix is to schedule the `ChangeFocus()` operation after children so that it is performed only when the child is fully prepared to receive focus.
+
+In general it is recommended to check the return value of `ChangeFocus()` to determine as to whether focus was actually changed.
+
+## `CompositeDrawable.BorderColour` has changed type from `SRGBColour` to `ColourInfo`
+
+To facilitate gradiented border support, the type of `CompositeDrawable.BorderColour` has changed from `SRGBColour` to `ColourInfo`. While some implicit conversions from `SRGBColour` to `ColourInfo` exist, some properties of `SRGBColour` are not available on `ColourInfo`, as the latter does not always represent a single colour, and may require appropriate adjustments.
+
 # [2021.1118.0](https://github.com/ppy/osu-framework/releases/tag/2021.1118.0)
 
 ## `KeyBindingContainer` now sends key repeat events by default
