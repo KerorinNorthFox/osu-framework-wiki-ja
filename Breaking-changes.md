@@ -6,7 +6,7 @@ This page serves to give a list of all breaking/major changes.
 
 ## `InputManager.ChangeFocus()` will no longer switch focus to drawables that are not alive, not present or do not have a parent
 
-To avoid unusual scenarios concerning `ChangeFocus()`, wherein a drawable could potentially request focus and have focus automatically taken away from it every frame, `ChangeFocus()` now checks whether a drawable is alive, present and has a parent before switching focus to the requested target.
+To avoid unusual scenarios concerning `ChangeFocus()`, wherein a drawable could potentially request focus and have focus automatically taken away from it every frame, `ChangeFocus()` now checks whether the target drawable is alive, present and has a parent before switching focus to it.
 
 This potentially breaks scenarios such as calling `ChangeFocus()` in `LoadComplete()` on a child drawable with the expectation that the child drawable should receive focus as soon as its ancestor is added to the draw hierarchy. In such scenarios, the suggested fix is to schedule the `ChangeFocus()` operation after children so that it is performed only when the child is fully prepared to receive focus.
 
