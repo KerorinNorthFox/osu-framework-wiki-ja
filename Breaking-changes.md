@@ -2,6 +2,28 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+### Visual test projects now use native .NET 6 "Hot reload"
+
+Over the years we have maintained our own version of hot reload, affectionately named "dynamic compilation". Even after multiple complete rewrites of the system, there are still edge cases where it will unexpectedly fall over due to being too greedy in including what it considers required for the recompile.
+
+
+The startup cost when running in debug was considerable (around 10-30s initialisation) and the first-compile overhead could also be high (5-60s). In addition, the dependencies required to make it work increased the final assembly size of osu!framework, even for release deploys.
+
+With the introduction of cross-platform support for hot reload in .NET 6 we have made the decision to switch to the natively supported version.
+
+To use this new version:
+- From Rider, you'll get a popup that you have to click "Apply Changes" when a change is made to code while running. You can bind a key to `Apply Hot Reload Changes` in Rider (defaults to Alt+F10) to make it quicker to apply changes.
+- Running `dotnet watch` from CLI on your test project will automatically watch files and recompile when a hange is seen.
+
+New limitations:
+- The limitations of hot reload are [listed here](https://github.com/dotnet/roslyn/blob/main/docs/wiki/EnC-Supported-Edits.md).
+- Notably, adding new `override` methods or `class`es are not supported. You can workaround this for the common scenario of prototyping new components by creating subclasses and adding the `override` methods before the initial hot reload.
+
+We are interested in hearing feedback on this change, especially troubling cases where the previous behaviour worked better for you. Hope is that the limitations of the new method are outweighed by the leaner assembly, better performance, and (in general) up-front error when a change can't be applied, rather than an error that can be delayed longer than it would take to run a full recompile/restart.
+
+
 # [2022.214.0](https://github.com/ppy/osu-framework/releases/tag/2022.214.0)
 
 ## `InputManager.ChangeFocus()` will no longer switch focus to drawables that are not alive, not present or do not have a parent
