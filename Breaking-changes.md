@@ -2,7 +2,7 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
-# vNext
+# [2022.223.0](https://github.com/ppy/osu-framework/releases/tag/2022.223.0)
 
 ### Visual test projects now use native .NET 6 "Hot reload"
 
