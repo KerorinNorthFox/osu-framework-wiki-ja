@@ -5,13 +5,13 @@ shell:
 CSPROJ="osu.Game/osu.Game.csproj"
 SLN="osu.sln"
 
-dotnet remove $CSPROJ package ppy.osu.Framework;
-dotnet sln $SLN add ../osu-framework/osu.Framework/osu.Framework.csproj ../osu-framework/osu.Framework.NativeLibs/osu.Framework.NativeLibs.csproj;
+dotnet remove $CSPROJ package ppy.osu.Framework
+dotnet sln $SLN add ../osu-framework/osu.Framework/osu.Framework.csproj ../osu-framework/osu.Framework.NativeLibs/osu.Framework.NativeLibs.csproj
 dotnet add $CSPROJ reference ../osu-framework/osu.Framework/osu.Framework.csproj
 
 SLNF="osu.Desktop.slnf"
 tmp=$(mktemp)
-jq '.solution.projects += ["../osu-framework/osu.Framework/osu.Framework.csproj", "../osu-framework/osu.Framework/osu.Framework.NativeLibs.csproj"]' osu.Desktop.slnf > $tmp
+jq '.solution.projects += ["../osu-framework/osu.Framework/osu.Framework.csproj", "../osu-framework/osu.Framework.NativeLibs/osu.Framework.NativeLibs.csproj"]' osu.Desktop.slnf > $tmp
 mv -f $tmp $SLNF
 ```
 
