@@ -4,7 +4,7 @@ This page serves to give a list of all breaking/major changes.
 
 # [2022.421.0](https://github.com/ppy/osu-framework/releases/tag/2022.421.0)
 
-### `IScreen` navigation interface methods now receive an "event args" structure
+## `IScreen` navigation interface methods now receive an "event args" structure
 
 To allow adding more data to `IScreen` navigation interface methods in the future without further API breakage, their signatures have been changed to include an "event args" structure in the following manner:
 
@@ -28,7 +28,7 @@ Additionally, `ScreenExitEvent` contains a new `Destination` member, that allows
 
 # [2022.223.0](https://github.com/ppy/osu-framework/releases/tag/2022.223.0)
 
-### Visual test projects now use native .NET 6 "Hot reload"
+## Visual test projects now use native .NET 6 "Hot reload"
 
 Over the years we have maintained our own version of hot reload, affectionately named "dynamic compilation". Even after multiple complete rewrites of the system, there are still edge cases where it will unexpectedly fall over due to being too greedy in including what it considers required for the recompile.
 
