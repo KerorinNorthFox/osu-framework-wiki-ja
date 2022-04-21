@@ -2,6 +2,30 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2022.421.0](https://github.com/ppy/osu-framework/releases/tag/2022.421.0)
+
+### `IScreen` navigation interface methods now receive an "event args" structure
+
+To allow adding more data to `IScreen` navigation interface methods in the future without further API breakage, their signatures have been changed to include an "event args" structure in the following manner:
+
+```diff
+- void OnEntering(IScreen last);
++ void OnEntering(ScreenTransitionEvent e);
+
+- void OnExiting(IScreen next);
++ void OnExiting(ScreenExitEvent e);
+
+- void OnResuming(IScreen last);
++ void OnResuming(ScreenTransitionEvent e);
+
+- void OnSuspending(IScreen next);
++ void OnSuspending(ScreenTransitionEvent e);
+```
+
+The `last` and `next` arguments from the old signatures can now be accessed via `e.Last` and `e.Next` respectively.
+
+Additionally, `ScreenExitEvent` contains a new `Destination` member, that allows to specify which screen is the "destination" screen of an exit operation spanning multiple screens.
+
 # [2022.223.0](https://github.com/ppy/osu-framework/releases/tag/2022.223.0)
 
 ### Visual test projects now use native .NET 6 "Hot reload"
