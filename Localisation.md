@@ -1,8 +1,6 @@
 ## `LocalisableString`
 
-Localisation in `osu-framework` is built mainly with extensibility in mind, consisting of a `LocalisableString` descriptor which UI controls accept for text display, and which can hold different types of implementation confronting to `ILocalisableStringData`, either provided by the framework or implemented by the consumer.
-
-The framework provides a number of essential string implementations for basic localisation support.
+Localisation in `osu-framework` revolves around the `LocalisableString` class, which UI controls and text destinations accept in place of `string`. This page explains the provided methods of interacting with `LocalisableString`, but further customisation is also possible by implementing `ILocalisableStringData` directly.
 
 ### `LocalisableFormattableString`
 
