@@ -136,8 +136,13 @@ This can be achieved by creating a `LocalisationManager` subclass that overrides
         {
             public readonly int Custom;
 
+            protected CustomLocalisationParameters(CustomLocalisationParameters parameters)
+                : base(parameters, parameters.Custom)
+            {
+            }
+
             public CustomLocalisationParameters(LocalisationParameters parameters, int custom)
-                : base(parameters.Store, parameters.PreferOriginalScript)
+                : base(parameters)
             {
                 Custom = custom;
             }
