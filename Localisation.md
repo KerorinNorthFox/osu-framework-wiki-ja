@@ -156,3 +156,50 @@ This can be achieved by creating a `LocalisationManager` subclass that overrides
             return /* localisation logic */;
         }
 ```
+
+## `LocalisableDescriptionAttribute`
+
+Represents an attribute for assigning localised description strings to classes/enums, similar to `DescriptionAttribute`. 
+
+Since attributes in general only allow constant input, the `LocalisableString`s to use for the attribute must be stored statically in a public field or a property:
+```csharp
+public static class Strings
+{
+    public static LocalisableString Class => ...;
+    public static LocalisableString EnumOne => ...;
+    public static LocalisableString EnumTwo => ...;
+    public static LocalisableString EnumThree => ...;
+}
+```
+
+The way `LocalisableDescriptionAttribute` works is by specifying the `Type` of the class containing the `LocalisableString` member, followed by the name of said member for lookup:
+```csharp
+// [Description("Class")]
+[LocalisableDescription(typeof(Strings), nameof(Strings.Class))]
+public class ClassWithLocalisableDescription
+{
+}
+
+public enum EnumWithLocalisableDescription
+{
+    // [Description("One")]
+    [LocalisableDescription(typeof(Strings), nameof(Strings.EnumOne))]
+    One,
+
+    // [Description("Two")]
+    [LocalisableDescription(typeof(Strings), nameof(Strings.EnumTwo))]
+    Two,
+
+    // [Description("Three")]
+    [LocalisableDescription(typeof(Strings), nameof(Strings.EnumThree))]
+    Three,
+}
+```
+
+And in order to retrieve the description, use the extension method `ExtensionMethods.GetLocalisableDescription`:
+```csharp
+// Text = classInstance.GetDescription();
+Text = classInstance.GetLocalisableDescription();
+// Text = enumValue.GetDescription();
+Text = enumValue.GetLocalisableDescription();
+```
