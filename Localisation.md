@@ -132,7 +132,7 @@ This can be achieved by creating a `LocalisationManager` subclass that overrides
 
         protected override LocalisationParameters CreateLocalisationParameters() => new CustomLocalisationParameters(base.CreateLocalisationParameters(), custom.Value);
 
-        private class CustomLocalisationParameters : LocalisationParameters
+        protected class CustomLocalisationParameters : LocalisationParameters
         {
             public readonly int Custom;
 
