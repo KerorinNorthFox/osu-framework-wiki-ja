@@ -8,18 +8,21 @@ Represents a string which can be formatted based on the currently selected local
  - `LocalisableString.Format`, accepting a format string and a list of arguments designed in a similar fashion to `string.Format`:
    
    ```csharp
+   // Text = string.Format("{0} + {1} = {2}", localisable1, localisable2, localisable3);
    Text = LocalisableString.Format("{0} + {1} = {2}", localisable1, localisable2, localisable3);
    ```
  
  - `LocalisableString.Interpolate`, accepting an interpolated string (`$"..."`):
 
    ```csharp
+   // Text = $"{localisable1} + {localisable2} = {localisable3}";
    Text = LocalisableString.Interpolate($"{localisable1} + {localisable2} = {localisable3}");
    ```
 
  - `LocalisableStringExtensions.ToLocalisableString`, accepting an `IFormattable` object (e.g. number types, `DateTime`s, `TimeSpan`s, etc.) and a format string, in a similar fashion to `IFomrattable.ToString`:
 
    ```csharp
+   // Text = formattable.ToString("N0");
    Text = formattable.ToLocalisableString("N0");
    ```
 
