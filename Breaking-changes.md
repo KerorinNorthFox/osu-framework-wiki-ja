@@ -6,7 +6,11 @@ This page serves to give a list of all breaking/major changes.
 
 ## `IHasFilterTerms.FilterTerms` is now an array of `LocalisableString`s
 
-Now supports filtering by either the original text or the localised form.
+Supports filtering by either the original text or the localised form. Migration:
+```diff
+public IEnumerable<string> FilterTerms => new string[] { ... };
+public IEnumerable<LocalisableString> FilterTerms => new LocalisableString[] { ... };
+```
 
 # [2022.421.0](https://github.com/ppy/osu-framework/releases/tag/2022.421.0)
 
