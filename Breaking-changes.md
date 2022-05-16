@@ -6,7 +6,7 @@ This page serves to give a list of all breaking/major changes.
 
 ## `IHasFilterTerms.FilterTerms` is now an array of `LocalisableString`s
 
-Supports filtering by either the original text or the localised form. Migration:
+Supports filtering by either the original text or the localised form according to the currently selected language. Migration:
 ```diff
 - public IEnumerable<string> FilterTerms => new string[] { ... };
 + public IEnumerable<LocalisableString> FilterTerms => new LocalisableString[] { ... };
