@@ -2,6 +2,12 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `IHasFilterTerms.FilterTerms` is now an array of `LocalisableString`s
+
+Now supports filtering by either the original text or the localised form.
+
 # [2022.421.0](https://github.com/ppy/osu-framework/releases/tag/2022.421.0)
 
 ## `IScreen` navigation interface methods now receive an "event args" structure
