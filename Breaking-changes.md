@@ -12,6 +12,10 @@ Supports filtering by either the original text or the localised form according t
 + public IEnumerable<LocalisableString> FilterTerms => new LocalisableString[] { ... };
 ```
 
+## `ScrollEvent.ScrollDelta.X` (horizontal scrolling) is now consistent across platforms.
+
+Previously, Windows, Linux and Android were inverted. Delta is positive when mouse wheel scrolled to the up or left, in non-"natural" scroll mode (ie. the classic way).
+
 # [2022.421.0](https://github.com/ppy/osu-framework/releases/tag/2022.421.0)
 
 ## `IScreen` navigation interface methods now receive an "event args" structure
