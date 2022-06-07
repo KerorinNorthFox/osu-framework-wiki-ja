@@ -2,7 +2,21 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
-# vNext
+# 2022.607.0
+
+### "Unlimited" frame limiter is no longer completely unlimited #5235
+
+Games using osu!framework can generally run at *very* high frame rates when not much is going on.
+
+This can be counter-productive due to the induced allocation and GPU overhead.
+ - Allocation overhead can lead to excess garbage collection
+ - GPU overhead can lead to unexpected pipeline blocking (and stutters as a result).
+   Also, in general graphics card manufacturers do not test their hardware at insane frame rates and therefore drivers are not optimised to handle this kind of throughput.
+ - We only harvest input at 1000hz, so running any higher has zero benefits.
+
+If you think you know better for your specific application (or more correctly need to remove the limit for benchmarking), set `GameHost.AllowBenchmarkUnlimitedFrames` to `true`.
+
+# 2022.528.0
 
 ## `IHasFilterTerms.FilterTerms` is now an array of `LocalisableString`s
 
