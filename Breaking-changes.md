@@ -2,6 +2,16 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# 2022.624.0
+
+## `TextureStore.AddStore/RemoveStore` have been split into "store" and "texture source" methods
+
+In an effort to make the texture API easier to comprehend, the `AddStore`/`RemoveStore` methods have been split into two pairs:
+ - `AddTextureSource`/`RemoveTextureSource`, for adding/removing texture data lookup sources (i.e. `TextureLoaderStore`s)
+ - `AddStore`/`RemoveStore`, for adding/removing `TextureStore`s.
+
+Any existing usages of `AddStore` for adding lookup sources must be changed to use `AddTextureSource` instead.
+
 # 2022.607.0
 
 ### "Unlimited" frame limiter is no longer completely unlimited #5235
