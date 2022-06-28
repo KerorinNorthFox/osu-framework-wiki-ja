@@ -2,7 +2,7 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
-# 2022.624.0
+# [2022.624.0](https://github.com/ppy/osu-framework/releases/tag/2022.624.0)
 
 ## `TextureStore.AddStore/RemoveStore` have been split into "store" and "texture source" methods
 
@@ -12,7 +12,7 @@ In an effort to make the texture API easier to comprehend, the `AddStore`/`Remov
 
 Any existing usages of `AddStore` for adding lookup sources must be changed to use `AddTextureSource` instead.
 
-# 2022.607.0
+# [2022.607.0](https://github.com/ppy/osu-framework/releases/tag/2022.607.0)
 
 ### "Unlimited" frame limiter is no longer completely unlimited #5235
 
@@ -26,7 +26,7 @@ This can be counter-productive due to the induced allocation and GPU overhead.
 
 If you think you know better for your specific application (or more correctly need to remove the limit for benchmarking), set `GameHost.AllowBenchmarkUnlimitedFrames` to `true`.
 
-# 2022.528.0
+# [2022.528.0](https://github.com/ppy/osu-framework/releases/tag/2022.528.0)
 
 ## `IHasFilterTerms.FilterTerms` is now an array of `LocalisableString`s
 
