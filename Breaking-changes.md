@@ -2,6 +2,23 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `IRenderer` added as parameter to `DrawNode`
+
+```diff
+- DrawNode.Draw(Action<TexturedVertex2D> vertexAction);
++ DrawNode.Draw(IRenderer renderer);
+- DrawNode.DrawOpaqueInterior(Action<TexturedVertex2D> vertexAction);
++ DrawNode.DrawOpaqueInterior(IRenderer renderer);
+```
+
+In places where the `vertexAction` parameter was used, pass `null` instead.
+
+## `ClearInfo`, `MaskingInfo`, `DepthInfo` have been re-namespaced
+
+The new namespace is `osu.Framework.Graphics.Rendering`.
+
 # [2022.624.0](https://github.com/ppy/osu-framework/releases/tag/2022.624.0)
 
 ## `TextureStore.AddStore/RemoveStore` have been split into "store" and "texture source" methods
