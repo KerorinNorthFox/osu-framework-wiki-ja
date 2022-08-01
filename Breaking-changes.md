@@ -42,6 +42,7 @@ class MyDrawNode : DrawNode
         myFrameBuffer?.Dispose();
     }
 }
+```
 
 # [2022.624.0](https://github.com/ppy/osu-framework/releases/tag/2022.624.0)
 
