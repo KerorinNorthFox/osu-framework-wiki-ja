@@ -19,6 +19,35 @@ In places where the `vertexAction` parameter was used, pass `null` instead.
 
 The new namespace is `osu.Framework.Graphics.Rendering`.
 
+## `QuadBatch<T>` and `LinearBatch<T>` are no longer exposed
+
+They should instead be created via the `IRenderer` and stored as an `IVertexBatch<T>` :
+
+```diff
+class MyDrawNode : DrawNode
+{
+-   private readonly QuadBatch<TexturedVertex2D> myBatch = new QuadBatch<TexturedVertex2D>(1, 1);
++   private IVertexBatch<TexturedVertex2D> myBatch;
+
+    public override void Draw(IRenderer renderer)
+    {
+        base.Draw(renderer);
+
++       myBatch ??= renderer.CreateQuadBatch<TexturedVertex2D>(1, 1);
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        batch?.Dispose();
+    }
+}
+```
+
+## OpenGL-specific `PrimitiveType` no longer used to create vertex batches
+
+The new `PrimitiveTopology` enumeration should be used instead.
+
 ## `FrameBuffer` is no longer exposed
 
 Frame buffers may be created via the `IRenderer` and stored as an `IFrameBuffer`. Be aware that the parameter types have also changed!
