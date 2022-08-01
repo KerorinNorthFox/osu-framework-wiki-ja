@@ -19,6 +19,30 @@ In places where the `vertexAction` parameter was used, pass `null` instead.
 
 The new namespace is `osu.Framework.Graphics.Rendering`.
 
+## `FrameBuffer` is no longer exposed
+
+Frame buffers may be created via the `IRenderer` and stored as an `IFrameBuffer`. Be aware that the parameter types have also changed!
+
+```diff
+class MyDrawNode : DrawNode
+{
+-   private readonly FrameBuffer myFrameBuffer = new FrameBuffer(new[] { RenderbufferInternalFormat.DepthComponent16 }, All.Nearest);
++   private IFrameBuffer myFrameBuffer;
+
+    public override void Draw(IRenderer renderer)
+    {
+        base.Draw(renderer);
+
++       myFrameBuffer ??= renderer.CreateFrameBuffer(new[] { RenderBufferFormat.D16 }, TextureFilteringMode.Nearest);
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        myFrameBuffer?.Dispose();
+    }
+}
+
 # [2022.624.0](https://github.com/ppy/osu-framework/releases/tag/2022.624.0)
 
 ## `TextureStore.AddStore/RemoveStore` have been split into "store" and "texture source" methods
