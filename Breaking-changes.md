@@ -73,6 +73,24 @@ class MyDrawNode : DrawNode
 }
 ```
 
+## `Shader` is no longer exposed
+
+Shaders are still loaded via the `ShaderManager`, but are now returned as `IShader`s.
+
+```diff
+class MyDrawable : Drawable
+{
+-   private Shader shader;
++   private IShader shader;
+
+    [BackgroundDependencyLoader]
+    private void load(ShaderManager shaders)
+    {
+        shader = shaders.Load("a", "b");
+    }
+}
+```
+
 # [2022.624.0](https://github.com/ppy/osu-framework/releases/tag/2022.624.0)
 
 ## `TextureStore.AddStore/RemoveStore` have been split into "store" and "texture source" methods
