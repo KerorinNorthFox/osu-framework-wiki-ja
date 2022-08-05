@@ -4,6 +4,165 @@ This page serves to give a list of all breaking/major changes.
 
 # vNext
 
+## `WrapMode` and `Opacity` enums have been re-namespaced
+
+Their new location is `osu.Framework.Graphics.Textures`.
+
+## `Texture.WhitePixel` has been moved to `IRenderer`
+
+It is no longer provided as a static member. Instead, [resolve](/ppy/osu-framework/wiki/Dependency-Injection) an `IRenderer` and access `IRenderer.WhitePixel`.
+
+```diff
+public class MyDrawable : Drawable
+{
++   [BackgroundDependencyLoader]
++   private void load(IRenderer renderer)
++   {
++       texture ??= renderer.WhitePixel;
++   }
+
+    private Texture texture;
+
+    public Texture Texture
+    {
+-       get => texture ?? Texture.WhitePixel;
++       get => texture;
+        set => texture = value;
+    }
+}
+```
+
+## `TextureStore`, `FontStore` and `LargeTextureStore` construction parameters have changed
+
+- Requires an `IRenderer` parameter (via dependency injection).
+- Filter mode parameter changed from `All` to `TextureFilteringMode`.
+
+One common use case is to provide a new texture store from inside a derived `Game`, for which the following change is required:
+
+```diff
+public class TestGame : osu.Framework.Game
+{
+    private DependencyContainer dependencies;
+
+    protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
+        dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+-       var largeStore = new LargeTextureStore(Host.CreateTextureLoaderStore(new NamespacedResourceStore<byte[]>(Resources, @"Textures")), All.Nearest);
++       var largeStore = new LargeTextureStore(Host.Renderer, Host.CreateTextureLoaderStore(new NamespacedResourceStore<byte[]>(Resources, @"Textures")), TextureFilteringMode.Nearest);
+        largeStore.AddTextureSource(Host.CreateTextureLoaderStore(new OnlineStore()));
+        dependencies.Cache(largeStore);
+    }
+}
+```
+
+## `Texture` cannot be used to create textures
+
+`Texture` must now be created via `IRenderer`.
+
+```diff
+public class MyDrawable : Drawable
+{
+-   private readonly Texture texture;
+
+-   public MyDrawable()
+-   {
+-       texture = new Texture(100, 100);
+-       texture.SetData(...);
+-   }
++   private Texture texture;
+
++   [BackgroundDependencyLoader]
++   private void load(IRenderer renderer)
++   {
++       texture = renderer.CreateTexture(100, 100);
++       texture.SetData(...);
++   }
+}
+```
+
+`DummyRenderer` may be used for cases where textures need to be created and neither an `IRenderer` nor `GameHost` is accessible:
+
+```diff
+[TestFixture]
+public class MyTestFixture
+{
+    public void CreateATexture()
+    {
+-       Texture texture = new Texture(1, 1);
++       Texture texture = new DummyRenderer().CreateTexture(1, 1);
+    }
+}
+```
+
+## Texture drawing methods moved from `DrawNode` to `IRenderer` extension methods
+
+Appearing alongside `IRenderer` is the new `RendererExtensions` class providing extension helper methods for common drawing procedures.
+
+An example of the type of change required `DrawNode`:
+```diff
+public class MyDrawNode : DrawNode
+{
+    public override void Draw(IRenderer renderer)
+    {
+        base.Draw(renderer);
+
+-       DrawQuad(renderer.WhitePixel, ...);
++       renderer.DrawQuad(renderer.WhitePixel, ...);
+    }
+}
+```
+
+The following methods have been moved to this class:
+```
+DrawTriangle()
+DrawQuad()
+DrawClipped()
+DrawFrameBuffer()
+```
+
+## `TextureGL` is no longer accessible
+
+Properties such as `TextureGL.BypassTextureUploadQueueing` have been moved to `Texture` itself, and `Texture` can be used for all drawing procedures.
+
+During rendering, textures may now be bound via an integer sampling unit.
+
+```diff
+public class MyDrawable : Drawable
+{
+    private Texture texture;
+
+    [BackgroundDependencyLoader]
+    private void load(IRenderer renderer)
+    {
+        texture = renderer.CreateTexture(100, 100);
+        texture.BypassUploadQueueing = true;
+        texture.SetData(...);
+    }
+}
+
+public class MyDrawNode : DrawNode
+{
+    private Texture texture;
+
+    public override void Draw(IRenderer renderer)
+    {
+        base.Draw(renderer);
+
+-       texture.TextureGL.Bind();
+-       texture.TextureGL.Bind(TextureUnit.Texture1);
++       texture.Bind();
++       texture.Bind(1);
+
+        // Note: The texture binding above isn't required in either case for the call below.
+-       DrawQuad(texture.TextureGL, ...);
++       renderer.DrawQuad(texture, ...);
+    }
+}
+```
+
 ## `IRenderer` added as parameter to `DrawNode`
 
 ```diff
