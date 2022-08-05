@@ -295,9 +295,9 @@ public class MyDrawNode : TexturedShaderDrawNode
 ```
 WrapMode    -> osu.Framework.Graphics.Textures.WrapMode
 Opacity     -> osu.Framework.Graphics.Textures.Opacity
-ClearInfo   -> osu.Framework.Graphics.Rendering
-MaskingInfo -> osu.Framework.Graphics.Rendering
-DepthInfo   -> osu.Framework.Graphics.Rendering
+ClearInfo   -> osu.Framework.Graphics.Rendering.ClearInfo
+MaskingInfo -> osu.Framework.Graphics.Rendering.MaskingInfo
+DepthInfo   -> osu.Framework.Graphics.Rendering.DepthInfo
 ```
 
 # [2022.624.0](https://github.com/ppy/osu-framework/releases/tag/2022.624.0)
