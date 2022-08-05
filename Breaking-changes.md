@@ -86,44 +86,6 @@ DrawQuad()
 DrawClipped()
 DrawFrameBuffer()
 ```
-## `TextureGL` is no longer accessible
-
-Properties such as `TextureGL.BypassTextureUploadQueueing` have been moved to `Texture` itself, and `Texture` can be used for all rendering procedures. When rendering, textures are now bound to different sampling units via an integer value.
-
-```diff
-public class MyDrawable : Drawable
-{
-    private Texture texture;
-
-    [BackgroundDependencyLoader]
-    private void load(IRenderer renderer)
-    {
-        texture = renderer.CreateTexture(100, 100);
--       texture.TextureGL.BypassUploadQueueing = true;
-+       texture.BypassUploadQueueing = true;
-        texture.SetData(...);
-    }
-}
-
-public class MyDrawNode : DrawNode
-{
-    private Texture texture;
-
-    public override void Draw(IRenderer renderer)
-    {
-        base.Draw(renderer);
-
--       texture.TextureGL.Bind();
--       texture.TextureGL.Bind(TextureUnit.Texture1);
-+       texture.Bind();
-+       texture.Bind(1);
-
-        // Note: The texture binding above isn't required in either case for the call below.
--       DrawQuad(texture.TextureGL, ...);
-+       renderer.DrawQuad(texture, ...);
-    }
-}
-```
 
 ## Textures must be created through the `IRenderer`
 
@@ -160,6 +122,45 @@ public class MyTestFixture
     {
 -       Texture texture = new Texture(1, 1);
 +       Texture texture = new DummyRenderer().CreateTexture(1, 1);
+    }
+}
+```
+
+## `TextureGL` is no longer accessible
+
+Properties such as `TextureGL.BypassTextureUploadQueueing` have been moved to `Texture` itself, and `Texture` can be used for all rendering procedures. When rendering, textures are now bound to different sampling units via an integer value.
+
+```diff
+public class MyDrawable : Drawable
+{
+    private Texture texture;
+
+    [BackgroundDependencyLoader]
+    private void load(IRenderer renderer)
+    {
+        texture = renderer.CreateTexture(100, 100);
+-       texture.TextureGL.BypassUploadQueueing = true;
++       texture.BypassUploadQueueing = true;
+        texture.SetData(...);
+    }
+}
+
+public class MyDrawNode : DrawNode
+{
+    private Texture texture;
+
+    public override void Draw(IRenderer renderer)
+    {
+        base.Draw(renderer);
+
+-       texture.TextureGL.Bind();
+-       texture.TextureGL.Bind(TextureUnit.Texture1);
++       texture.Bind();
++       texture.Bind(1);
+
+        // Note: The texture binding above isn't required in either case for the call below.
+-       DrawQuad(texture.TextureGL, ...);
++       renderer.DrawQuad(texture, ...);
     }
 }
 ```
