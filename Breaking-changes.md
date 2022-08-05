@@ -290,6 +290,10 @@ public class MyDrawNode : TexturedShaderDrawNode
 
 ```
 
+## `IVertex`, `TexturedVertex2D`, et al. have been re-namespaced
+
+They are now placed under the `osu.Framework.Graphics.Rendering.Vertices` namespace
+
 ## Several enums have been re-namespaced
 
 ```
