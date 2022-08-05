@@ -4,13 +4,45 @@ This page serves to give a list of all breaking/major changes.
 
 # vNext
 
-## `WrapMode` and `Opacity` enums have been re-namespaced
+## `IRenderer` added as parameter to `DrawNode`
 
-Their new location is `osu.Framework.Graphics.Textures`.
+In order to allow the framework to interoperate with different rendering backends, all rendering functions are now performed through a new `IRenderer` interface and parameter.
 
-## `Texture.WhitePixel` has been moved to `IRenderer`
+```diff
+- DrawNode.Draw(Action<TexturedVertex2D> vertexAction);
++ DrawNode.Draw(IRenderer renderer);
+- DrawNode.DrawOpaqueInterior(Action<TexturedVertex2D> vertexAction);
++ DrawNode.DrawOpaqueInterior(IRenderer renderer);
+```
 
-It is no longer provided as a static member. Instead, [resolve](/ppy/osu-framework/wiki/Dependency-Injection) an `IRenderer` and access `IRenderer.WhitePixel`.
+In places where the `vertexAction` parameter was previously used (e.g. to draw textures), `null` can be given as a parameter instead.
+
+## `GLWrapper` removed, replaced by calls through `IRenderer`
+
+The static `GLWrapper` class has been removed, and all drawing functions should be performed via the new `DrawNode` parameter instead. There is a 1-1 API correlation between the classes.
+
+```diff
+public class MyDrawNode : DrawNode
+{
+    public override void Draw(IRenderer renderer)
+    {
+        base.Draw(renderer);
+
+-       GLWrapper.PushDepthInfo(...);
++       renderer.PushDepthInfo(...);
+
+-       GLWrapper.SetBlend(...);
++       renderer.SetBlend(...);
+
+-       GLWrapper.PopDepthInfo();
++       renderer.PopDepthInfo();
+    }
+}
+```
+
+## `Texture.WhitePixel` has moved to `IRenderer`
+
+For cases where it's used as a fallback texture, it can be retrieved by [resolving](/ppy/osu-framework/wiki/Dependency-Injection) an `IRenderer` into the `Drawable` class and accessing `IRenderer.WhitePixel`.
 
 ```diff
 public class MyDrawable : Drawable
@@ -32,35 +64,32 @@ public class MyDrawable : Drawable
 }
 ```
 
-## `TextureStore`, `FontStore` and `LargeTextureStore` construction parameters have changed
+## Texture drawing methods moved from `DrawNode` to `IRenderer` extension methods
 
-- Requires an `IRenderer` parameter (via dependency injection).
-- Filter mode parameter changed from `All` to `TextureFilteringMode`.
-
-One common use case is to provide a new texture store from inside a derived `Game`, for which the following change is required:
-
+Appearing alongside `IRenderer` is the new `RendererExtensions` class providing helper methods for common drawing procedures.
 ```diff
-public class TestGame : osu.Framework.Game
+public class MyDrawNode : DrawNode
 {
-    private DependencyContainer dependencies;
-
-    protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
-        dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-
-    [BackgroundDependencyLoader]
-    private void load()
+    public override void Draw(IRenderer renderer)
     {
--       var largeStore = new LargeTextureStore(Host.CreateTextureLoaderStore(new NamespacedResourceStore<byte[]>(Resources, @"Textures")), All.Nearest);
-+       var largeStore = new LargeTextureStore(Host.Renderer, Host.CreateTextureLoaderStore(new NamespacedResourceStore<byte[]>(Resources, @"Textures")), TextureFilteringMode.Nearest);
-        largeStore.AddTextureSource(Host.CreateTextureLoaderStore(new OnlineStore()));
-        dependencies.Cache(largeStore);
+        base.Draw(renderer);
+
+-       DrawQuad(renderer.WhitePixel, ...);
++       renderer.DrawQuad(renderer.WhitePixel, ...);
     }
 }
 ```
+All of the following methods have been moved to this class:
+```
+DrawTriangle()
+DrawQuad()
+DrawClipped()
+DrawFrameBuffer()
+```
 
-## `Texture` cannot be used to create textures
+## Textures must be created through the `IRenderer`
 
-`Texture` must now be created via `IRenderer`.
+[Resolve](/ppy/osu-framework/wiki/Dependency-Injection) an `IRenderer` into the `Drawable` class and use `IRenderer.CreateTexture()` method to create textures.
 
 ```diff
 public class MyDrawable : Drawable
@@ -97,37 +126,9 @@ public class MyTestFixture
 }
 ```
 
-## Texture drawing methods moved from `DrawNode` to `IRenderer` extension methods
-
-Appearing alongside `IRenderer` is the new `RendererExtensions` class providing extension helper methods for common drawing procedures.
-
-An example of the type of change required `DrawNode`:
-```diff
-public class MyDrawNode : DrawNode
-{
-    public override void Draw(IRenderer renderer)
-    {
-        base.Draw(renderer);
-
--       DrawQuad(renderer.WhitePixel, ...);
-+       renderer.DrawQuad(renderer.WhitePixel, ...);
-    }
-}
-```
-
-The following methods have been moved to this class:
-```
-DrawTriangle()
-DrawQuad()
-DrawClipped()
-DrawFrameBuffer()
-```
-
 ## `TextureGL` is no longer accessible
 
-Properties such as `TextureGL.BypassTextureUploadQueueing` have been moved to `Texture` itself, and `Texture` can be used for all drawing procedures.
-
-During rendering, textures may now be bound via an integer sampling unit.
+Properties such as `TextureGL.BypassTextureUploadQueueing` have been moved to `Texture` itself, and `Texture` can be used for all rendering procedures. When rendering, textures are now bound to different sampling units via an integer value.
 
 ```diff
 public class MyDrawable : Drawable
@@ -138,7 +139,8 @@ public class MyDrawable : Drawable
     private void load(IRenderer renderer)
     {
         texture = renderer.CreateTexture(100, 100);
-        texture.BypassUploadQueueing = true;
+-       texture.TextureGL.BypassUploadQueueing = true;
++       texture.BypassUploadQueueing = true;
         texture.SetData(...);
     }
 }
@@ -163,36 +165,24 @@ public class MyDrawNode : DrawNode
 }
 ```
 
-## `IRenderer` added as parameter to `DrawNode`
+## The `QuadBatch<T>` and `LinearBatch<T>` classes are no longer accessible
+
+Create vertex batches via the `IRenderer` and store as an `IVertexBatch<T>` instead:
 
 ```diff
-- DrawNode.Draw(Action<TexturedVertex2D> vertexAction);
-+ DrawNode.Draw(IRenderer renderer);
-- DrawNode.DrawOpaqueInterior(Action<TexturedVertex2D> vertexAction);
-+ DrawNode.DrawOpaqueInterior(IRenderer renderer);
-```
-
-In places where the `vertexAction` parameter was used, pass `null` instead.
-
-## `ClearInfo`, `MaskingInfo`, `DepthInfo` have been re-namespaced
-
-The new namespace is `osu.Framework.Graphics.Rendering`.
-
-## `QuadBatch<T>` and `LinearBatch<T>` are no longer exposed
-
-They should instead be created via the `IRenderer` and stored as an `IVertexBatch<T>` :
-
-```diff
-class MyDrawNode : DrawNode
+public class MyDrawNode : DrawNode
 {
--   private readonly QuadBatch<TexturedVertex2D> myBatch = new QuadBatch<TexturedVertex2D>(1, 1);
-+   private IVertexBatch<TexturedVertex2D> myBatch;
+-   private readonly QuadBatch<TexturedVertex2D> quadBatch = new QuadBatch<TexturedVertex2D>(1, 1);
+-   private readonly LinearBatch<TexturedVertex2D> linearBatch = new LinearBatch<TexturedVertex2D>(1, 1, PrimitiveType.Triangles);
++   private IVertexBatch<TexturedVertex2D> quadBatch;
++   private IVertexBatch<TexturedVertex2D> linearBatch;
 
     public override void Draw(IRenderer renderer)
     {
         base.Draw(renderer);
 
-+       myBatch ??= renderer.CreateQuadBatch<TexturedVertex2D>(1, 1);
++       quadBatch ??= renderer.CreateQuadBatch<TexturedVertex2D>(1, 1);
++       linearBatch ??= renderer.CreateLinearBatch<TexturedVertex2D>(1, 1, PrimitiveTopology.Triangles);
     }
 
     protected override void Dispose(bool disposing)
@@ -203,16 +193,14 @@ class MyDrawNode : DrawNode
 }
 ```
 
-## OpenGL-specific `PrimitiveType` no longer used to create vertex batches
+Beware that when creating linear batches, the type parameter has changed from `PrimitiveType` to `PrimitiveTopology`!
 
-The new `PrimitiveTopology` enumeration should be used instead.
+## The `FrameBuffer` class is no longer accessible
 
-## `FrameBuffer` is no longer exposed
-
-Frame buffers may be created via the `IRenderer` and stored as an `IFrameBuffer`. Be aware that the parameter types have also changed!
+Create frame buffers via the `IRenderer` and store as an `IFrameBuffer`.
 
 ```diff
-class MyDrawNode : DrawNode
+public class MyDrawNode : DrawNode
 {
 -   private readonly FrameBuffer myFrameBuffer = new FrameBuffer(new[] { RenderbufferInternalFormat.DepthComponent16 }, All.Nearest);
 +   private IFrameBuffer myFrameBuffer;
@@ -232,12 +220,14 @@ class MyDrawNode : DrawNode
 }
 ```
 
-## `Shader` is no longer exposed
+Beware that the render buffer type parameter has changed from `RenderbufferInternalFormat` to `RenderBufferFormat`!
 
-Shaders are still loaded via the `ShaderManager`, but are now returned as `IShader`s.
+## The `Shader` class is no longer accessible
+
+Shaders are still created via the `ShaderManager`, but are now returned as `IShader`s.
 
 ```diff
-class MyDrawable : Drawable
+public class MyDrawable : Drawable
 {
 -   private Shader shader;
 +   private IShader shader;
@@ -248,6 +238,66 @@ class MyDrawable : Drawable
         shader = shaders.Load("a", "b");
     }
 }
+```
+
+## `TextureStore`, `FontStore` and `LargeTextureStore` require an `IRenderer` constructor parameter
+
+One common use case is to provide a new texture store from inside a derived `Game`, for which the following change is required:
+
+```diff
+public class TestGame : osu.Framework.Game
+{
+    private DependencyContainer dependencies;
+
+    protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
+        dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+
+    [BackgroundDependencyLoader]
+    private void load()
+    {
+-       var largeStore = new LargeTextureStore(Host.CreateTextureLoaderStore(new NamespacedResourceStore<byte[]>(Resources, @"Textures")), All.Nearest);
++       var largeStore = new LargeTextureStore(Host.Renderer, Host.CreateTextureLoaderStore(new NamespacedResourceStore<byte[]>(Resources, @"Textures")), TextureFilteringMode.Nearest);
+        largeStore.AddTextureSource(Host.CreateTextureLoaderStore(new OnlineStore()));
+        dependencies.Cache(largeStore);
+    }
+}
+```
+
+Beware that the filter mode parameter has changed from `All` to `TextureFilteringMode`!
+
+## Some `TexturedShaderDrawNode` members now take an `IRenderer` parameter
+
+```diff
+public class MyDrawNode : TexturedShaderDrawNode
+{
+    public override void Draw(IRenderer renderer)
+    {
+        base.Draw(renderer);
+
+-       Shader.Bind();
++       var shader = GetAppropriateShader(renderer);
++       shader.Bind();
+
+        // ...
+
+-       Shader.Unbind();
++       shader.Unbind();
+    }
+
+-   protected override bool RequiresRoundedShader => ...;
++   protected override bool RequiresRoundedShader(IRenderer renderer) => ...;
+}
+
+```
+
+## Several enums have been re-namespaced
+
+```
+WrapMode    -> osu.Framework.Graphics.Textures.WrapMode
+Opacity     -> osu.Framework.Graphics.Textures.Opacity
+ClearInfo   -> osu.Framework.Graphics.Rendering
+MaskingInfo -> osu.Framework.Graphics.Rendering
+DepthInfo   -> osu.Framework.Graphics.Rendering
 ```
 
 # [2022.624.0](https://github.com/ppy/osu-framework/releases/tag/2022.624.0)
