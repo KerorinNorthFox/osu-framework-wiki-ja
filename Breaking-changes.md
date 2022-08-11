@@ -2,6 +2,38 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+
+# vNext
+
+## Depth test function is now typed to `DepthTestFunction`
+
+In places where the `DepthInfo` struct is used with a custom depth function, the following changes are required.
+```diff
+- new DepthInfo(function: DepthFunction.Never)
++ new DepthInfo(function: DepthStencilFunction.Never)
+
+- new DepthInfo(function: DepthFunction.Less)
++ new DepthInfo(function: DepthStencilFunction.LessThan)
+
+- new DepthInfo(function: DepthFunction.Lequal)
++ new DepthInfo(function: DepthStencilFunction.LessThanOrEqual)
+
+- new DepthInfo(function: DepthFunction.Equal)
++ new DepthInfo(function: DepthStencilFunction.Equal)
+
+- new DepthInfo(function: DepthFunction.Gequal)
++ new DepthInfo(function: DepthStencilFunction.GreaterThanOrEqual)
+
+- new DepthInfo(function: DepthFunction.Greater)
++ new DepthInfo(function: DepthStencilFunction.GreaterThan)
+
+- new DepthInfo(function: DepthFunction.Notequal)
++ new DepthInfo(function: DepthStencilFunction.NotEqual)
+
+- new DepthInfo(function: DepthFunction.Always)
++ new DepthInfo(function: DepthStencilFunction.Always)
+```
+
 # [2022.805.0](https://github.com/ppy/osu-framework/releases/tag/2022.805.0)
 
 ## `IRenderer` added as parameter to `DrawNode`
