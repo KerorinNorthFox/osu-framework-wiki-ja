@@ -5,7 +5,7 @@ This page serves to give a list of all breaking/major changes.
 
 # vNext
 
-## Depth test function is now typed to `DepthTestFunction`
+## Depth test function is now typed to `DepthStencilFunction`
 
 In places where the `DepthInfo` struct is used with a custom depth function, the following changes are required.
 ```diff
