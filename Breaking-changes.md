@@ -2,7 +2,7 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
-# vNext
+# [2022.901.0](https://github.com/ppy/osu-framework/releases/tag/2022.901.0)
 
 ## `CompositeDrawable.RemoveInternal`, `IContainer.Remove`, `IContainer.RemoveRange` and `IContainer.RemoveAll` now require a `bool` parameter
 
