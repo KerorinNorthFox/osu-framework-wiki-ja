@@ -2,7 +2,15 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
 
+## `CompositeDrawable.RemoveInternal`, `IContainer.Remove`, `IContainer.RemoveRange` and `IContainer.RemoveAll` now require a `bool` parameter
+
+A common mistake we've seen made osu!-side is where drawables are `Remove`d from the hierarchy with the intention of never using them again. In such cases, disposal is not guaranteed – nor is unbinding of `Bindable` fields/properties – which can lead to event and object leakage.
+
+To prevent this from happening, a new `disposeImmediately` parameter has been added.
+
+Generally this should be set to `true` unless you intend to reuse the removed drawable (ie. by adding back to the hierarchy at a different location).
 
 # [2022.816.0](https://github.com/ppy/osu-framework/releases/tag/2022.816.0)
 
