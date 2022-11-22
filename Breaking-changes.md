@@ -2,6 +2,38 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## `Bindable<T>.CopyTo` should be implemented for any custom bindables
+
+To improve the performance of creating clones of bindables (ie. via `GetUnboundCopy()`), the copy portion of `BindTo()` has been split out into its own method. If you have any custom bindable types which were copying values across within a `BindTo()` override, please move the copy operation to `CopyTo()` instead. Pay special attention to the direction of assignment, which will reverse from what it was in `BindTo`.
+
+A fix should look something like this:
+
+```diff
+diff --git a/osu.Framework/Bindables/BindableNumber.cs b/osu.Framework/Bindables/BindableNumber.cs
+index 6d605667f..430da79d0 100644
+--- a/osu.Framework/Bindables/BindableNumber.cs
++++ b/osu.Framework/Bindables/BindableNumber.cs
+@@ -199,12 +199,12 @@ protected void TriggerPrecisionChange(BindableNumber<T> source = null, bool prop
+                 PrecisionChanged?.Invoke(precision);
+         }
+ 
+-        public override void BindTo(Bindable<T> them)
++        public override void CopyTo(Bindable<T> them)
+         {
+             if (them is BindableNumber<T> other)
+-                Precision = other.Precision;
++                other.Precision = Precision;
+ 
+-            base.BindTo(them);
++            base.CopyTo(them);
+         }
+ 
+         public override void UnbindEvents()
+
+```
+
 # [2022.907.0](https://github.com/ppy/osu-framework/releases/tag/2022.907.0)
 
 ## `DepthStencilFunction` renamed to `BufferTestFunction`
