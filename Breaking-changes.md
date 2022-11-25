@@ -4,7 +4,49 @@ This page serves to give a list of all breaking/major changes.
 
 # vNext
 
-## `Bindable<T>.CopyTo` should be implemented for any custom bindables
+## Source generation support for DI is here (https://github.com/ppy/osu-framework/pull/5541)
+
+This one's been brewing for a long time while I tried to figure out the best way to do things. It provides a structural foundation on top of which we can build other source generators.
+
+For source generators to work at all for us, we unfortunately need to make every `Drawable` class `partial`. This can be done as a graceful upgrade – previous reflection pathways are still supported so no immediate changes should be required to your project to compile.
+
+### Analyser + codefix
+
+I've created a pretty "basic" analyser for warning against non-`partial` classes when required. It attempts to discover:
+- Types used as the argument to calls of `DependencyContainer.Inject()`.
+- Types used as type arguments of `CachedModelDependencyContainer<T>`.
+- Types implementing `ITransformable`, `IDrawable` or `ISourceGeneratedDependencyActivator`.
+
+This covers all current cases while being as least invasive as possible (i.e. not analysing every member of every class ever).
+
+A code fix has been provided for the diagnostic, however if you're planning to codefix the whole solution I suggest the running the following command until it outputs 0 changes:
+
+```
+dotnet format analyzers osu.Desktop.slnf --verbosity d
+```
+
+The code fix seems to not fix all issues on the first attempt. This is potentially caused by my implementation, however I've tried everything that I could find and nothing's worked. I'll look into fixing this as a future effort, however for the most part it's a one-time thing.
+
+The analyser and code fixer don't have tests at the moment. These are also planned in a future effort and will be structured similarly to the source generator tests and the `osu-localisation-analyser` project.
+
+### Notes
+
+- Member accessor validation is not supported yet. I think these will probably be added to an analyser in a future effort, but I've disabled the relevant tests in https://github.com/smoogipoo/osu-framework/commit/f3324205ded5ed1c05fa3a92a8fc4b5c26ec7cb4 for now.
+- Build time has increased. This can probably be improved further, however I don't want to drag on this PR much longer.
+- Going to definitions of classes is a +1 process now, with every single definition now giving you two locations.
+- I eventually want to update the source generator to make use of `IIncrementalGenerator`, but there's a bit more reading to do for that.
+- The class is generated via AST rather than raw code. This is a personal/stylistic choice because I originally implemented it using raw code and couldn't bear it.
+- The SG code quality is not quite where I want it to be at the moment - it's lacking documentation (compared to something like `osu-localisation-analyser`) and the tests are lacking structure. This will be improved in a future effort.
+
+I have not tested VSCode compatibility, but I have no reason to believe it won't work, unlike `osu-localisation-analyser` where there's differences in how IDEs add files to workspaces from analysers/codefixes.
+
+### Performance
+
+Check the pull request thread for CPU and memory profiling, but the short of this is that framework allocations required for dependency injection are down 50% or more; overall allocations at runtime are down 50% (by object count) and also substantially by memory; CPU overhead for DI activation (ie. creating a new `Drawable`) is down magnitudes on first usage, and also marginally on subsequent usages.
+
+Put simply, it's a win all-round.
+
+## `Bindable<T>.CopyTo` should be implemented for any custom bindables (https://github.com/ppy/osu-framework/pull/5531)
 
 To improve the performance of creating clones of bindables (ie. via `GetUnboundCopy()`), the copy portion of `BindTo()` has been split out into its own method. If you have any custom bindable types which were copying values across within a `BindTo()` override, please move the copy operation to `CopyTo()` instead. Pay special attention to the direction of assignment, which will reverse from what it was in `BindTo`.
 
