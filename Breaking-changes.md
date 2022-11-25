@@ -4,7 +4,7 @@ This page serves to give a list of all breaking/major changes.
 
 # vNext
 
-## Source generation support for DI is here (https://github.com/ppy/osu-framework/pull/5541)
+## Add source generator for dependency injection (https://github.com/ppy/osu-framework/pull/5541)
 
 This one's been brewing for a long time while I tried to figure out the best way to do things. It provides a structural foundation on top of which we can build other source generators.
 
