@@ -2,7 +2,15 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
-# vNext
+# [2022.1129.0](https://github.com/ppy/osu-framework/releases/tag/2022.1129.0)
+
+## `IHasFilterableChildren` has been removed; use `IFilterable` instead
+
+Rather than rely on `IHasFilterableChildren` to descend down complex hierarchies for filtering purposes, `IContainerEnumerable<T>.Children` is used, which results in less boilerplate as you don't need to remember to implement it whenever needed.
+
+## `IConditionalFilterable` is introduced
+
+By implementing `IConditionalFilterable`, you get one extra bindable to play with. If the value of said bindable is `true`, then the item is included in textual search as usual. If it is `false`, however, it - and its entire subtree - is excluded from further search on the premise that the item does not meet external criteria. In practical terms, you would set it to `false` when you want to hide some items inside a `SearchContainer` because they're unavailable due to other settings.
 
 ## Classes used in dependency injection need to implement the `IDependencyInjectionCandidate` interface (https://github.com/ppy/osu-framework/pull/5548)
 
