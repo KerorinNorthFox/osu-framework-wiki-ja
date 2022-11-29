@@ -4,7 +4,7 @@ This page serves to give a list of all breaking/major changes.
 
 # [2022.1129.0](https://github.com/ppy/osu-framework/releases/tag/2022.1129.0)
 
-## `IHasFilterableChildren` has been removed; use `IFilterable` instead
+## `IHasFilterableChildren` has been removed; use `IFilterable` instead (#5530)
 
 Rather than rely on `IHasFilterableChildren` to descend down complex hierarchies for filtering purposes, `IContainerEnumerable<T>.Children` is used, which results in less boilerplate as you don't need to remember to implement it whenever needed.
 
