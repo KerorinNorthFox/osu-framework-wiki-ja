@@ -4,7 +4,7 @@ This page serves to give a list of all breaking/major changes.
 
 # vNext
 
-## Classes used in dependency injection need to implement the `IDependencyInjectionCandidate` interface
+## Classes used in dependency injection need to implement the `IDependencyInjectionCandidate` interface (https://github.com/ppy/osu-framework/pull/5548)
 
 This does not affect `Drawable` subclasses.
 
