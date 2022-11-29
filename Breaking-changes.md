@@ -2,29 +2,29 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
-# [2022.1129.0](https://github.com/ppy/osu-framework/releases/tag/2022.1129.0)
+## [2022.1129.0](https://github.com/ppy/osu-framework/releases/tag/2022.1129.0)
 
-## `IHasFilterableChildren` has been removed; use `IFilterable` instead (#5530)
+### `IHasFilterableChildren` has been removed; use `IFilterable` instead (https://github.com/ppy/osu-framework/pull/5530)
 
 Rather than rely on `IHasFilterableChildren` to descend down complex hierarchies for filtering purposes, `IContainerEnumerable<T>.Children` is used, which results in less boilerplate as you don't need to remember to implement it whenever needed.
 
-## `IConditionalFilterable` is introduced
+### `IConditionalFilterable` is introduced (https://github.com/ppy/osu-framework/pull/5530)
 
 By implementing `IConditionalFilterable`, you get one extra bindable to play with. If the value of said bindable is `true`, then the item is included in textual search as usual. If it is `false`, however, it - and its entire subtree - is excluded from further search on the premise that the item does not meet external criteria. In practical terms, you would set it to `false` when you want to hide some items inside a `SearchContainer` because they're unavailable due to other settings.
 
-## Classes used in dependency injection need to implement the `IDependencyInjectionCandidate` interface (https://github.com/ppy/osu-framework/pull/5548)
+### Classes used in dependency injection need to implement the `IDependencyInjectionCandidate` interface (https://github.com/ppy/osu-framework/pull/5548)
 
 This does not affect `Drawable` subclasses.
 
-# [2022.1126.0](https://github.com/ppy/osu-framework/releases/tag/2022.1126.0)
+## [2022.1126.0](https://github.com/ppy/osu-framework/releases/tag/2022.1126.0)
 
-## Add source generator for dependency injection (https://github.com/ppy/osu-framework/pull/5541)
+### Add source generator for dependency injection (https://github.com/ppy/osu-framework/pull/5541)
 
 This one's been brewing for a long time while I tried to figure out the best way to do things. It provides a structural foundation on top of which we can build other source generators.
 
 For source generators to work at all for us, we unfortunately need to make every `Drawable` class `partial`. This can be done as a graceful upgrade – previous reflection pathways are still supported so no immediate changes should be required to your project to compile.
 
-### Analyser + codefix
+#### Analyser + codefix
 
 I've created a pretty "basic" analyser for warning against non-`partial` classes when required. It attempts to discover:
 - Types used as the argument to calls of `DependencyContainer.Inject()`.
@@ -43,7 +43,7 @@ The code fix seems to not fix all issues on the first attempt. This is potential
 
 The analyser and code fixer don't have tests at the moment. These are also planned in a future effort and will be structured similarly to the source generator tests and the `osu-localisation-analyser` project.
 
-### Notes
+#### Notes
 
 - Member accessor validation is not supported yet. I think these will probably be added to an analyser in a future effort, but I've disabled the relevant tests in https://github.com/smoogipoo/osu-framework/commit/f3324205ded5ed1c05fa3a92a8fc4b5c26ec7cb4 for now.
 - Build time has increased. This can probably be improved further, however I don't want to drag on this PR much longer.
@@ -54,13 +54,13 @@ The analyser and code fixer don't have tests at the moment. These are also plann
 
 I have not tested VSCode compatibility, but I have no reason to believe it won't work, unlike `osu-localisation-analyser` where there's differences in how IDEs add files to workspaces from analysers/codefixes.
 
-### Performance
+#### Performance
 
 Check the pull request thread for CPU and memory profiling, but the short of this is that framework allocations required for dependency injection are down 50% or more; overall allocations at runtime are down 50% (by object count) and also substantially by memory; CPU overhead for DI activation (ie. creating a new `Drawable`) is down magnitudes on first usage, and also marginally on subsequent usages.
 
 Put simply, it's a win all-round.
 
-## `Bindable<T>.CopyTo` should be implemented for any custom bindables (https://github.com/ppy/osu-framework/pull/5531)
+### `Bindable<T>.CopyTo` should be implemented for any custom bindables (https://github.com/ppy/osu-framework/pull/5531)
 
 To improve the performance of creating clones of bindables (ie. via `GetUnboundCopy()`), the copy portion of `BindTo()` has been split out into its own method. If you have any custom bindable types which were copying values across within a `BindTo()` override, please move the copy operation to `CopyTo()` instead. Pay special attention to the direction of assignment, which will reverse from what it was in `BindTo`.
 
@@ -90,15 +90,15 @@ index 6d605667f..430da79d0 100644
 
 ```
 
-# [2022.907.0](https://github.com/ppy/osu-framework/releases/tag/2022.907.0)
+## [2022.907.0](https://github.com/ppy/osu-framework/releases/tag/2022.907.0)
 
-## `DepthStencilFunction` renamed to `BufferTestFunction`
+### `DepthStencilFunction` renamed to `BufferTestFunction`
 
 The new naming should better fit future usages outside of depth and stencil tests.
 
-# [2022.901.0](https://github.com/ppy/osu-framework/releases/tag/2022.901.0)
+## [2022.901.0](https://github.com/ppy/osu-framework/releases/tag/2022.901.0)
 
-## `CompositeDrawable.RemoveInternal`, `IContainer.Remove`, `IContainer.RemoveRange` and `IContainer.RemoveAll` now require a `bool` parameter
+### `CompositeDrawable.RemoveInternal`, `IContainer.Remove`, `IContainer.RemoveRange` and `IContainer.RemoveAll` now require a `bool` parameter
 
 A common mistake we've seen made osu!-side is where drawables are `Remove`d from the hierarchy with the intention of never using them again. In such cases, disposal is not guaranteed – nor is unbinding of `Bindable` fields/properties – which can lead to event and object leakage.
 
@@ -106,9 +106,9 @@ To prevent this from happening, a new `disposeImmediately` parameter has been ad
 
 Generally this should be set to `true` unless you intend to reuse the removed drawable (ie. by adding back to the hierarchy at a different location).
 
-# [2022.816.0](https://github.com/ppy/osu-framework/releases/tag/2022.816.0)
+## [2022.816.0](https://github.com/ppy/osu-framework/releases/tag/2022.816.0)
 
-## Depth test function is now typed to `DepthStencilFunction`
+### Depth test function is now typed to `DepthStencilFunction`
 
 In places where the `DepthInfo` struct is used with a custom depth function, the following changes are required.
 ```diff
@@ -137,9 +137,9 @@ In places where the `DepthInfo` struct is used with a custom depth function, the
 + new DepthInfo(function: DepthStencilFunction.Always)
 ```
 
-# [2022.805.0](https://github.com/ppy/osu-framework/releases/tag/2022.805.0)
+## [2022.805.0](https://github.com/ppy/osu-framework/releases/tag/2022.805.0)
 
-## `IRenderer` added as parameter to `DrawNode`
+### `IRenderer` added as parameter to `DrawNode`
 
 In order to allow the framework to interoperate with different rendering backends, all rendering functions are now performed through a new `IRenderer` interface and parameter.
 
@@ -152,7 +152,7 @@ In order to allow the framework to interoperate with different rendering backend
 
 In places where the `vertexAction` parameter was previously used (e.g. to draw textures), `null` can be given as a parameter instead.
 
-## `GLWrapper` removed, replaced by calls through `IRenderer`
+### `GLWrapper` removed, replaced by calls through `IRenderer`
 
 The static `GLWrapper` class has been removed, and all drawing functions should be performed via the new `DrawNode` parameter instead. There is a 1-1 API correlation between the classes.
 
@@ -175,7 +175,7 @@ public class MyDrawNode : DrawNode
 }
 ```
 
-## `Texture.WhitePixel` has moved to `IRenderer`
+### `Texture.WhitePixel` has moved to `IRenderer`
 
 For cases where it's used as a fallback texture, it can be retrieved by [resolving](/ppy/osu-framework/wiki/Dependency-Injection) an `IRenderer` into the `Drawable` class and accessing `IRenderer.WhitePixel`.
 
@@ -199,7 +199,7 @@ public class MyDrawable : Drawable
 }
 ```
 
-## Texture drawing methods moved from `DrawNode` to `IRenderer` extension methods
+### Texture drawing methods moved from `DrawNode` to `IRenderer` extension methods
 
 Appearing alongside `IRenderer` is the new `RendererExtensions` class providing helper methods for common drawing procedures.
 ```diff
@@ -222,7 +222,7 @@ DrawClipped()
 DrawFrameBuffer()
 ```
 
-## Textures must be created through the `IRenderer`
+### Textures must be created through the `IRenderer`
 
 [Resolve](/ppy/osu-framework/wiki/Dependency-Injection) an `IRenderer` into the `Drawable` class and use `IRenderer.CreateTexture()` method to create textures.
 
@@ -261,7 +261,7 @@ public class MyTestFixture
 }
 ```
 
-## `TextureGL` is no longer accessible
+### `TextureGL` is no longer accessible
 
 Properties such as `TextureGL.BypassTextureUploadQueueing` have been moved to `Texture` itself, and `Texture` can be used for all rendering procedures. When rendering, textures are now bound to different sampling units via an integer value.
 
@@ -300,7 +300,7 @@ public class MyDrawNode : DrawNode
 }
 ```
 
-## The `QuadBatch<T>` and `LinearBatch<T>` classes are no longer accessible
+### The `QuadBatch<T>` and `LinearBatch<T>` classes are no longer accessible
 
 Create vertex batches via the `IRenderer` and store as an `IVertexBatch<T>` instead:
 
@@ -330,7 +330,7 @@ public class MyDrawNode : DrawNode
 
 Beware that when creating linear batches, the type parameter has changed from `PrimitiveType` to `PrimitiveTopology`!
 
-## The `FrameBuffer` class is no longer accessible
+### The `FrameBuffer` class is no longer accessible
 
 Create frame buffers via the `IRenderer` and store as an `IFrameBuffer`.
 
@@ -357,7 +357,7 @@ public class MyDrawNode : DrawNode
 
 Beware that the render buffer type parameter has changed from `RenderbufferInternalFormat` to `RenderBufferFormat`!
 
-## The `Shader` class is no longer accessible
+### The `Shader` class is no longer accessible
 
 Shaders are still created via the `ShaderManager`, but are now returned as `IShader`s.
 
@@ -375,7 +375,7 @@ public class MyDrawable : Drawable
 }
 ```
 
-## `TextureStore`, `FontStore` and `LargeTextureStore` require an `IRenderer` constructor parameter
+### `TextureStore`, `FontStore` and `LargeTextureStore` require an `IRenderer` constructor parameter
 
 One common use case is to provide a new texture store from inside a derived `Game`, for which the following change is required:
 
@@ -400,7 +400,7 @@ public class TestGame : osu.Framework.Game
 
 Beware that the filter mode parameter has changed from `All` to `TextureFilteringMode`!
 
-## Some `TexturedShaderDrawNode` members now take an `IRenderer` parameter
+### Some `TexturedShaderDrawNode` members now take an `IRenderer` parameter
 
 ```diff
 public class MyDrawNode : TexturedShaderDrawNode
@@ -425,11 +425,11 @@ public class MyDrawNode : TexturedShaderDrawNode
 
 ```
 
-## `IVertex`, `TexturedVertex2D`, et al. have been re-namespaced
+### `IVertex`, `TexturedVertex2D`, et al. have been re-namespaced
 
 They are now placed under the `osu.Framework.Graphics.Rendering.Vertices` namespace
 
-## Several enums have been re-namespaced
+### Several enums have been re-namespaced
 
 ```
 WrapMode    -> osu.Framework.Graphics.Textures.WrapMode
@@ -439,9 +439,9 @@ MaskingInfo -> osu.Framework.Graphics.Rendering.MaskingInfo
 DepthInfo   -> osu.Framework.Graphics.Rendering.DepthInfo
 ```
 
-# [2022.624.0](https://github.com/ppy/osu-framework/releases/tag/2022.624.0)
+## [2022.624.0](https://github.com/ppy/osu-framework/releases/tag/2022.624.0)
 
-## `TextureStore.AddStore/RemoveStore` have been split into "store" and "texture source" methods
+### `TextureStore.AddStore/RemoveStore` have been split into "store" and "texture source" methods
 
 In an effort to make the texture API easier to comprehend, the `AddStore`/`RemoveStore` methods have been split into two pairs:
  - `AddTextureSource`/`RemoveTextureSource`, for adding/removing texture data lookup sources (i.e. `TextureLoaderStore`s)
@@ -449,9 +449,9 @@ In an effort to make the texture API easier to comprehend, the `AddStore`/`Remov
 
 Any existing usages of `AddStore` for adding lookup sources must be changed to use `AddTextureSource` instead.
 
-# [2022.607.0](https://github.com/ppy/osu-framework/releases/tag/2022.607.0)
+## [2022.607.0](https://github.com/ppy/osu-framework/releases/tag/2022.607.0)
 
-### "Unlimited" frame limiter is no longer completely unlimited #5235
+#### "Unlimited" frame limiter is no longer completely unlimited #5235
 
 Games using osu!framework can generally run at *very* high frame rates when not much is going on.
 
@@ -463,9 +463,9 @@ This can be counter-productive due to the induced allocation and GPU overhead.
 
 If you think you know better for your specific application (or more correctly need to remove the limit for benchmarking), set `GameHost.AllowBenchmarkUnlimitedFrames` to `true`.
 
-# [2022.528.0](https://github.com/ppy/osu-framework/releases/tag/2022.528.0)
+## [2022.528.0](https://github.com/ppy/osu-framework/releases/tag/2022.528.0)
 
-## `IHasFilterTerms.FilterTerms` is now an array of `LocalisableString`s
+### `IHasFilterTerms.FilterTerms` is now an array of `LocalisableString`s
 
 Supports filtering by either the original text or the localised form according to the currently selected language. Migration:
 ```diff
@@ -473,13 +473,13 @@ Supports filtering by either the original text or the localised form according t
 + public IEnumerable<LocalisableString> FilterTerms => new LocalisableString[] { ... };
 ```
 
-## `ScrollEvent.ScrollDelta.X` (horizontal scrolling) is now consistent across platforms.
+### `ScrollEvent.ScrollDelta.X` (horizontal scrolling) is now consistent across platforms.
 
 Previously, Windows, Linux and Android were inverted. Delta is positive when mouse wheel scrolled to the up or left, in non-"natural" scroll mode (ie. the classic way).
 
-# [2022.421.0](https://github.com/ppy/osu-framework/releases/tag/2022.421.0)
+## [2022.421.0](https://github.com/ppy/osu-framework/releases/tag/2022.421.0)
 
-## `IScreen` navigation interface methods now receive an "event args" structure
+### `IScreen` navigation interface methods now receive an "event args" structure
 
 To allow adding more data to `IScreen` navigation interface methods in the future without further API breakage, their signatures have been changed to include an "event args" structure in the following manner:
 
@@ -501,9 +501,9 @@ The `last` and `next` arguments from the old signatures can now be accessed via 
 
 Additionally, `ScreenExitEvent` contains a new `Destination` member, that allows to specify which screen is the "destination" screen of an exit operation spanning multiple screens.
 
-# [2022.223.0](https://github.com/ppy/osu-framework/releases/tag/2022.223.0)
+## [2022.223.0](https://github.com/ppy/osu-framework/releases/tag/2022.223.0)
 
-## Visual test projects now use native .NET 6 "Hot reload"
+### Visual test projects now use native .NET 6 "Hot reload"
 
 Over the years we have maintained our own version of hot reload, affectionately named "dynamic compilation". Even after multiple complete rewrites of the system, there are still edge cases where it will unexpectedly fall over due to being too greedy in including what it considers required for the recompile.
 
@@ -523,9 +523,9 @@ New limitations:
 We are interested in hearing feedback on this change, especially troubling cases where the previous behaviour worked better for you. Hope is that the limitations of the new method are outweighed by the leaner assembly, better performance, and (in general) up-front error when a change can't be applied, rather than an error that can be delayed longer than it would take to run a full recompile/restart.
 
 
-# [2022.214.0](https://github.com/ppy/osu-framework/releases/tag/2022.214.0)
+## [2022.214.0](https://github.com/ppy/osu-framework/releases/tag/2022.214.0)
 
-## `InputManager.ChangeFocus()` will no longer switch focus to drawables that are not alive, not present or do not have a parent
+### `InputManager.ChangeFocus()` will no longer switch focus to drawables that are not alive, not present or do not have a parent
 
 To avoid unusual scenarios concerning `ChangeFocus()`, wherein a drawable could potentially request focus and have focus automatically taken away from it every frame, `ChangeFocus()` now checks whether the target drawable is alive, present and has a parent before switching focus to it.
 
@@ -533,13 +533,13 @@ This potentially breaks scenarios such as calling `ChangeFocus()` in `LoadComple
 
 In general it is recommended to check the return value of `ChangeFocus()` to determine as to whether focus was actually changed.
 
-## `CompositeDrawable.BorderColour` has changed type from `SRGBColour` to `ColourInfo`
+### `CompositeDrawable.BorderColour` has changed type from `SRGBColour` to `ColourInfo`
 
 To facilitate gradiented border support, the type of `CompositeDrawable.BorderColour` has changed from `SRGBColour` to `ColourInfo`. While some implicit conversions from `SRGBColour` to `ColourInfo` exist, some properties of `SRGBColour` are not available on `ColourInfo`, as the latter does not always represent a single colour, and may require appropriate adjustments.
 
-# [2021.1118.0](https://github.com/ppy/osu-framework/releases/tag/2021.1118.0)
+## [2021.1118.0](https://github.com/ppy/osu-framework/releases/tag/2021.1118.0)
 
-## `KeyBindingContainer` now sends key repeat events by default
+### `KeyBindingContainer` now sends key repeat events by default
 
 `KeyBindingContainers` are commonly used in UI, where we expect to be able to receive key repeats. Historically this was controlled by the `SendRepeats` flag, but now that all events send `KeyBindingPressEvent` with a repeat argument, handling this legacy mode of operation was causing more issues that it was worth. The default expectation should be that repeats arrive.
 
@@ -567,9 +567,9 @@ public bool OnPressed(KeyBindingPressEvent<MyAction> e)
 }
 ```
 
-# [2021.1106.0](https://github.com/ppy/osu-framework/releases/tag/2021.1106.0)
+## [2021.1106.0](https://github.com/ppy/osu-framework/releases/tag/2021.1106.0)
 
-## `BufferedContainer.CacheDrawnFrameBuffer` has been moved to a constructor argument
+### `BufferedContainer.CacheDrawnFrameBuffer` has been moved to a constructor argument
 
 ```csharp
 // old code:
@@ -579,13 +579,13 @@ var bufferedContainer = new BufferedContainer() { CacheDrawnFrameBuffer = true }
 var bufferedContainer = new BufferedContainer(cachedFrameBuffer: true);
 ```
 
-## `IEffect.CacheDrawnEffect` has been removed
+### `IEffect.CacheDrawnEffect` has been removed
 
 We had no usages of this. If you were using it, nest the effected content in a `BufferedContainer` with `cachedFrameBuffer` set to `true`.
 
-# [2021.1029.0](https://github.com/ppy/osu-framework/releases/tag/2021.1029.0)
+## [2021.1029.0](https://github.com/ppy/osu-framework/releases/tag/2021.1029.0)
 
-## `TextFlowContainer` no longer returns raw `SpriteText`s, returning `ITextPart`s instead
+### `TextFlowContainer` no longer returns raw `SpriteText`s, returning `ITextPart`s instead
 
 In preparation for adding localisation support to `TextFlowContainer`s, the various `AddText()`/`AddLine()` overloads will no longer return raw `SpriteText`s. Instead, an `ITextPart` structure will be returned.
 
@@ -593,9 +593,9 @@ Via `ITextPart`, the consumer can both access all `Drawables` associated with a 
 
 For consumers wanting to implement their own `ITextPart`s to extend the functionality of `TextFlowContainer`, an abstract `TextPart` is also provided which implements the typical flow of handling `Drawables` and `DrawablePartsRecreated`. The only thing that a consumer has to do when inheriting that class is to implement `CreateDrawablesFor(TextFlowContainer)`.
 
-# [2021.916.1](https://github.com/ppy/osu-framework/releases/tag/2021.916.1)
+## [2021.916.1](https://github.com/ppy/osu-framework/releases/tag/2021.916.1)
 
-## `IKeyBindingHandler<T>` and `IScrollBindingHandler<T>` now provide `UIEvent`s
+### `IKeyBindingHandler<T>` and `IScrollBindingHandler<T>` now provide `UIEvent`s
 
 To allow for more arguments without changing the signature of the handling methods, and also for consistency with the input flow in general, both interfaces now provide `UIEvent`s rather than placing each parameter directly on the methods.
 
@@ -620,15 +620,15 @@ Find: bool OnScroll\((\w+) (\w+), float \w+, bool \w+\)
 Replace: bool OnScroll(KeyBindingScrollEvent<$1> e)
 ```
 
-# [2021.907.0](https://github.com/ppy/osu-framework/releases/tag/2021.907.0)
+## [2021.907.0](https://github.com/ppy/osu-framework/releases/tag/2021.907.0)
 
-## `AnimationClockComposite.PlaybackPosition` can no longer go below 0
+### `AnimationClockComposite.PlaybackPosition` can no longer go below 0
 
 This is not a change to actual playback behaviour - it only affects the return value of the playback position, which now matches the underlying playback behaviour.
 
-# [2021.830.0](https://github.com/ppy/osu-framework/releases/tag/2021.830.0)
+## [2021.830.0](https://github.com/ppy/osu-framework/releases/tag/2021.830.0)
 
-## `ITooltip.SetContent` no longer require returning `bool` value
+### `ITooltip.SetContent` no longer require returning `bool` value
 
 Until now, the method of reusing tooltip instances was problematic (two tooltips handling the same data type could not exist). Instance sharing is now based on the constructed tooltip's `Type`, rather than the data type.
 
@@ -657,9 +657,9 @@ public override void SetContent(object content)
 ```
 
 
-# [2021.818.0](https://github.com/ppy/osu-framework/releases/tag/2021.818.0)
+## [2021.818.0](https://github.com/ppy/osu-framework/releases/tag/2021.818.0)
 
-## All custom implementations of `IBindable` must implement `CreateInstance()`
+### All custom implementations of `IBindable` must implement `CreateInstance()`
 
 Bindables previously used `Activator.CreateInstance()` to implement the `GetBoundCopy()` call. In profiling this has turned out to be a bottleneck in some scenarios, so in order to reduce the associated runtime overhead to about half, all implementors of `IBindable` now must implement `CreateInstance()`.
 
@@ -684,9 +684,9 @@ public sealed class CustomBindable : BaseBindable
 }
 ```
 
-# [2021.803.0](https://github.com/ppy/osu-framework/releases/tag/2021.803.0)
+## [2021.803.0](https://github.com/ppy/osu-framework/releases/tag/2021.803.0)
 
-## `EnumLocalisationMapper` for enum localisation has been replaced with per-member `LocalisableDescription` attributes
+### `EnumLocalisationMapper` for enum localisation has been replaced with per-member `LocalisableDescription` attributes
 
 As the current way for localising `enum`s require a side-class for the mapping, it became a tedious procedure to localise enums and lengthens a lot of files for supporting such.
 
@@ -741,9 +741,9 @@ Benchmarks:
     | GetLocalisableDescription |   100 |   540.643 us |  15.9231 us |  45.6864 us |   539.138 us |
     | GetLocalisableDescription |  1000 | 7,218.708 us | 270.7659 us | 768.1179 us | 7,192.596 us |
 
-# [2021.721.0](https://github.com/ppy/osu-framework/releases/tag/2021.721.0)
+## [2021.721.0](https://github.com/ppy/osu-framework/releases/tag/2021.721.0)
 
-## `PlatformAction` type is changed to an enum type
+### `PlatformAction` type is changed to an enum type
 
 If `PlatformAction.ActionType` was matched, change to a matching of `PlatformAction` itself like:
 
@@ -766,49 +766,49 @@ For `PlatformActionMethod.Delete`, and if only the Delete key should be handled 
 +        case PlatformAction.Delete:
 ```
 
-# [2021.628.0](https://github.com/ppy/osu-framework/releases/tag/2021.628.0)
+## [2021.628.0](https://github.com/ppy/osu-framework/releases/tag/2021.628.0)
 
-## `IHasTooltip.Text` is now a `LocalisableString`
+### `IHasTooltip.Text` is now a `LocalisableString`
 
 `IHasTooltip.Text` now takes a `LocalisableString` instead of  regular string. Users of custom tooltip containers may also have to change checks in the `SetContent()` method of their tooltip type to check if content is a `LocalisableString` instead of a regular string.
 
-## Recently added `GameThread.ThreadPausing` has been removed
+### Recently added `GameThread.ThreadPausing` has been removed
 
 This was only added in the previous release, but has since been replaced with the bindable `GameThread.State`, which gives more detail about the current state of the thread.
 
-# [2021.622.0](https://github.com/ppy/osu-framework/releases/tag/2021.622.0)
+## [2021.622.0](https://github.com/ppy/osu-framework/releases/tag/2021.622.0)
 
-## `MarkdownHeading.GetFontSizeByLevel` now specifies absolute sizes
+### `MarkdownHeading.GetFontSizeByLevel` now specifies absolute sizes
 
 The result of this method is now more correctly applied to headers via `FontSize` rather than `Scale`. If you were overriding this method, please multiply your returned values by `20` to maintain sizing compatibility.
 
-## "OpenSans" is no longer provided, with the default font now being "Roboto"
+### "OpenSans" is no longer provided, with the default font now being "Roboto"
 
 We were already using Roboto in the visual tests contexts, but fallback to OpenSans could be seen for tool windows in both framework and consumer projects. In an effort to consolidate this visually, all framework components now use Roboto, the chosen font for osu!framework design logic.
 
 This means that if you were previously relying on the presence of OpenSans and do not want to switch to Roboto, you will need to re-add the font resources in your project. Instructions on doing this can be found [here](https://github.com/ppy/osu-framework/wiki/Setting-Up-Fonts).
 
-# [2021.419.0](https://github.com/ppy/osu-framework/releases/tag/2021.419.0)
+## [2021.419.0](https://github.com/ppy/osu-framework/releases/tag/2021.419.0)
 
-## `RotationDirection.CounterClockwise` has been renamed to `Counterclockwise`
+### `RotationDirection.CounterClockwise` has been renamed to `Counterclockwise`
 
 As it appears to be often one word, the enum member `CounterClockwise` has been renamed to `Counterclockwise`.
 
-# [2021.416.0](https://github.com/ppy/osu-framework/releases/tag/2021.416.0)
+## [2021.416.0](https://github.com/ppy/osu-framework/releases/tag/2021.416.0)
 
-## `IBindable`, `IBindable<T>`, and `IBindableList<>` are no longer `IParseable`
+### `IBindable`, `IBindable<T>`, and `IBindableList<>` are no longer `IParseable`
 
 `IParseable` is only implemented on the `Bindable<>` and `BindableList<>` classes. Code that relied on this functionality should instead cast to `IParseable`.
 
-# [2021.330.0](https://github.com/ppy/osu-framework/releases/tag/2021.330.0)
+## [2021.330.0](https://github.com/ppy/osu-framework/releases/tag/2021.330.0)
 
-## InputHandler no longer has a Priority property
+### InputHandler no longer has a Priority property
 
 Priority is now decided by the construction order of `InputHandler`s in `CreateAvailableInputHandlers`.
 
-# [2021.317.0](https://github.com/ppy/osu-framework/releases/tag/2021.317.0)
+## [2021.317.0](https://github.com/ppy/osu-framework/releases/tag/2021.317.0)
 
-## ConfigManager.Set is now protected and renamed to `SetDefault`
+### ConfigManager.Set is now protected and renamed to `SetDefault`
 
 Previously this method was `public` for convenience, but as it implicitly set the `Default` value of bindables it touched, could cause unexpected behaviour.
 
@@ -823,44 +823,44 @@ config.Set(ConfigType.Name, true);
 config.SetValue(ConfigType.Name, true);
 ```
 
-## osuTK support has been removed in most places
+### osuTK support has been removed in most places
 
 If you were supporting it via `GameHost` initialisation, you may need to remove a parameter. Internally, we still support it in a minimal way for Xamarin platforms.
 
-# [2021.225.0](https://github.com/ppy/osu-framework/releases/tag/2021.225.0)
+## [2021.225.0](https://github.com/ppy/osu-framework/releases/tag/2021.225.0)
 
-## The regular weight of OpenSans has been renamed to OpenSans-Regular
+### The regular weight of OpenSans has been renamed to OpenSans-Regular
 
 Until now this font wasn't following the convention we use everywhere else. If you are referencing it directly, please update your strings to point to the new name.
 
 
-## LocalisedString no longer exists
+### LocalisedString no longer exists
 
 For strings which have romanisable content, `RomanisableString` should be used instead.
 
-## Multiple UI Components now use `LocalisableString` in place of `string`
+### Multiple UI Components now use `LocalisableString` in place of `string`
 
 If you have custom implementations, you will need to update the overridden signatures.
 
-## Explicit `ToString` may be required where previous not
+### Explicit `ToString` may be required where previous not
 
 Getting the current value of some strings (ie. on UI Components) will now require an explicit call to `.ToString()`.
 
-# [2021.106.0](https://github.com/ppy/osu-framework/releases/tag/2021.106.0)
+## [2021.106.0](https://github.com/ppy/osu-framework/releases/tag/2021.106.0)
 
-## Games will now throw (and crash) immediately on performing cross-thread transform operations
+### Games will now throw (and crash) immediately on performing cross-thread transform operations
 
 This may mean that as a framework consumer you need to re-think how you are performing operations between drawables. The easiest way to avoid issue is to use `Schedule` to force the target code to be on the correct thread.
 
 # [2020.1009.0](https://github.com/ppy/osu-framework/releases/tag/2020.1009.0)
 
-## `WaveformGraph.BaseColour` should be used instead of `Colour` for the default frequency colour
+### `WaveformGraph.BaseColour` should be used instead of `Colour` for the default frequency colour
 
 `Colour` now uniformly affects the entire graph as expected.
 
 # [2020.901.0](https://github.com/ppy/osu-framework/releases/tag/2020.901.0)
 
-## `IAggregateAudioAdjustment.GetAggregate()` has been made an extension method
+### `IAggregateAudioAdjustment.GetAggregate()` has been made an extension method
 
 To avoid aggregate adjustment implementations from having to implement both `Aggregate{Volume,Balance,Frequency,Tempo}` and `GetAggregate()`, the latter has been made an extension method returning one of the aforementioned four values for the appropriate property of the adjustment.
 
@@ -868,31 +868,31 @@ Possible compilation failures related to `GetAggregate()` should be resolved by 
 
 # [2020.819.0](https://github.com/ppy/osu-framework/releases/tag/2020.819.0)
 
-### `TextBox` events only trigger on user input
+#### `TextBox` events only trigger on user input
 
 The events were specifically exposed to provide feedback on user input, but were triggering on programmatic manipulation of the textbox's text. See https://github.com/ppy/osu-framework/pull/3839/files.
 
 # [2020.710.0](https://github.com/ppy/osu-framework/releases/tag/2020.710.0)
 
-## `TextBox` will no longer trigger sound effects
+### `TextBox` will no longer trigger sound effects
 
 This is a fringe use-case, as the samples were never included with the framework, but if you happened to be providing them in your game resources, you will need to update your `TextBox` implementation to trigger them again. Check the [osu!-side changes](https://github.com/ppy/osu/pull/9216) for an example of how to do this.
 
-## `CachedModelDependencyContainer` models must now only contain read-only fields
+### `CachedModelDependencyContainer` models must now only contain read-only fields
 
 Mutating bindables of models attached to a `CachedModelDependencyContainer` can lead to crashes or otherwise unexpected behaviour, and is now disallowed.
 
 # [2020.302.0](https://github.com/ppy/osu-framework/releases/tag/2020.302.0)
 
-## `FrameworkDebugConfig` no longer exposes `PerformanceLogging`
+### `FrameworkDebugConfig` no longer exposes `PerformanceLogging`
 
 Performance logging is now toggled by opening "Global Statistics" overlay via Ctrl+F2. To manually toggle it, you may access `GameHost.PerformanceLogging`, but note that a change to this bindable will be overridden by toggling the statistics overlay.
 
-## Layout validation and invalidation has been reworked
+### Layout validation and invalidation has been reworked
 
 To better cover edge-case scenarios where layout wasn't properly refreshed, the process of layout invalidation has changed.
 
-### In cases where `Invalidate()` affected a `Cached` member, the following adjustment is necessary:
+#### In cases where `Invalidate()` affected a `Cached` member, the following adjustment is necessary:
 
 ```diff
 public class MyDrawable : Drawable
@@ -919,7 +919,7 @@ public class MyDrawable : Drawable
 }
 ```
 
-### In cases where `InvalidateFromChild()` affected a `Cached` member, the following adjustment is necessary:
+#### In cases where `InvalidateFromChild()` affected a `Cached` member, the following adjustment is necessary:
 
 ```diff
 public class MyDrawable : Drawable
@@ -942,7 +942,7 @@ public class MyDrawable : Drawable
 }
 ```
 
-### In cases where _both_ `Invalidate()` and `InvalidateFromChild()` affected the same `Cached` member, the following adjustment is required:
+#### In cases where _both_ `Invalidate()` and `InvalidateFromChild()` affected the same `Cached` member, the following adjustment is required:
 
 ```diff
 public class MyDrawable : Drawable
@@ -995,7 +995,7 @@ public class MyDrawable : Drawable
 }
 ```
 
-### In cases where custom logic that can't be described as layout was done in `Invalidate()`, the following adjustment is necessary:
+#### In cases where custom logic that can't be described as layout was done in `Invalidate()`, the following adjustment is necessary:
 
 ```diff
 public class MyDrawable : Drawable
@@ -1035,7 +1035,7 @@ public class MyDrawable : Drawable
 
 # [2020.218.0](https://github.com/ppy/osu-framework/releases/tag/2020.218.0)
 
-## `BindableList<T>.ItemsAdded` is now obsolete
+### `BindableList<T>.ItemsAdded` is now obsolete
 
 The `ItemsAdded` event failed to provide enough context when items are moved around or inserted into the list.
 
@@ -1072,7 +1072,7 @@ BindableList<int> list = new BindableList<int>();
 
 Note that `CollectionChanged` should _not_ be used in conjunction with the `ItemsAdded` event.
 
-## `BindableList<T>.ItemsRemoved` is now obsolete
+### `BindableList<T>.ItemsRemoved` is now obsolete
 
 As above, the `ItemsRemoved` revent has also been replaced by the `CollectionChanged` [NotifyCollectionChangedEventHandler](https://docs.microsoft.com/en-au/dotnet/api/system.collections.specialized.notifycollectionchangedeventhandler?view=netframework-4.8).
 
@@ -1110,11 +1110,11 @@ BindableList<int> list = new BindableList<int>();
 
 # [2020.122.0](https://github.com/ppy/osu-framework/releases/tag/2020.122.0)
 
-## InputManager.CreateButtonManagerFor was renamed to InputManager.CreateButtonEventManagerFor
+### InputManager.CreateButtonManagerFor was renamed to InputManager.CreateButtonEventManagerFor
 
 Changed to match other methods and the class name it was creating.
 
-## Various input "end" events now return `void` and can no longer block propagation
+### Various input "end" events now return `void` and can no longer block propagation
 
 Events affected:
 ```csharp
@@ -1144,23 +1144,23 @@ The following table illustrates the events for which the relationship is satisfi
 
 # [2020.109.0](https://github.com/ppy/osu-framework/releases/tag/2020.109.0)
 
-## The namespace `osu.Framework.MathUtils` has been removed
+### The namespace `osu.Framework.MathUtils` has been removed
 
 All existing utility classes have been moved to the namespace `osu.Framework.Utils`.
 
 # [2019.1224.0](https://github.com/ppy/osu-framework/releases/tag/2019.1224.0)
 
-## `TextBox` and all related components are now abstract
+### `TextBox` and all related components are now abstract
 
 `BasicTextBox` is provided as a drop-in replacement that comes with the framework design language.
 
-## `PasswordTextBox` has been renamed 
+### `PasswordTextBox` has been renamed 
 
 Renamed to `BasicPasswordTextBox` and comes with the framework design language.
 
 # [2019.1211.1](https://github.com/ppy/osu-framework/releases/tag/2019.1211.1)
 
-## The value provided in the constructor for `Bindable<T>` is now used as both the initial and default value
+### The value provided in the constructor for `Bindable<T>` is now used as both the initial and default value
 
 The following lines of code are now identical.
 ```csharp
@@ -1170,7 +1170,7 @@ var bindable2 = new Bindable<int>(10);
 
 # [2019.1210.1](https://github.com/ppy/osu-framework/releases/tag/2019.1210.1)
 
-## PerformanceLogging was moved to DebugConfig
+### PerformanceLogging was moved to DebugConfig
 
 As seen in https://github.com/ppy/osu/issues/6795, some users are turning on performance logging and leaving it on. This is not intended, as it adds a noticeable overhead to retrieve and write the stack traces to disk.
 
@@ -1178,53 +1178,53 @@ This change allows the setting to reset each game execution, rather than be save
 
 # [2019.1121.0](https://github.com/ppy/osu-framework/releases/tag/2019.1121.0)
 
-## .NET Standard 2.1
+### .NET Standard 2.1
 
 osu!framework now targets .NET Standard 2.1. Consumers of the framework will need to install the [.NET Core 3.0 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.0) and change their projects to target `netstandard2.1`/`netcoreapp3.0`.
 
-## `WebRequest.ResponseString` and `WebRequest.ResponseData` properties were converted to methods
+### `WebRequest.ResponseString` and `WebRequest.ResponseData` properties were converted to methods
 
 `GetResponseString` and `GetResponseData` methods are provided as a replacement. This change was done in order to indicate that these operations are expensive(they do memory allocations in the heap on each call).
 
 # [2019.1104.0](https://github.com/ppy/osu-framework/releases/tag/2019.1104.0)
 
-## `Button` has been made abstract
+### `Button` has been made abstract
 
 `BasicButton` is provided as a drop-in replacement that comes with the framework design language.
 
 # [2019.921.0](https://github.com/ppy/osu-framework/releases/tag/2019.921.0)
 
-## `Quad.ConservativeArea` has been removed
+### `Quad.ConservativeArea` has been removed
 
 It was inaccurate for certain `Quad`s. Use `Area` as a replacement.
 
 # [2019.821.0](https://github.com/ppy/osu-framework/releases/tag/2019.821.0)
 
-## `SpriteText.UseFixedWidthForCharacter` has been removed
+### `SpriteText.UseFixedWidthForCharacter` has been removed
 
 Provide an array of `char`s as `SpriteText.FixedWidthExcludeCharacters` instead.
 
-## `SpriteText.GetTextureForCharacter` and `SpriteText.GetFallbackTextureForCharacter` have been removed.
+### `SpriteText.GetTextureForCharacter` and `SpriteText.GetFallbackTextureForCharacter` have been removed.
 
 Glyphs must now always be retrieved through an `ITexturedGlyphLookupStore`. The `SpriteText.CreateTextBuilder()` method is provided to allow overriding the store which glyphs are retrieved from.
 
-## `BlendingModes` are now obsoleted
+### `BlendingModes` are now obsoleted
 
 Please switch to using `BlendingParameters` static properties instead, whcih provide the same functionality. This change was made to expose full control over blend equations and simplify the blending class structure, which previously spanned three related types.
 
 # [2019.809.0](https://github.com/ppy/osu-framework/releases/tag/2019.809.0)
 
-## `Cached` is now a class and requires object initialisation
+### `Cached` is now a class and requires object initialisation
 
 Usages of `Cached` without initialising (via `new Cached()`) will need to be updated.
 
-## `Animation` no longer supports `AutoSizeAxes`
+### `Animation` no longer supports `AutoSizeAxes`
 
 `Animation` will automatically auto-size on axes which are not relative sized (via `RelativeSizeAxes`) and for which `Size` has not been set.
 
 # [2019.726.0](https://github.com/ppy/osu-framework/releases/tag/2019.726.0)
 
-## `Path` now supports `AutoSizeAxes` and is set to auto-size in both axes by default
+### `Path` now supports `AutoSizeAxes` and is set to auto-size in both axes by default
 
 There are now three modes of operation for paths:
 ```
@@ -1252,7 +1252,7 @@ new Container
 
 # [2019.702.0](https://github.com/ppy/osu-framework/releases/tag/2019.702.0)
 
-## `InputKey` enum names for extra mouse buttons have been renamed.
+### `InputKey` enum names for extra mouse buttons have been renamed.
 
 ```
 MouseButtonX -> ExtraMouseButtonX
@@ -1260,7 +1260,7 @@ MouseButtonX -> ExtraMouseButtonX
 
 # [2019.628.0](https://github.com/ppy/osu-framework/releases/tag/2019.628.0)
 
-## `Menu` and several related components have been made abstract
+### `Menu` and several related components have been made abstract
 
 For each component, there are two ways to resolve resulting errors:
 
@@ -1349,13 +1349,13 @@ For each component, there are two ways to resolve resulting errors:
         }
         ```
 
-## `DebugSetting.ActiveGCMode` no longer exists
+### `DebugSetting.ActiveGCMode` no longer exists
 
 If you were manually setting this, you can do so via [.NET methods](https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/latency?view=netframework-4.8).
 
 # [2019.614.0](https://github.com/ppy/osu-framework/releases/tag/2019.614.0)
 
-## `ScrollContainer<T>` is now abstract (and `ScrollContainer` no longer exists)
+### `ScrollContainer<T>` is now abstract (and `ScrollContainer` no longer exists)
 
 In a push to make the provided framework components design agnostic, `ScrollContainer` is no longer provided. As a framework consumer you have a few options to resolve this:
 
@@ -1455,25 +1455,25 @@ public class MyScrollContainer : ScrollContainer<Drawable>
 
 # [2019.611.0](https://github.com/ppy/osu-framework/releases/tag/2019.611.0)
 
-## `LinearVertexBuffer` and `QuadVertexBuffer` can no longer be constructed outside of osu!framework.
+### `LinearVertexBuffer` and `QuadVertexBuffer` can no longer be constructed outside of osu!framework.
 
 For existing code, `LinearBatch(size, 1)` and `QuadBatch(size, 1)` may be used to replace vertex buffer usages. Code must be updated to always invoke `batch.Add(vertex)` with the vertices that should be drawn.
 
 `VertexBuffer` may still be derived for custom implementations.
 
-## VisibilityContainer now exposes visibility via a bindable
+### VisibilityContainer now exposes visibility via a bindable
 
 `VisibilityContainer` no longer implements `IStateful<Visibility>`, instead exposing a single `Bindable<Visibility> State`.
 
 # [2019.606.0](https://github.com/ppy/osu-framework/releases/tag/2019.606.0)
 
-## `Texture.DrawTriangle()` and `Texture.DrawQuad()` have been removed ([#2475](https://github.com/ppy/osu-framework/pull/2475))
+### `Texture.DrawTriangle()` and `Texture.DrawQuad()` have been removed ([#2475](https://github.com/ppy/osu-framework/pull/2475))
 
 Use `DrawNode.DrawTriangle()` and `DrawNode.DrawQuad()` instead.
 
 # [2019.604.0](https://github.com/ppy/osu-framework/releases/tag/2019.604.0)
 
-## Global `TrackStore` and `ResourceStore`s can no longer access resources that are out of their respective namespaces.
+### Global `TrackStore` and `ResourceStore`s can no longer access resources that are out of their respective namespaces.
 
 Previously, it was possible to access any resource as a part of `TrackStore` and `SampleStore` via their `Get` methods because the entire resource store would be nested inside them. 
 
@@ -1482,7 +1482,7 @@ This nesting has been removed, so you can now only access files that are part of
 * For `TrackStore`, this will be the `Tracks` namespace. 
 * For `SampleStore`, this will be the `Samples` namespace.
 
-## Audio stores have been renamed
+### Audio stores have been renamed
 
 To bring naming in-line with the purpose of audio stores, the following classes have been renamed:
 
@@ -1496,13 +1496,13 @@ The public variables relating to these stores have been renamed to reflect this 
 `AudioManager.Track` -> `AudioManager.Tracks`  
 `AudioManager.Sample` -> `AudioManager.Samples`
 
-## Virtual tracks must be retrieved from `ITrackStore`
+### Virtual tracks must be retrieved from `ITrackStore`
 
 `ITrackStore` now has a `GetVirtual` method which will create a virtual track. This will handle adding the track correctly to the audio subsystem. If one wishes to create a custom type of virtual tracks (a super-edge-case) you could implement the `ITrackStore` interface and manually add your component to `AudioManager` via `AddItem`.
 
 # [2019.523.0](https://github.com/ppy/osu-framework/releases/tag/2019.523.0)
 
-## TabControl can now select nothing [#2430](https://github.com/ppy/osu-framework/pull/2430)
+### TabControl can now select nothing [#2430](https://github.com/ppy/osu-framework/pull/2430)
 
 While this does not match most OS implementations of a tab control, this was deemed useful for o!f usage scenarios.
 
@@ -1514,7 +1514,7 @@ tabControl.Current.Value = null;
 
 Now it is allowed.
 
-## Dropdown can now select nothing [#2428](https://github.com/ppy/osu-framework/pull/2428)
+### Dropdown can now select nothing [#2428](https://github.com/ppy/osu-framework/pull/2428)
 
 Previously, this code would throw an exception.
 
@@ -1524,17 +1524,17 @@ dropdownMenu.Current.Value = null;
 
 Now it is allowed. Note that implementations of dropdown should be updated to handle this (common scenario is that the `DropdownHeader` would not correctly handle a `string.Empty` case if it was using AutoSize in the Y axis).
 
-## `TabItem.IsRemovable` is true by default [#2425](https://github.com/ppy/osu-framework/pull/2425)
+### `TabItem.IsRemovable` is true by default [#2425](https://github.com/ppy/osu-framework/pull/2425)
 
 This felt like a more sane default. Any existing usage of custom `TabItem`s where `IsRemovable` was overridden, or any existing usage where removal is explicitly *not* wanted need to be updated.
 
 # [2019.514.0](https://github.com/ppy/osu-framework/releases/tag/2019.514.0)
 
-## `Game.FrameStatisticsMode` is now a bindable named `Game.FrameStatistics` [#2399](https://github.com/ppy/osu-framework/pull/2399)
+### `Game.FrameStatisticsMode` is now a bindable named `Game.FrameStatistics` [#2399](https://github.com/ppy/osu-framework/pull/2399)
 
 This allows consumers to hook value changed events so they can, for instance, save the (framework) FPS display's state to config and handle hotkey-based changes.
 
-## Visual `TestCase`s are now `TestScene`s [#2365](https://github.com/ppy/osu-framework/pull/2365)
+### Visual `TestCase`s are now `TestScene`s [#2365](https://github.com/ppy/osu-framework/pull/2365)
 
 The term `TestCase` is used by testing frameworks to denote single methods inside a test class. We were using it on the class itself as a prefix, which got quite confusing. This resolves the conflict and feels more correct as these are visual tests – ie. "scenes".
 
@@ -1542,7 +1542,7 @@ Note that the `TestCase` prefix is still supported by tooling for the time being
 
 # [2019.427.0](https://github.com/ppy/osu-framework/releases/tag/2019.427.0)
 
-## `Drawable.ApplyDrawNode()` has been removed [#2314](https://github.com/ppy/osu-framework/pull/2314)
+### `Drawable.ApplyDrawNode()` has been removed [#2314](https://github.com/ppy/osu-framework/pull/2314)
 
 The direction of application of `DrawNode` states has been inversed.
 
@@ -1599,13 +1599,13 @@ class MyCustomDrawable : Drawable
 }
 ```
 
-## The namespace of `EdgeEffectParameters` and `EdgeEffectType` has changed [#2314](https://github.com/ppy/osu-framework/pull/2314)
+### The namespace of `EdgeEffectParameters` and `EdgeEffectType` has changed [#2314](https://github.com/ppy/osu-framework/pull/2314)
 
 They now reside in `osu.Framework.Graphics.Effects`.
 
 # [2019.327.0](https://github.com/ppy/osu-framework/releases/tag/2019.327.0)
 
-## Font fallback order changes [#2296](https://github.com/ppy/osu-framework/pull/2296)
+### Font fallback order changes [#2296](https://github.com/ppy/osu-framework/pull/2296)
 
 Games adding their own fonts can now do so directly to `Game.Fonts`. Fallback (framework-side) fonts are now always at the lowest priority.
 
@@ -1621,7 +1621,7 @@ now:
 Fonts.AddStore(new GlyphStore(Resources, @"Fonts/osuFont"));
 ```
 
-## FontAwesome and SpriteIcon is provided by the framework [#2293](https://github.com/ppy/osu-framework/pull/2293)
+### FontAwesome and SpriteIcon is provided by the framework [#2293](https://github.com/ppy/osu-framework/pull/2293)
 
 If you manually added either of these to your project, please remove them.
 
@@ -1635,17 +1635,17 @@ new SpriteIcon
 
 # [2019.319.0](https://github.com/ppy/osu-framework/releases/tag/2019.319.0)
 
-## Parameter order of `AddUntilStep` / `AddWaitStep` reversed [#2256](https://github.com/ppy/osu-framework/pull/2256)
+### Parameter order of `AddUntilStep` / `AddWaitStep` reversed [#2256](https://github.com/ppy/osu-framework/pull/2256)
 
 In order to standardise parameter order, these two methods' parameters have been reversed. Old parameter order methods are available temporarily (as `[Obsolete]`) to ease migration.
 
-## New attribute `[SetUpSteps]` added [#2266](https://github.com/ppy/osu-framework/pull/2266)
+### New attribute `[SetUpSteps]` added [#2266](https://github.com/ppy/osu-framework/pull/2266)
 
 Finally allows steps to be added that will run before every `[Test]` method.
 
 # [2019.221.0](https://github.com/ppy/osu-framework/releases/tag/2019.221.0)
 
-## Implicit operator removed from `Bindable` [#2152](https://github.com/ppy/osu-framework/pull/2152)
+### Implicit operator removed from `Bindable` [#2152](https://github.com/ppy/osu-framework/pull/2152)
 
 In order to avoid accidental misuse / misunderstandings, `.Value` must always be added to `Bindable` when requesting its value. One such case which used to be confusing:
 
@@ -1670,7 +1670,7 @@ if (bindableDrawable == drawable)
 }
 ```
 
-## Bindable.ValueChanged now provides `ValueChangedEvent` [#2012](https://github.com/ppy/osu-framework/pull/2012)
+### Bindable.ValueChanged now provides `ValueChangedEvent` [#2012](https://github.com/ppy/osu-framework/pull/2012)
 
 It is now possible to access the old value. This was a common requirement in bindable usage which we had issues with until now.
 
@@ -1682,7 +1682,7 @@ bindable.ValueChanged += e =>
 }
 ```
 
-## Introduction of `FontUsage` [#2043](https://github.com/ppy/osu-framework/pull/2043)
+### Introduction of `FontUsage` [#2043](https://github.com/ppy/osu-framework/pull/2043)
 
 While old methods of setting font attributes will still work, they are now marked as `[Obsoleted]`. You should use `Font = new FontUsage(size: 200)` going forward. For convenience, you can adjust existing fonts like so:
 
