@@ -2,6 +2,12 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# vNext
+
+## Classes used in dependency injection need to implement the `IDependencyInjectionCandidate` interface
+
+This does not affect `Drawable` subclasses.
+
 # [2022.1126.0](https://github.com/ppy/osu-framework/releases/tag/2022.1126.0)
 
 ## Add source generator for dependency injection (https://github.com/ppy/osu-framework/pull/5541)
