@@ -44,6 +44,7 @@ These statistics are counted per frame.
 * [ScheduleInvk](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/Containers/CompositeDrawable.cs#L721): The number of [timed tasks](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Threading/Scheduler.cs) ran from the queue.
 * [InputQueue](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/InputManager.cs#L288): The number of [UserInputManagers](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/UserInputManager.cs) handling non-positional (keybinding specific) input. 
 * [PositionalIQ](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/InputManager.cs#L315): The number of [UserInputManagers](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Input/UserInputManager.cs) handling positional input.
+* [CCL](https://github.com/ppy/osu-framework/blob/bd4ac6890a1ac7b2ec492b80975a0a2e61d9fcb0/osu.Framework/Graphics/Containers/CompositeDrawable.cs#L718): The number of times a drawable's [life state](https://github.com/ppy/osu-framework/blob/9bbc6a81a2b8f035e2b043d3718d2db6e4f1d868/osu.Framework/Graphics/Drawable.cs#L373-L376) is checked and updated.
 
 ### Draw
 * [VBufBinds](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/OpenGL/GLWrapper.cs#L169): The number of [OpenGL](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/OpenGL/GLWrapper.cs) [VBO](https://www.khronos.org/opengl/wiki/Vertex_Specification#Vertex_Buffer_Object) bind calls.
