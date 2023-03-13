@@ -24,5 +24,5 @@ Selects the graphics renderer implementation. Valid values are:
 Selects the graphics surface that the renderer should use. Valid values are:
 - `opengl`
 - `metal` (only on Apple operating systems)
-- `direct3d11` (only on the Windows operating system)
-- `vulkan`
+- `direct3d11` (only on Windows operating systems)
+- `vulkan` (except Apple operating systems)
