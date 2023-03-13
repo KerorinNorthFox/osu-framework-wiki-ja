@@ -15,9 +15,9 @@ Force an execution mode for test runs. Valid values are `SingleThread` and `Mult
 ## `OSU_GRAPHICS_RENDERER`
 
 Selects the graphics renderer implementation. Valid values are:
-- `gl` or `opengl` - uses the [`GLRenderer`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/OpenGL/GLRenderer.cs) implementation.
+- `gl` or `opengl` - the [`GLRenderer`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/OpenGL/GLRenderer.cs) implementation.
     - Only supports the `opengl` [graphics surface](#OSU_GRAPHICS_SURFACE).
-- `veldrid` - uses the [`VeldridRenderer`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/Veldrid/VeldridRenderer.cs) implementation.
+- `veldrid` - the [`VeldridRenderer`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/Veldrid/VeldridRenderer.cs) implementation.
 
 ## `OSU_GRAPHICS_SURFACE`
 
