@@ -12,3 +12,17 @@ By default, `AddUntilStep` has a timeout to ensure tests don't run forever. Sett
 
 Force an execution mode for test runs. Valid values are `SingleThread` and `MultiThreaded`. Default is `MultiThreaded`.
 
+## `OSU_GRAPHICS_RENDERER`
+
+Selects the graphics renderer implementation. Valid values are:
+- `gl` or `opengl` - uses the [`GLRenderer`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/OpenGL/GLRenderer.cs) implementation.
+    - Only supports the `opengl` [graphics surface](#OSU_GRAPHICS_SURFACE).
+- `veldrid` - uses the [`VeldridRenderer`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/Veldrid/VeldridRenderer.cs) implementation.
+
+## `OSU_GRAPHICS_SURFACE`
+
+Selects the graphics surface that the renderer should use. Valid values are:
+- `opengl`
+- `metal`
+- `direct3d11`
+- `vulkan`
