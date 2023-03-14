@@ -2,6 +2,242 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+## [2023.314.0](https://github.com/ppy/osu-framework/releases/tag/2023.314.0)
+
+## The OpenGL Core profile is now used
+
+Shaders now follow "Vulkan GLSL", which is mostly documented in the spec: [`GL_KHR_vulkan_glsl`](https://github.com/KhronosGroup/GLSL/blob/master/extensions/khr/GL_KHR_vulkan_glsl.txt). The primary differences are documented below:
+
+### Vertex shader members
+
+<table>
+<tr>
+<th>old</th>
+<th>new</th>
+<tr>
+<td>
+
+```glsl
+attribute lowp int In_Value;
+varying lowp int Out_Value;
+```
+
+</td>
+<td>
+
+```glsl
+layout(location = 0) in lowp int InValue;
+layout(location = 0) out lowp int OutValue;
+```
+
+</td>
+</tr>
+</table>
+
+The location increases for each additional member in the respective `in`/`out` lists.
+
+### Fragment shader members
+
+<table>
+<tr>
+<th>old</th>
+<th>new</th>
+<tr>
+<td>
+
+```glsl
+varying lowp int In_Value;
+```
+
+</td>
+<td>
+
+```glsl
+layout(location = 0) in lowp int InValue;
+```
+
+</td>
+</tr>
+</table>
+
+The location increases for each additional member, and must match the location of the respective member in the vertex shader.
+
+### Fragment shader outputs
+
+Fragment shaders are required to define an output variable.
+
+<table>
+<tr>
+<th>old</th>
+<th>new</th>
+<tr>
+<td>
+
+```glsl
+void main(void)
+{
+    gl_FragColor = vec4(0.0);
+}
+```
+
+</td>
+<td>
+
+```glsl
+layout(location = 0) out vec4 colour;
+
+void main(void)
+{
+    colour = vec4(0.0);
+}
+```
+
+</td>
+</tr>
+</table>
+
+### Uniform members
+
+Free-floating "global" uniforms are not supported. They must be placed in ["uniform blocks"](https://www.khronos.org/opengl/wiki/Interface_Block_(GLSL)#Buffer_backed).
+
+<table>
+<tr>
+<th>old</th>
+<th>new</th>
+<tr>
+<td>
+
+```glsl
+uniform lowp int Uniform_Value;
+```
+
+</td>
+<td>
+
+```glsl
+layout(std140, set = 0, binding = 0) uniform MyUniforms
+{
+    lowp int Uniform_Value;
+};
+```
+
+</td>
+</tr>
+</table>
+
+**Notes:**
+- `std140` should always be used.
+- The `set` increases for each unique uniform block.
+- `binding` is a special required value which indicates where in the program the block should be bound. osu!framework manages this for you and should be 0 for uniform blocks.
+- Both shader stages can use the same uniform block from the same set, provided that the physical layout matches.
+
+Furthermore, this means that uniform blocks have become a first-class citizen in osu!framework. The code to make use of the above looks like this:
+```csharp
+
+class MyDrawNode : DrawNode
+{
+    private IUniformBuffer<MyBufferData>? bufferData;
+
+    public override void Draw(IRenderer renderer)
+    {
+        base.Draw(renderer);
+
+        // Create the uniform buffer.
+        bufferData ??= renderer.CreateUniformBuffer<MyBufferData>();
+
+        // Update the uniform buffer.
+        bufferData.Data = bufferData.Data with
+        {
+            UniformValue = 5
+        };
+
+        // Bind the buffer to the shader.
+        shader.BindUniformBuffer("MyUniforms", bufferData);
+
+        shader.Bind();
+        // Draw...
+    }
+
+    protected override void Dispose(bool isDisposing)
+    {
+        base.Dispose(isDisposing);
+
+        // Ensure that the buffer is disposed.
+        bufferData?.Dispose();
+    }
+}
+
+// Pack = 1 is required.
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+// Record structs automatically implement IEquatable<>
+public record struct MyBufferData
+{
+    // Use types provided in the osu.Framework.Graphics.Shaders.Types namespace.
+    public UniformInt UniformValue;
+
+    // The struct must be a multiple of 16 bytes.
+    private readonly UniformPadding12 pad2;
+}
+```
+
+Runtime validation is present to notify of incorrect alignment/packing.
+
+### Uniform textures/samplers
+
+The combined sampler of GLSL is not supported.
+
+<table>
+<tr>
+<th>old</th>
+<th>new</th>
+<tr>
+<td>
+
+```glsl
+uniform lowp sampler2D Sampler;
+```
+
+</td>
+<td>
+
+```glsl
+layout(set = 0, binding = 0) uniform lowp texture2D Texture;
+layout(set = 0, binding = 1) uniform lowp sampler Sampler;
+```
+
+</td>
+</tr>
+</table>
+
+**Notes:**
+- `std140` cannot be applied here unlike for uniform blocks.
+- The `set` increases along with all other uniform blocks/textures.
+- The texture and sampler are bound to different points. The texture being bound to 0 and sampler to 1 will be standard for osu!framework going forward.
+
+### Sampling textures
+
+<table>
+<tr>
+<th>old</th>
+<th>new</th>
+<tr>
+<td>
+
+```glsl
+vec4 col = texture2D(my_Sampler, ...);
+```
+
+</td>
+<td>
+
+```glsl
+vec4 col = texture(sampler2D(my_Texture, my_Sampler), ...);
+```
+
+</td>
+</tr>
+</table>
+
 ## [2022.1129.0](https://github.com/ppy/osu-framework/releases/tag/2022.1129.0)
 
 ### `IHasFilterableChildren` has been removed; use `IFilterable` instead (https://github.com/ppy/osu-framework/pull/5530)
