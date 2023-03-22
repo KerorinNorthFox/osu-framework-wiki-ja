@@ -2,6 +2,14 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+## [2023.322.0](https://github.com/ppy/osu-framework/releases/tag/2023.322.0)
+
+### `TexturedShaderDrawNode.TextureShader` is made private
+
+This is partially done to force consumers into binding uniform blocks in the newly defined `TexturedShaderDrawNode.BindUniformResources` method, such that uniform blocks are always bound whenever the corresponding shader is used for drawing in the framework.
+
+For binding/unbinding shaders, use `TexturedShaderDrawNode.BindTextureShader`/`TexturedShaderDrawNode.UnbindTextureShader` instead.
+
 ## [2023.314.0](https://github.com/ppy/osu-framework/releases/tag/2023.314.0)
 
 ## The OpenGL Core profile is now used
