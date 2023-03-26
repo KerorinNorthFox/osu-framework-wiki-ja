@@ -2,6 +2,16 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+## [2023.326.0](https://github.com/ppy/osu-framework/releases/tag/2023.326.0)
+
+### iOS project structure has been revamped
+
+In efforts to migrate the framework to SDL on iOS, the project structure required major changes. For consumers, you're required to remove the `AppDelegate` class attached in the game project as `GameAppDelegate` no longer exists, and change the `Application.Main` method to call `GameApplication.Main` as such:
+```diff
+-        public static void Main(string[] args) => UIApplication.Main(args, null, typeof(AppDelegate));
++        public static void Main(string[] args) => GameApplication.Main(new MyGameIOS());
+```
+
 ## [2023.322.0](https://github.com/ppy/osu-framework/releases/tag/2023.322.0)
 
 ### `TexturedShaderDrawNode.TextureShader` is made private
