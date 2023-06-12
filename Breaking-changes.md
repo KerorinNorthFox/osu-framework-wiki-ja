@@ -2,6 +2,23 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+## vNext
+
+## `AddDropdownItem(LocalisableString text, T value)` has been removed
+
+If you were using this, refactor your code to use `LocalisableString GenerateItemText(T value)` instead.
+
+Easiest way is to add `LocalisableString? CustomDropdownText` to your `T`, or wrap `T` in a class that has one.
+Then simply change `GenerateItemText()` to use that:
+
+```cs
+public partial class MyDropdown : Dropdown<T>
+{
+    protected override LocalisableString GenerateItemText(T value)
+        => value.CustomDropdownText ?? base.GenerateItemText(value);
+}
+```
+
 ## [2023.326.0](https://github.com/ppy/osu-framework/releases/tag/2023.326.0)
 
 ### iOS project structure has been revamped
