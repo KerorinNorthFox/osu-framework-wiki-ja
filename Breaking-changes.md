@@ -19,6 +19,12 @@ public partial class MyDropdown : Dropdown<T>
 }
 ```
 
+## Subclasses of `FocusedOverlayContainer` must now implement `Pop{In,Out}()`
+
+Previously, subclasses of `FocusedOverlayContainer` were not forced to implement `Pop{In,Out}` themselves, despite actually needing to do so for the overlay to actually play transitions out correctly. This has now been changed and inheritors of the class must always implement `Pop{In,Out}`.
+
+In practice this should not break any reasonable consumers of the class, except for the need to remove any `base.Pop{In,Out}()` calls in classes that directly inherit `FocusedOverlayContainer` and call base in `Pop{In,Out}()`.
+
 ## [2023.326.0](https://github.com/ppy/osu-framework/releases/tag/2023.326.0)
 
 ### iOS project structure has been revamped
