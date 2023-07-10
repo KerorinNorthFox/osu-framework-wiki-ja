@@ -4,7 +4,9 @@ This page serves to give a list of all breaking/major changes.
 
 ## vNext
 
-## `AddDropdownItem(LocalisableString text, T value)` has been removed
+## [2023.618.0](https://github.com/ppy/osu-framework/releases/tag/2023.618.0)
+
+### `AddDropdownItem(LocalisableString text, T value)` has been removed
 
 If you were using this, refactor your code to use `LocalisableString GenerateItemText(T value)` instead.
 
@@ -19,7 +21,7 @@ public partial class MyDropdown : Dropdown<T>
 }
 ```
 
-## Subclasses of `FocusedOverlayContainer` must now implement `Pop{In,Out}()`
+### Subclasses of `FocusedOverlayContainer` must now implement `Pop{In,Out}()`
 
 Previously, subclasses of `FocusedOverlayContainer` were not forced to implement `Pop{In,Out}` themselves, despite actually needing to do so for the overlay to actually play transitions out correctly. This has now been changed and inheritors of the class must always implement `Pop{In,Out}`.
 
