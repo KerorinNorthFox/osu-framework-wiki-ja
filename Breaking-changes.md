@@ -4,6 +4,22 @@ This page serves to give a list of all breaking/major changes.
 
 ## vNext
 
+## [2023.712.0](https://github.com/ppy/osu-framework/releases/tag/2023.712.0)
+
+### `GameHost.GetClipboard()` is obsolete
+
+The new way to retrieve a `Clipboard` instance is to resolve it via dependency injection directly. This does not require resolving the `GameHost` anymore:
+
+```diff
+ [BackgroundDependencyLoader]
+-private void load(GameHost host)
++private void load(Clipboard clipboard)
+ {
+-    host?.Clipboard.SetText("example");
++    clipboard.SetText("example");
+ }
+```
+
 ## [2023.618.0](https://github.com/ppy/osu-framework/releases/tag/2023.618.0)
 
 ### `AddDropdownItem(LocalisableString text, T value)` has been removed
