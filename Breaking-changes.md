@@ -4,6 +4,16 @@ This page serves to give a list of all breaking/major changes.
 
 ## vNext
 
+## [2023.720.0](https://github.com/ppy/osu-framework/releases/tag/2023.720.0)
+
+### Source generators will now only run on release builds
+
+As we continue to add more source generators, we've seen increases in compile-time overheads, with local testing showing over 2x compile times with source generators turned on.
+
+osu!framework source generators are made to optimise builds at runtime (mostly by removing reflection overhead). As such, it doesn't make sense to run these for debug releases as they are basically custom release-targeting optimisations.
+
+This should not result in a noticeable change in runtime performance during debug, but will reduce compilation times by over 50% in most cases. This is valuable during debug as the most common case is frequently building / hot reloading for quick iteration.
+
 ## [2023.712.0](https://github.com/ppy/osu-framework/releases/tag/2023.712.0)
 
 ### `GameHost.GetClipboard()` is obsolete
