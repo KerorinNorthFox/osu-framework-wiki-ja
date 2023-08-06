@@ -49,7 +49,7 @@ public class AwesomeKeyBindingContainer : KeyBindingContainer<InputAction>
 
 There are two modes that can be specified on the creation of a new keybinding container via the parameters. One is the [SimultaneousBindingMode](https://github.com/ppy/osu-framework/blob/e143142928ebf87a10777217ecf0d6dc45082282/osu.Framework/Input/Bindings/KeyBindingContainer.cs#L285), and the other is the [KeyCombinationMatchingMode](https://github.com/ppy/osu-framework/blob/e143142928ebf87a10777217ecf0d6dc45082282/osu.Framework/Input/Bindings/KeyCombination.cs#L316). The SimultaneousBindingMode specifies whether or not an input should be valid based on whether or not other buttons are pressed simultaneously, whereas the KeyCombinationMatchingMode specifies how strict the keybinding should be in regards to whether or not the exact buttons are pressed. 
 
-For a better visual representation of these modes and how they restrict multiple key press events, please see [TestCaseKeyBindings](https://github.com/ppy/osu-framework/blob/master/osu.Framework.Tests/Visual/TestCaseInput/TestCaseKeyBindings.cs).
+For a better visual representation of these modes and how they restrict multiple key press events, please see [`TestCaseKeyBindingsGrid`](https://github.com/ppy/osu-framework/blob/master/osu.Framework.Tests/Visual/Input/TestSceneKeyBindingsGrid.cs).
 
 ## Handling key bound actions
 
