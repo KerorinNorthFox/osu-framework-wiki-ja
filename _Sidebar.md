@@ -18,7 +18,7 @@
  * [Environment variables](/ppy/osu-framework/wiki/Environment_variables)
  * [Frequently Asked Questions / Common Scenarios](/ppy/osu-framework/wiki/Common-Scenarios)
 ## Testing
- * [Dynamic Compilation and Visual Testing](/ppy/osu-framework/wiki/Development-and-Testing)
+ * [Development and Testing](/ppy/osu-framework/wiki/Development-and-Testing)
  * [Testing local framework checkout with other projects](/ppy/osu-framework/wiki/Testing-local-framework-checkout-with-other-projects)
 ## Debugging and Logging
  * [Draw Visualizer](/ppy/osu-framework/wiki/Debug-Overlays:-Draw-Visualizer)
