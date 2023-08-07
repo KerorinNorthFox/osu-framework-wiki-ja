@@ -1,6 +1,6 @@
 `osu-framework` utilizes `Bindable<T>` objects to distribute data between components. In conjunction with Drawable components, they provide functionality to automatically remove communication between `Bindable<T>` objects when finalized, serving as a safer alternative to C#'s `event`.
 
-## Creating a `Bindable<T>`
+# Creating a `Bindable<T>`
 
 In `public`/`protected`/`internal` scenarios, it is recommended to store a private `Bindable<T>` backing and re-expose it publicly as one of the read-only interfaces - `IBindable` or `IBindable<T>`, depending on how much access the outside objects should have. 
 
@@ -18,7 +18,7 @@ public class MyClass
 
 A few subclasses, such as `BindableDouble`, extend `Bindable<T>` to provide additional functionality such as range-limiting of numeric values or floating point precision handling. These are available under the `osu.Framework.Bindables` namespace.
 
-## Binding `Bindable<T>`s together
+# Binding `Bindable<T>`s together
 
 `Bindable<T>` supports the ability to "bind" to other `Bindable<T>`s. When either one of the bindable's values changes, it will also set the value on the other.
 
@@ -86,7 +86,7 @@ x.ValueChanged += myValueFunc;
 x.TriggerChange();
 ```
 
-## Breaking the `Bindable<T>` chain
+# Breaking the `Bindable<T>` chain
 
 The binding chain between `Bindable<T>`s is weak. That is, bound `Bindable<T>`s will not cause each other to forego garbage collection.
 
@@ -100,7 +100,7 @@ It may be desired to unbind at an arbitrary point in time when finalization is n
 * `UnbindBindings()` - Unbinds all `Bindable<T>`s bound via `BoundTo()`.
 * `UnbindAll()` - Combines `UnbindEvents()` and `UnbindBindings()`.
 
-## Leasing
+# Leasing
 
 There may be a scenario where you want to restrict updates to a high level bindable, but still allow changes by a certain component (or subset of components). Leasing exists to fulfil this goal. While a bindable is leased, it will be set to a `Disabled` state, but the special `LeasedBindable` will bypass this check and allow the bindable's value to be changed (and propagate as usual).
 
