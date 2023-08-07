@@ -1,4 +1,4 @@
-`osu-framework` utilizes `Bindable<T>` objects to distribute data between components. In conjuncation with Drawable components, they provide functionality to automatically remove communication between `Bindable<T>` objects when finalized, serving as a safer alternative to C#'s `event`.
+`osu-framework` utilizes `Bindable<T>` objects to distribute data between components. In conjunction with Drawable components, they provide functionality to automatically remove communication between `Bindable<T>` objects when finalized, serving as a safer alternative to C#'s `event`.
 
 ## Creating a `Bindable<T>`
 
@@ -6,7 +6,7 @@ In `public`/`protected`/`internal` scenarios, it is recommended to store a priva
 
 In `private` scenarios, it is simplest to store bindables as `Bindable<T>`.
 
-```
+```csharp
 public class MyClass
 {
     private readonly Bindable<int> privateBacking = new Bindable<int>();
@@ -16,40 +16,48 @@ public class MyClass
 }
 ```
 
-A few subclasses, such as `BindableDouble`, extend `Bindable<T>` to provide additional functionality such as range-limiting of numeric values. These are available under the `osu.Framework.Configuration` namespace.
+A few subclasses, such as `BindableDouble`, extend `Bindable<T>` to provide additional functionality such as range-limiting of numeric values or floating point precision handling. These are available under the `osu.Framework.Bindables` namespace.
 
 ## Binding `Bindable<T>`s together
 
 `Bindable<T>` supports the ability to "bind" to other `Bindable<T>`s. When either one of the bindable's values changes, it will also set the value on the other.
 
-This is available through the `.BindTo()` and `.GetBoundCopy()` methods.
+This is available through the `.BindTo()` and `.GetBoundCopy()` methods, as well as the `.BindTarget` property (the latter is especially useful as syntactic sugar in property initialiser usage).
 
 ```csharp
 var x = new Bindable<int>(1);
 var y = new Bindable<int>(2);
 
 x.BindTo(y);
-Assert.IsTrue(x.Value == 2); // BoundTo() immediately sets x's value to y's
+Assert.That(x.Value, () => Is.EqualTo(2)); // BoundTo() immediately sets x's value to y's
 
 y.Value = 10;
-Assert.IsTrue(x.Value == 10); // The value set to y previously is propagated to x
+Assert.That(x.Value, () => Is.EqualTo(10)); // The value set to y above is propagated to x
 
 x.Value = 5;
-Assert.IsTrue(y.Value == 5); // Same as above - dual-way communication
+Assert.That(y.Value, () => Is.EqualTo(5)); // Same as above - dual-way communication
 ```
 
 ```csharp
 var x = new Bindable<int>(1);
-var y = x.GetBoundCopy();
-
-x.BindTo(y);
-Assert.IsTrue(x.Value == 2); // BoundTo() immediately sets x's value to y's
+var y = x.GetBoundCopy(); // The binding is set up automatically here.
 
 y.Value = 10;
-Assert.IsTrue(x.Value == 10); // The value set to y previously is propagated to x
+Assert.That(x.Value, () => Is.EqualTo(10)); // The value set to y above is propagated to x.
 
 x.Value = 5;
-Assert.IsTrue(y.Value == 5); // Same as above - dual-way communication
+Assert.That(y.Value, () => Is.EqualTo(5)); // Same as above - dual-way communication
+```
+
+```csharp
+var x = new Bindable<int>(1);
+var y = new Bindable<int>() { BindTarget = x };
+
+y.Value = 10;
+Assert.That(x.Value, () => Is.EqualTo(10)); // The value set to y above is propagated to x.
+
+x.Value = 5;
+Assert.That(y.Value, () => Is.EqualTo(5)); // Same as above - dual-way communication
 ```
 
 Generally, when interacting with a bindable exposed by another object, one should always make a local bindable to track changes. **Binding to another object instance's bindable events should be avoided**, as it bypasses the reference safety provided by bindables.
