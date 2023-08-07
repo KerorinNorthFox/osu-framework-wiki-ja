@@ -1,8 +1,8 @@
-## `LocalisableString`
+# `LocalisableString`
 
 Localisation in `osu-framework` revolves around the `LocalisableString` class, which UI controls and text destinations accept in place of `string`. This page explains the provided methods of interacting with `LocalisableString`, but further customisation is also possible by implementing `ILocalisableStringData` directly.
 
-### `LocalisableFormattableString`
+## `LocalisableFormattableString`
 
 Represents a string which can be formatted based on the currently selected locale, exposed in two methods and one extension method:
  - `LocalisableString.Format`, accepting a format string and a list of arguments designed in a similar fashion to `string.Format`:
@@ -26,7 +26,7 @@ Represents a string which can be formatted based on the currently selected local
    Text = formattable.ToLocalisableString("N0");
    ```
 
-### `TranslatableString`
+## `TranslatableString`
 
 Represents a string which can be translated across different languages via a specific "key" that is used to look up on the `ILocalisationStore` associated with the locale.
 ```csharp
@@ -64,7 +64,7 @@ string Get(string lookup) // ILocalisationStore.Get(string)
 }
 ```
 
-### `RomanisableString`
+## `RomanisableString`
 
 Represents a unicode string that has a romanised variant, in which can be toggled on/off by the `FrameworkSetting.ShowUnicode` setting available in the config manager.
 ```csharp
@@ -73,7 +73,7 @@ Text = new RomanisableString("音楽", "ongaku");
 // FrameworkSetting.ShowUnicode == false: "ongaku" is shown
 ```
 
-### `CaseTransformableString`
+## `CaseTransformableString`
 
 Represents a string which accepts a `LocalisableString` and transforms it to the specified casing, exposed in a set of extension methods which accept either `LocalisableString` or `ILocalisableStringData` (string implementations):
  - `LocalisableStringExtensions.ToUpper`, which converts all characters of the input string to uppercase, using `TextInfo.ToUpper`.
@@ -87,7 +87,7 @@ Text = new RomanisableString("音楽", "ongaku").ToTitle();
 ...
 ```
 
-### Custom string implementations
+## Custom string implementations
 
 `LocalisableString` accepts any implementation that confronts to the `ILocalisableStringData` interface, in which it can retrieve the final localised string with.
 ```csharp
@@ -113,7 +113,7 @@ Text = new RomanisableString("音楽", "ongaku").ToTitle();
     }
 ```
 
-#### `LocalisationParameters`
+## `LocalisationParameters`
 
 String implementations require context to be able to localise the string. `LocalisationParameters` provide enough context to fit the need for the framework's own string implementations, but it can be built upon for custom string implementations.
 
@@ -157,7 +157,7 @@ This can be achieved by creating a `LocalisationManager` subclass that overrides
         }
 ```
 
-## `LocalisableDescriptionAttribute`
+# `LocalisableDescriptionAttribute`
 
 Represents an attribute for assigning localised description strings to classes/enums, similar to `DescriptionAttribute`. 
 
