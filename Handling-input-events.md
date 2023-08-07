@@ -7,13 +7,13 @@ Parent              < Handler #4
         Child_2_1   < Handler #1
 ```
 
-## Positional vs non-positional input
+# Positional vs non-positional input
 
 "Positional" input refers to any input that depends on a screen-space position (e.g. hover). "Non-positional" input refers to any other input (e.g. a button press).
 
-### Individual event handlers
+## Individual event handlers
 
-#### Positional
+### Positional
 
 ```csharp
 protected virtual bool OnMouseMove(MouseMoveEvent e);
@@ -41,7 +41,7 @@ protected virtual bool OnTabletPenButtonPress(TabletPenButtonPressEvent e);
 protected virtual void OnTabletPenButtonRelease(TabletPenButtonReleaseEvent e);
 ```
 
-#### Non-positional
+### Non-positional
 
 ```csharp
 protected virtual bool OnKeyDown(KeyDownEvent e);
@@ -78,7 +78,7 @@ protected override bool OnClick(ClickEvent e)
 
 Input handlers that correspond to continuations/resolutions of previous input, such as `OnMouseUp()`, `OnDragEnd()`, `OnKeyUp()`, etc., will only fire on drawables that registered to handle the original input by returning `true` - for the examples above, that would be `OnMouseDown()`, `OnDragStart()`, `OnKeyDown()`, etc. Those events cannot be suppressed.
 
-## Aggregate event handler
+# Aggregate event handler
 
 ```csharp
 protected virtual bool Handle(UIEvent e);
@@ -105,7 +105,7 @@ This counts as both a positional and non-positional event handler and works well
 > }
 > ```
 
-## Controlling whether input is to be handled
+# Controlling whether input is to be handled
 
 By default, any `Drawable` that implements the handlers described above will receive all events appropriate for the types of input listed.
 
@@ -144,7 +144,8 @@ class MyContainer : FillFlowContainer
 }
 ```
 
-## Receiving and handling focus
+# Receiving and handling focus
+
 ```csharp
 public virtual bool RequestsFocus;
 public virtual bool AcceptsFocus;
@@ -155,11 +156,11 @@ protected virtual void OnFocusLost(FocusLostEvent e);
 
 Focus may be received via both positional and non-positional input. A `Drawable` with `AcceptsFocus = false` will never receive focus.
 
-### Positional
+## Positional
 
 A `Drawable` receives focus when `OnClick()` returns `true`.
 
-### Non-positional
+## Non-positional
 
 The top-most `Drawable` with `RequestsFocus = true` and `HandleNonPostionalInput = true` will receive focus if nothing else has focus.
 
@@ -177,7 +178,7 @@ The `OnFocusLost()` method is unconditionally invoked on the un-focused `Drawabl
 > }
 > ```
 
-## Input event hierarchy
+# Input event hierarchy
 
 The following hierarchical relationship of input events can be useful to know when drilling down with the [aggregate event handler](#Aggregate-event-handler).
 
