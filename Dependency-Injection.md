@@ -236,3 +236,44 @@ Note that the `DependencyContainer` class exposes two methods for caching depend
         private DerivedDependency derivedDependency { get; set; } // WRONG - will fail at runtime
     }
     ```
+
+### `[Cached]` on drawable classes
+
+Drawable classes themselves can be annotated with the `[Cached]` attribute. In that case, the attribute is interpreted such that all instances of the drawable class will cache themselves to all of their children.
+
+The caching will use the type _at the point of declaration_. To illustrate, given the following structure:
+
+```csharp
+[Cached]
+public partial class A : Drawable { }
+                      
+public partial class B : A { }
+```
+
+the following things will happen:
+
+- Instances of `A` will cache themselves to their children using type `A`.
+- Instances of `B` will cache themselves to their children using type `A`.
+- Instances of `B` will **not** cache themselves to their children using type `B`. For that to happen, the `[Cached]` attribute would have to be repeated on type `B`.
+
+### `[Cached]` on interfaces implemented by a drawable class
+
+A variant of type-based caching above is available via interfaces. Interfaces can be annotated with `[Cached]`; every `Drawable` will cache itself to its children using every interface type annotated with `[Cached]` that it implements. As an example:
+
+```csharp
+[Cached]
+public interface IFirstInterface { }
+
+[Cached]
+public interface ISecondInterface { }
+
+public interface IThirdInterface { }
+
+public partial class Dependency : Drawable, IFirstInterface, IThirdInterface { }
+```
+
+all instances of `Dependency`:
+
+- will cache themselves to children as `IFirstInterface`,
+- will cache themselves to children as `ISecondInterface` (transitively via `IThirdInterface`),
+- will **not** cache themselves to children as `IThirdInterface` (as, analogously to classes, `[Cached]` is only valid on types it is explicitly put on)
