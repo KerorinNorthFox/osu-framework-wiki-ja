@@ -19,7 +19,6 @@
  * [Frequently Asked Questions / Common Scenarios](/ppy/osu-framework/wiki/Common-Scenarios)
 ## Testing
  * [Dynamic Compilation and Visual Testing](/ppy/osu-framework/wiki/Development-and-Testing)
- * [Testing framework PRs with other projects via NuGet](/ppy/osu-framework/wiki/Testing-framework-PRs-with-other-projects-via-NuGet)
  * [Testing local framework checkout with other projects](/ppy/osu-framework/wiki/Testing-local-framework-checkout-with-other-projects)
 ## Debugging and Logging
  * [Draw Visualizer](/ppy/osu-framework/wiki/Debug-Overlays:-Draw-Visualizer)
