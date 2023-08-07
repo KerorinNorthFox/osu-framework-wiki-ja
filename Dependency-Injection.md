@@ -178,3 +178,61 @@ public partial class MyGame : Game
     }
 }
 ```
+
+Note that the `DependencyContainer` class exposes two methods for caching dependencies:
+
+- `.Cache()` will always cache the dependency using its *runtime, most derived type*. The implications of this are demonstrated by the following example:
+
+    ```csharp
+    public abstract class BaseDependency { }
+    public class DerivedDependency : BaseDependency { }
+
+    public partial class DependencyProvider
+    {
+        private BaseDependency dependency;
+
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        {
+            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+            dependencies.Cache(dependency = new DerivedDependency());
+            return dependencies;
+        }
+    }
+
+    public partial class DependencyConsumer
+    {
+        [Resolved]
+        private BaseDependency baseDependency { get; set; }       // WRONG - will fail at runtime
+
+        [Resolved]
+        private DerivedDependency derivedDependency { get; set; } // OK
+    }
+    ```
+
+- `.CacheAs<T>()` will cache the dependency using its *declared* type, as demonstrated by the following example:
+
+    ```csharp
+    public abstract class BaseDependency { }
+    public class DerivedDependency : BaseDependency { }
+
+    public partial class DependencyProvider
+    {
+        private BaseDependency dependency;
+
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        {
+            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+            dependencies.CacheAs(dependency = new DerivedDependency());
+            return dependencies;
+        }
+    }
+
+    public partial class DependencyConsumer
+    {
+        [Resolved]
+        private BaseDependency baseDependency { get; set; }       // OK
+
+        [Resolved]
+        private DerivedDependency derivedDependency { get; set; } // WRONG - will fail at runtime
+    }
+    ```
