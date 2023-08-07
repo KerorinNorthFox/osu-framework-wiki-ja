@@ -1,5 +1,3 @@
-# Setting up your first project
-
 This tutorial will show you how to create a new project integrating osu-framework from scratch. It is not meant to be a guide for contributing to the osu-framework project itself.
 
 * [Getting started](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#getting-started)
