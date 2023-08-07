@@ -1,4 +1,3 @@
-# Setting Up Fonts
 This tutorial assumes you have completed [setting up your first project](/ppy/osu-framework/wiki/Setting-up-your-first-project) and [setting up compiled resource stores](Setting-Up-Compiled-Resource-Stores).
 
 In this tutorial, you will learn how to add custom fonts into your game and use it:
@@ -6,7 +5,7 @@ In this tutorial, you will learn how to add custom fonts into your game and use 
 * [Adding the custom font to the font store](#adding-the-custom-font-to-the-font-store)
 * [Using specific font for sprite text](#using-specific-font-for-sprite-text)
 
-## Converting to binary font and texture files
+# Converting to binary font and texture files
 For the custom font to be recognized inside osu!framework, you will have to convert it into a binary font with texture files alongside it.
 
 To start off, you'll need to download and install [BMFont by AngelCode](https://www.angelcode.com/products/bmfont) for converting the font, then run it and load [this configuration](/ppy/osu-framework/blob/master/osu.Framework/Resources/Fonts/bmfont.bmfc) for selecting required character range:
@@ -35,7 +34,7 @@ The font file name should be saved in the following pattern:
 | MyAwesomeFont | `null` | `false` | `MyAwesomeFont` |
 | MyAwesomeFont | `null` | `true` | `MyAwesomeFont-Italic` |
 
-## Adding the custom font to the font store
+# Adding the custom font to the font store
 To use the custom font inside your game, you'll need to add it to the `FontStore` by specifying:
  - The resource store of your resources folder that contains the binary fonts.
  - The asset name of the binary font, The font path should be specified here relative from the resource store you've specified. (`Fonts/MyAwesomeFont` for this tutorial)
@@ -89,7 +88,9 @@ namespace MyAwesomeProject.Game
 ---
 
 Now you're almost done, by default, the first font to be added to your game will automatically be used for all `SpriteText`s in your game, but you may want to use a specific font.
-## Using specific font for a sprite text
+
+# Using specific font for a sprite text
+
 To use a specific font for a sprite text, all you have to do is construct a new `FontUsage` with:
 | Parameter | Description | Value in this tutorial |
 | --------- | ----------- | ---------------------- |
