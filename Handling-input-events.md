@@ -11,8 +11,10 @@ Parent              < Handler #4
 
 "Positional" input refers to any input that depends on a screen-space position (e.g. hover). "Non-positional" input refers to any other input (e.g. a button press).
 
-## Individual event handlers
-##### Positional
+### Individual event handlers
+
+#### Positional
+
 ```csharp
 protected virtual bool OnMouseMove(MouseMoveEvent e);
 
@@ -39,7 +41,8 @@ protected virtual bool OnTabletPenButtonPress(TabletPenButtonPressEvent e);
 protected virtual void OnTabletPenButtonRelease(TabletPenButtonReleaseEvent e);
 ```
 
-##### Non-positional
+#### Non-positional
+
 ```csharp
 protected virtual bool OnKeyDown(KeyDownEvent e);
 protected virtual void OnKeyUp(KeyUpEvent e);
@@ -58,7 +61,9 @@ protected virtual void OnTabletAuxiliaryButtonRelease(TabletAuxiliaryButtonRelea
 These event handlers should be used when singular events are to be handled.
 
 The boolean return value indicates whether the event should continue being propagated to other `Drawable`s in the scene graph.  
-**Example:** If a child did not want its parent to receive an `OnHover()` event, it should override `OnHover()` to return `true`.
+
+> **Example:**
+> If a child did not want its parent to receive an `OnHover()` event, it should override `OnHover()` to return `true`.
 
 `OnHoverLost()` is an exception which is unconditionally invoked on every un-hovered `Drawable`.
 
@@ -71,9 +76,10 @@ protected override bool OnClick(ClickEvent e)
 }
 ```
 
-Input handlers that correspond to continuations/resolutions of previous input, such as `OnMouseUp`, `OnDragEnd`, `OnKeyUp`, etc., will only fire on drawables that registered to handle the original input by returning `true` - for the examples above, that would be `OnMouseDown`, `OnDragStart`, `OnKeyDown`, etc. Those events cannot be suppressed.
+Input handlers that correspond to continuations/resolutions of previous input, such as `OnMouseUp()`, `OnDragEnd()`, `OnKeyUp()`, etc., will only fire on drawables that registered to handle the original input by returning `true` - for the examples above, that would be `OnMouseDown()`, `OnDragStart()`, `OnKeyDown()`, etc. Those events cannot be suppressed.
 
 ## Aggregate event handler
+
 ```csharp
 protected virtual bool Handle(UIEvent e);
 ```
@@ -82,21 +88,22 @@ This event handler should be used when groups of events with identical implement
 
 This counts as both a positional and non-positional event handler and works well when combined with the `HandleNonPositionalInput` and `HandlePositionalInput` properties described below.
 
-**Example:**
-```csharp
-protected override bool Handle(UIEvent e)
-{
-    switch (e)
-    {
-        case MouseEvent _:
-            // Stop all mouse events from being handled by other Drawables
-            return true;
-        default:
-            // Let other Drawables handle everything else
-            return false;
-    }
-}
-```
+> **Example**
+> ```csharp
+> protected override bool Handle(UIEvent e)
+> {
+>     switch (e)
+>     {
+>         case MouseEvent _:
+>             // Stop all mouse events from being handled by other Drawables
+>             return true;
+>
+>         default:
+>             // Let other Drawables handle everything else
+>             return false;
+>     }
+> }
+> ```
 
 ## Controlling whether input is to be handled
 
@@ -107,10 +114,13 @@ public virtual bool HandleNonPositionalInput;
 public virtual bool HandlePositionalInput;
 ```
 
-The above properties are provided to control whether a `Drawable` should receive the types of input events.  
-**Example**: If a `Drawable` did not want to handle any click, drag, and hover events at some point, it could achieve this by overriding `HandlePositionalInput` to return `false`.
+The above properties are provided to control whether a `Drawable` should receive the types of input events.
 
-**Warning**: Overriding the above properties will cause the `Drawable` to be _considered_ for (but not necessarily receive) that type of input, and thus serves as an anti-optimisation if the intention is to make the `Drawable` not considered for that type of input.
+> **Example:**
+> If a `Drawable` did not want to handle any click, drag, and hover events at some point, it could achieve this by overriding `HandlePositionalInput` to return `false`.
+
+> **Warning:**
+> Overriding the above properties will cause the `Drawable` to be _considered_ for (but not necessarily receive) that type of input, and thus serves as an anti-optimisation if the intention is to make the `Drawable` not considered for that type of input.
 
 If a parent should control whether itself or its children should be considered for a type of input at all, the following properties are provided to control the behaviour:
 
@@ -145,25 +155,27 @@ protected virtual void OnFocusLost(FocusLostEvent e);
 
 Focus may be received via both positional and non-positional input. A `Drawable` with `AcceptsFocus = false` will never receive focus.
 
-##### Positional
+### Positional
+
 A `Drawable` receives focus when `OnClick()` returns `true`.
 
-##### Non-positional
+### Non-positional
+
 The top-most `Drawable` with `RequestsFocus = true` and `HandleNonPostionalInput = true` will receive focus if nothing else has focus.
 
 The `OnFocusLost()` method is unconditionally invoked on the un-focused `Drawable`.
 
-**Example:**
-```csharp
-class MyDrawable : CompositeDrawable
-{
-    public override bool AcceptsFocus => true;
-    protected override bool OnClick(ClickEvent e) => true;
-
-    protected override void OnFocus(FocusEvent e) => this.ScaleTo(1.5f, 50);
-    protected override void OnFocusLost(FocusLostEvent e) => this.ScaleTo(1f, 50);
-}
-```
+> **Example:**
+> ```csharp
+> class MyDrawable : CompositeDrawable
+> {
+>     public override bool AcceptsFocus => true;
+>     protected override bool OnClick(ClickEvent e) => true;
+>
+>     protected override void OnFocus(FocusEvent e) => this.ScaleTo(1.5f, 50);
+>     protected override void OnFocusLost(FocusLostEvent e) => this.ScaleTo(1f, 50);
+> }
+> ```
 
 ## Input event hierarchy
 
