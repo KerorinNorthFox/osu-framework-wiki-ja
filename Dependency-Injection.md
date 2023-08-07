@@ -1,10 +1,31 @@
-In osu-framework, we support dependency injection at a `Drawable` level. Internally, this is done via `DependencyContainer`s, which are passed down the hierarchy and can be overridden at any point for further customisation (or replacement) by a child.
+In osu!framework, we support dependency injection at a `Drawable` level. Internally, this is done via `DependencyContainer`s, which are passed down the hierarchy and can be overridden at any point for further customisation (or replacement) by a child.
 
-The general usage for this is to fulfill a dependency that can come from a parent (potentially many levels above the point of usage). It is important to understand the general concept of [Dependency Injection](https://en.wikipedia.org/wiki/Dependency_injection) before reading on.
+The general usage for this is to fulfill a dependency that can come from a parent (potentially many levels above the point of usage). It is important to understand the general concept of [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) before reading on.
 
-There are a few ways dependencies can be `cached` (stored) and `resolved` (fetched):
+## Implementation
 
-## Using `[Cached]` and `[Resolved]` attributes
+osu!framework's dependency injection mechanism heavily leans on C# attributes, namely `[Cached]`, `[Resolved]`, and `[BackgroundDependencyLoader]`. Setting the dependencies up is done via one of two pathways: source generation and reflection. Understanding this is key, as the source generation pathway benefits from compile-time optimisations, but requires consumers to adjust their code accordingly.
+
+### Source generation
+
+Since the 2022.1126.0 release, the primary supported implementation of dependency injection relies on [source generators](https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview). The primary implications of this for framework consumers are as follows:
+
+- For the source generator-based dependency injection to work, `Drawable` classes must be `partial` so that the source generator can inject the DI machinery into the class. Non-compliant drawables will raise the [`OFSG001`](https://github.com/ppy/osu-framework/blob/e5f1aabc22f2f149f48c4fd9ca7c6f8381b00ec0/osu.Framework.SourceGeneration/Analysers/DiagnosticRules.cs#L14-L21) code inspection.
+- In more complicated custom DI usages, if it is desired to `.Inject()` dependencies into a custom non-drawable class, it must implement the marker [`IDependencyInjectionCandidate`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Allocation/IDependencyInjectionCandidate.cs) interface.
+
+The implementation of the source generator can be viewed [here](https://github.com/ppy/osu-framework/blob/master/osu.Framework.SourceGeneration/Generators/Dependencies/DependencyInjectionSourceGenerator.cs).
+
+### Reflection
+
+The original, legacy implementation of dependency injection heavily uses reflection. It will be used if user drawables are not marked `partial`, as the source generator cannot attach its own code to such drawables.
+
+Since the source generator pathway was introduced, this implementation is supported for backwards compatibility, but generally not recommended for new projects.
+
+## Storing and retrieving dependencies
+
+There are a few ways dependencies can be **cached** (stored) and **resolved** (retrieved):
+
+### `[Cached]` on drawable members
 
 This is the simplest implementation.
 
@@ -12,7 +33,7 @@ This is the simplest implementation.
 /// <summary>
 /// A class which caches something for use by children.
 /// </summary>
-public class MyGame : Game
+public partial class MyGame : Game
 {
     [Cached]
     protected readonly MyStore Store = new MyStore();
@@ -38,10 +59,10 @@ public class MyGame : Game
 /// <summary>
 /// A component that consumed the cached class.
 /// </summary>
-public class MyComponent : CompositeDrawable
+public partial class MyComponent : CompositeDrawable
 {
     [Resolved]
-    protected MyStore FetchedStore { get; set; }
+    protected MyStore FetchedStore { get; private set; } = null!;
 
     protected override void LoadComplete()
     {
@@ -55,7 +76,7 @@ public class MyComponent : CompositeDrawable
 }
 
 /// <summary>
-/// An class which is to be cached via DI.
+/// A class which is to be cached via DI.
 /// </summary>
 public class MyStore
 {
@@ -63,17 +84,17 @@ public class MyStore
 }
 ```
 
-Members marked with either of these attributes are cached or resolved in their respective classes before the [`[BackgroundDependencyLoader]`](#using-BackgroundDependencyLoader-to-resolve) method is run.
+Members marked with either of these attributes are cached or resolved in their respective classes before the [`[BackgroundDependencyLoader]`](#using-BackgroundDependencyLoader-to-resolve)-annotated method is run.
 
-## Using `[BackgroundDependencyLoader]` to resolve
+### Using `[BackgroundDependencyLoader]` to resolve
 
-This can be useful if you want to ensure everything happens in the (potentially asynchronous) `load` method.
+This can be useful if you want to ensure everything happens in the (potentially asynchronous) `load()` method.
 
 ```csharp
 /// <summary>
 /// A class which caches something for use by children.
 /// </summary>
-public class MyGame : Game
+public partial class MyGame : Game
 {
     [Cached]
     protected readonly MyStore Store = new MyStore();
@@ -99,7 +120,7 @@ public class MyGame : Game
 /// <summary>
 /// A component that consumed the cached class.
 /// </summary>
-public class MyComponent : CompositeDrawable
+public partial class MyComponent : CompositeDrawable
 {
     [BackgroundDependencyLoader]
     private void load(MyStore store)
@@ -120,7 +141,7 @@ public class MyStore
 }
 ```
 
-## Using `CreateChildDependencies` to cache
+### Using `CreateChildDependencies()` to cache
 
 Some more advanced scenarios may require use of this method instead of the `[Cached]` attribute, such as if late initialisation of the cacheable objects is required.
 
@@ -128,7 +149,7 @@ Some more advanced scenarios may require use of this method instead of the `[Cac
 /// <summary>
 /// A class which caches something for use by children.
 /// </summary>
-public class MyGame : Game
+public partial class MyGame : Game
 {
     protected MyStore Store;
 
