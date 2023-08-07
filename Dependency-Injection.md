@@ -2,11 +2,11 @@ In osu!framework, we support dependency injection at a `Drawable` level. Interna
 
 The general usage for this is to fulfill a dependency that can come from a parent (potentially many levels above the point of usage). It is important to understand the general concept of [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) before reading on.
 
-## Implementation
+# Implementation
 
 osu!framework's dependency injection mechanism heavily leans on C# attributes, namely `[Cached]`, `[Resolved]`, and `[BackgroundDependencyLoader]`. Setting the dependencies up is done via one of two pathways: source generation and reflection. Understanding this is key, as the source generation pathway benefits from compile-time optimisations, but requires consumers to adjust their code accordingly.
 
-### Source generation
+## Source generation
 
 Since the 2022.1126.0 release, the primary supported implementation of dependency injection relies on [source generators](https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview). The primary implications of this for framework consumers are as follows:
 
@@ -15,17 +15,17 @@ Since the 2022.1126.0 release, the primary supported implementation of dependenc
 
 The implementation of the source generator can be viewed [here](https://github.com/ppy/osu-framework/blob/master/osu.Framework.SourceGeneration/Generators/Dependencies/DependencyInjectionSourceGenerator.cs).
 
-### Reflection
+## Reflection
 
 The original, legacy implementation of dependency injection heavily uses reflection. It will be used if user drawables are not marked `partial`, as the source generator cannot attach its own code to such drawables.
 
 Since the source generator pathway was introduced, this implementation is supported for backwards compatibility, but generally not recommended for new projects.
 
-## Storing and retrieving dependencies
+# Storing and retrieving dependencies
 
 There are a few ways dependencies can be **cached** (stored) and **resolved** (retrieved):
 
-### `[Cached]` on drawable members
+## `[Cached]` on drawable members
 
 This is the simplest implementation.
 
@@ -86,7 +86,7 @@ public class MyStore
 
 Members marked with either of these attributes are cached or resolved in their respective classes before the [`[BackgroundDependencyLoader]`](#using-BackgroundDependencyLoader-to-resolve)-annotated method is run.
 
-### Using `[BackgroundDependencyLoader]` to resolve
+## Using `[BackgroundDependencyLoader]` to resolve
 
 This can be useful if you want to ensure everything happens in the (potentially asynchronous) `load()` method.
 
@@ -141,7 +141,7 @@ public class MyStore
 }
 ```
 
-### Using `CreateChildDependencies()` to cache
+## Using `CreateChildDependencies()` to cache
 
 Some more advanced scenarios may require use of this method instead of the `[Cached]` attribute, such as if late initialisation of the cacheable objects is required.
 
@@ -237,7 +237,7 @@ Note that the `DependencyContainer` class exposes two methods for caching depend
     }
     ```
 
-### `[Cached]` on drawable classes
+## `[Cached]` on drawable classes
 
 Drawable classes themselves can be annotated with the `[Cached]` attribute. In that case, the attribute is interpreted such that all instances of the drawable class will cache themselves to all of their children.
 
@@ -256,7 +256,7 @@ the following things will happen:
 - Instances of `B` will cache themselves to their children using type `A`.
 - Instances of `B` will **not** cache themselves to their children using type `B`. For that to happen, the `[Cached]` attribute would have to be repeated on type `B`.
 
-### `[Cached]` on interfaces implemented by a drawable class
+## `[Cached]` on interfaces implemented by a drawable class
 
 A variant of type-based caching above is available via interfaces. Interfaces can be annotated with `[Cached]`; every `Drawable` will cache itself to its children using every interface type annotated with `[Cached]` that it implements. As an example:
 
