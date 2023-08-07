@@ -2,7 +2,7 @@ A relatively extensive toolchain exists for applying transforms to `Drawable`s. 
 
 Internally, transforms are a state machine which is build using `TransformSequence`. Multiple transforms can be chained and nested. This page attempts to provide a starting point for understanding how transforms can be used, but there should be plenty of room for exploration beyond this guide via experimentation.
 
-## Basic operations
+# Basic operations
 
 A simple example which will fade a box into existence:
 
@@ -14,7 +14,7 @@ Add(box); // the target of transforms must always be in the draw hierarchy and l
 box.FadeInFromZero(500);
 ```
 
-## Chaining
+# Chaining
 
 Transforms can be chained in various ways. To run multiple transforms of different types at the same time value, simply chain the calls:
 
@@ -38,7 +38,7 @@ Add(box); // the target of transforms must always be in the draw hierarchy and l
 box.FadeInFromZero(500).Then().FadeOut(500); // fade in then out, over 1 second.
 ```
 
-## Offsets and delays
+# Offsets and delays
 
 To add a delay to a sequence, you can use `.Delay(ms)`:
 
@@ -66,11 +66,11 @@ using (box.BeginAbsoluteSequence(2000)) // nested calls will run from absolute c
 }
 ```
 
-## Looping
+# Looping
 
 To loop a certain transform sequence, append either of `.Loop(millisecondsPause)`, or `.Loop(millisecondsPause, times)`, depending on how you want the loop to behave:
 
-### `.Loop(millisecondsPause)`
+## `.Loop(millisecondsPause)`
 
 This will loop the transform sequence indefinitely, with a defined pause between each iteration of the loop, until it's [interrupted by one of the interruption methods](wiki/Transforms-and-tweening#interrupting-transforms).
 
@@ -83,7 +83,7 @@ Add(box); // the target of transforms must always be in the draw hierarchy and l
 box.ResizeTo(new Vector2(75), 500).Then().ResizeTo(new Vector2(50), 250).Loop(250);
 ```
 
-### `.Loop(millisecondsPause, times)`
+## `.Loop(millisecondsPause, times)`
 
 Just like the above, except that it will loop for a defined number of times, not indefinitely.
 
@@ -96,7 +96,7 @@ Add(box); // the target of transforms must always be in the draw hierarchy and l
 box.ResizeTo(new Vector2(75), 500).Then().ResizeTo(new Vector2(50), 250).Loop(250, 5);
 ```
 
-## Applying to arbitrary members (fields/properties)
+# Applying to arbitrary members (fields/properties)
 
 All specific transform methods such as `.FadeIn(...)`/`.FadeColour(...)` are [methods defined in extension classes](https://github.com/ppy/osu-framework/blob/4dbdb0039c1a1e802dfdaab94698f6d9485e6325/osu.Framework/Graphics/TransformableExtensions.cs#L487-L741) that delegate to the core method `.TransformTo()`, which accepts the name of the member to transform/tween, and the remaining arguments for transforming (duration, easing, etc.).
 
@@ -149,7 +149,7 @@ box.FadeInFromZero(500)
    .Then().FadeOut(500);
 ```
 
-## Manual interpolation
+# Manual interpolation
 
 In cases where transforms are to be run every frame, it is highly recommended to use interpolation instead:
 
@@ -161,11 +161,11 @@ public override void Update()
 }
 ```
 
-## Interrupting transforms
+# Interrupting transforms
 
 Transforms can be interrupted during their application, by finishing them immediately on current time, or removing them and leaving the transformed property at its current state, or rewinding it back to the beginning of the transform.
 
-### Finishing transforms immediately
+## Finishing transforms immediately
 
 To finish transforms immediately, use `FinishTransforms` on the drawable whose transforms are still being processed.
 
@@ -185,7 +185,7 @@ Scheduler.AddDelay(() =>
 }, 500);
 ```
 
-### Removing transforms
+## Removing transforms
 
 To remove transforms, use `ClearTransforms` on the drawable whose transforms are still being processed.
 
@@ -221,7 +221,7 @@ Scheduler.AddDelay(() =>
 
 - Note that `ClearTransformsAfter(time)` actually removes transforms starting at the given time, not after it. This was a mistake in naming and will be resolved soon.
 
-### Applying transforms to the drawable from a different time before removing
+## Applying transforms to the drawable from a different time before removing
 
 Removing transforms will not revert them, the drawable will remain at its current state.
 
@@ -243,11 +243,11 @@ Scheduler.AddDelay(() =>
 }, 500);
 ```
 
-## Rewinding support
+# Rewinding support
 
 // TODO
 
-## Using custom easing functions
+# Using custom easing functions
 
 In cases the [default `Easing` functions](https://github.com/ppy/osu-framework/blob/fb3029668d12ef14dd43ed9ac71395765daf9efe/osu.Framework/Graphics/Easing.cs) aren't what you want for some transforms, you can define your own `IEasingFunction` and pass it to the transforms:
 
@@ -266,11 +266,10 @@ box.FadeInFromZero(1000, new SpecialEasingFunction());
 
 - `IEasingFunction.ApplyEasing` accepts a time value in the range [0-1], and returns an eased value of it. For examples, you can refer to the [`DefaultEasingFunction`](https://github.com/ppy/osu-framework/blob/d284856a6a7a341ab12f1f1169cac30f4aec8caa/osu.Framework/Graphics/Transforms/DefaultEasingFunction.cs) implementation.
 
-## Best practices
+# Best practices
 
 Some basic things to note:
 
 - Transforming before a drawable is loaded (ie. `LoadComplete`) will cause the transforms to play out immediately. This is due to the drawable not yet having a clock to work with. If you must queue transforms before load, make sure to use a `Schedule(() => {})` call.
 - Transforms are not free and should not be run every frame. Please use interpolation for such cases.
 - Generally, we recommend not operating on oneself with transforms (ie. `this.FadeIn()`). This is due to the potential of conflicts between internal and external calls, which could overwrite or cause unexpected behaviour. Create a private nested container and operate on that instead.
-
