@@ -14,8 +14,9 @@ This tutorial will show you how to create a new project integrating osu-framewor
   * [Setup Attribute](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#setup-attribute)
   * [Further Reading](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project#further-reading)
 
-## Getting started
-### Creating a new project
+# Getting started
+
+## Creating a new project
 
 To get started, a custom osu! game base project has been made available as a template pack in the .NET command line interface. Using this template, it is possible to quickly and easily generate a new project using `osu-framework` as a starting point for creating your own game.
 
@@ -30,7 +31,7 @@ To get started, a custom osu! game base project has been made available as a tem
 
 > In addition to the `osu-framework-game` template, a template named `osu-framework-flappy-game` is also available which serves as an example of creating a basic, but feature complete game with `osu-framework`.
 
-### Project structure
+## Project structure
 
 When you open the solution file, you'll notice that there are three build projects inside it:
 
@@ -38,7 +39,7 @@ When you open the solution file, you'll notice that there are three build projec
 * `MyNewProject.Desktop`: As opposed to mobile devices, the `Desktop` project provides all of the system mechanisms and resources necessary to successfully run the project on desktop platforms. Separating this project from the `Game` project allows flexibility in supporting multiple platforms, such as mobile.
 * `MyNewProject.Game.Tests`: This project allows you to write and test the logic and UI of your project. It allows access to the Test Browser, which is a separate visual testing framework that will allow you to test your UI elements and other visuals.
 
-### Game logic
+## Game logic
 
 If you open up `MyNewProject.Game/MyNewProjectGame.cs`, you'll see the class responsible for some basic game logic. It inherits from the `osu.Framework.Game` super-class and by default, implements a basic [screen stack](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks) setup:
 
@@ -110,7 +111,7 @@ namespace MyNewProjectName.Game
 }
 ```
 
-### Platform specific logic
+## Platform specific logic
 
 The logic needed to begin execution of the game is located in `MyNewProject.Desktop/Program.cs`:
 
@@ -197,11 +198,11 @@ namespace MyNewProjectName.Game.Tests
 
 ```
 
-### Adding tests to the Test Browser
+## Adding tests to the Test Browser
 
 Now that our Test Browser is discovering tests from the specified namespace, we can start adding tests! To do so, create a new class that derives [`TestScene`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Testing/TestScene.cs) with the [`TestFixture`](https://docs.nunit.org/articles/nunit/writing-tests/attributes/testfixture.html) attribute. From here, we can add steps to this test of various types. For information on what types of steps are available, please refer to [Dynamic Compilation and Visual Testing](https://github.com/ppy/osu-framework/wiki/Development-and-Testing#steps-and-automated-testing).
 
-### Example Test
+## Example Test
 
 The following code adds a simple cube to the visual test browser that we created above. The cube has a rigid body attached, and should drop to the bottom of the screen when created. From here, we can choose to check the behavior of the cube by asserting that the cube eventually reaches the bottom via `AddAssert()`.
 
@@ -251,17 +252,17 @@ namespace AwesomeGame.VisualTests
 }
 ```
 
-## Appendix
+# Appendix
 
-### `SetUp` attribute
+## `SetUp` attribute
 
 The [`SetUp`](https://docs.nunit.org/articles/nunit/writing-tests/attributes/setup.html) NUnit attribute marks a method as a setup method that runs as a step before every group of tests in a test method. The steps created by this attribute get added to the visual test browser as well.
 
-### `BackgroundDependencyLoader` attribute
+## `BackgroundDependencyLoader` attribute
 
 The [`BackgroundDependencyLoader`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Allocation/BackgroundDependencyLoaderAttribute.cs) attribute denotes a method to be the load method of a [Drawable](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Graphics/Drawable.cs). You can specify a type in the method parameters to attempt to grab an object of that type that has been [cached](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Caching/Cached.cs).
 
-### Further reading
+## Further reading
 
 - For information on how to load your own resources such as textures and audio, please read [Setting Up Compiled Resource Stores](https://github.com/ppy/osu-framework/wiki/Setting-Up-Compiled-Resource-Stores).
 - For more information regarding dependency injection via the BackgroundDependencyLoader attribute, please read [Dependency Injection](https://github.com/ppy/osu-framework/wiki/Dependency-Injection)
