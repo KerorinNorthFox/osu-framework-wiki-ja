@@ -1,5 +1,3 @@
-# Setting Up Compiled Resource Stores
-
 This tutorial assumes you have completed [setting up your first project](https://github.com/ppy/osu-framework/wiki/Setting-up-your-first-project).
 
 * [Adding your resources library to the Resource Store](https://github.com/ppy/osu-framework/wiki/Setting-Up-Compiled-Resource-Stores#adding-your-resources-library-to-the-resource-store)
