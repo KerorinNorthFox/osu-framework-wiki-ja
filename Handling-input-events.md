@@ -181,5 +181,48 @@ The `OnFocusLost()` method is unconditionally invoked on the un-focused `Drawabl
 
 The following hierarchical relationship of input events can be useful to know when drilling down with the [aggregate event handler](#Aggregate-event-handler).
 
-![Input Events](https://user-images.githubusercontent.com/1329837/133580446-af8066f8-06ac-43e9-8545-c330543a3a5a.png)
-[source](https://drive.google.com/file/d/1sNpncJJsD4YKk5vkTEN88E51IbUhChUI/view?usp=sharing)
+```mermaid
+classDiagram
+    direction LR
+    UIEvent <|-- FocusEvent
+    UIEvent <|-- FocusLostEvent
+    UIEvent <|-- JoystickEvent
+    JoystickEvent <|-- JoystickAxisMoveEvent
+    JoystickEvent <|-- JoystickButtonEvent
+    JoystickButtonEvent <|-- JoystickPressEvent
+    JoystickButtonEvent <|-- JoystickReleaseEvent
+    UIEvent <|-- KeyBindingEvent
+    KeyBindingEvent <|-- KeyBindingPressEvent
+    KeyBindingEvent <|-- KeyBindingReleaseEvent
+    KeyBindingEvent <|-- KeyBindingScrollEvent
+    UIEvent <|-- KeyboardEvent
+    KeyboardEvent <|-- KeyDownEvent
+    KeyboardEvent <|-- KeyUpEvent
+    UIEvent <|-- MidiEvent
+    MidiEvent <|-- MidiDownEvent
+    MidiEvent <|-- MidiUpEvent
+    UIEvent <|-- MouseEvent
+    MouseEvent <|-- HoverEvent
+    MouseEvent <|-- HoverLostEvent
+    MouseEvent <|-- MouseButtonEvent
+    MouseButtonEvent <|-- ClickEvent
+    MouseButtonEvent <|-- DoubleClickEvent
+    MouseButtonEvent <|-- DragEndEvent
+    MouseButtonEvent <|-- DragEvent
+    MouseButtonEvent <|-- DragStartEvent
+    MouseButtonEvent <|-- MouseDownEvent
+    MouseButtonEvent <|-- MouseUpEvent
+    MouseEvent <|-- MouseMoveEvent
+    MouseEvent <|-- ScrollEvent
+    UIEvent <|-- TabletEvent
+    TabletEvent <|-- TabletAuxiliaryButtonEvent
+    TabletAuxiliaryButtonEvent <|-- TabletAuxiliaryButtonPressEvent
+    TabletAuxiliaryButtonEvent <|-- TabletAuxiliaryButtonReleaseEvent
+    TabletEvent <|-- TabletPenButtonEvent
+    TabletPenButtonEvent <|-- TabletPenButtonPressEvent
+    TabletPenButtonEvent <|-- TabletPenButtonReleaseEvent
+    UIEvent <|-- TouchEvent
+    TouchEvent <|-- TouchDownEvent
+    TouchEvent <|-- TouchMoveEvent
+    TouchEvent <|-- TouchUpEvent
+```
