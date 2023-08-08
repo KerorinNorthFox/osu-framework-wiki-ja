@@ -15,6 +15,8 @@ Since the 2022.1126.0 release, the primary supported implementation of dependenc
 
 The implementation of the source generator can be viewed [here](https://github.com/ppy/osu-framework/blob/master/osu.Framework.SourceGeneration/Generators/Dependencies/DependencyInjectionSourceGenerator.cs).
 
+For a fast compile-run cycle, source generators are by default only ran on release builds. Debug builds will use the reflection pathway as a fallback.
+
 ## Reflection
 
 The original, legacy implementation of dependency injection heavily uses reflection. It will be used if user drawables are not marked `partial`, as the source generator cannot attach its own code to such drawables.
@@ -267,7 +269,7 @@ public interface IFirstInterface { }
 [Cached]
 public interface ISecondInterface { }
 
-public interface IThirdInterface { }
+public interface IThirdInterface : ISecondInterface { }
 
 public partial class Dependency : Drawable, IFirstInterface, IThirdInterface { }
 ```
