@@ -4,6 +4,10 @@ This page serves to give a list of all breaking/major changes.
 
 ## vNext
 
+### `TexturedVertex2D` must be initialised with an `IRenderer`.
+
+The default constructor for this type has been obsoleted and will now generate a compiler error.
+
 ## [2023.720.0](https://github.com/ppy/osu-framework/releases/tag/2023.720.0)
 
 ### Source generators will now only run on release builds
