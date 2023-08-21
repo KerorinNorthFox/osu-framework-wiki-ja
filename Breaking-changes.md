@@ -8,6 +8,76 @@ This page serves to give a list of all breaking/major changes.
 
 The default constructor for this type has been obsoleted and will now generate a compiler error.
 
+### Maskable vertex input layout has changed
+
+Vertices which want to use the built-in `VertexShaderDescriptor.TEXTURE` fragment shader, or the `sh_Masking.h` particle, will need to adjust the vertex input slightly:
+
+```diff
++ #include "Internal/sh_MaskingInfo.h"
+
+layout(location = 0) in vec2 m_Position;
++ layout(location = 1) in int m_MaskingIndex;
+
++ layout(location = 5) flat out int v_MaskingIndex;
++ layout(location = 6) out highp vec2 v_ScissorPosition;
+
+void main(void)
+{
++   InitMasking(m_MaskingIndex);
+
+    // Transform from screen space to masking space.
+-   highp vec3 maskingPos = g_ToMaskingSpace * vec3(m_Position, 1.0);
++   highp vec4 maskingPos = g_MaskingInfo.ToMaskingSpace * vec4(m_Position, 1.0, 0.0);
+    v_MaskingPosition = maskingPos.xy / maskingPos.z;
+
++   // Transform from screen space to scissor space.
++   highp vec4 scissorPos = g_MaskingInfo.ToScissorSpace * vec4(m_Position, 1.0, 0.0);
++   v_ScissorPosition = scissorPos.xy / scissorPos.z;
+
++   v_MaskingIndex = m_MaskingIndex;
+
+    gl_Position = g_ProjMatrix * vec4(m_Position, 1.0, 1.0);
+}
+```
+
+Likewise, the C# definition must also be updated to write the `m_MaskingIndex` input, and be constructed with an `IRenderer`:
+
+```diff
+[StructLayout(LayoutKind.Sequential)]
+public struct MyCustomVertex : IEquatable<MyCustomVertex>, IVertex
+{
+    [VertexMember(2, VertexAttribPointerType.Float)]
+    public Vector2 Position;
+
++   [VertexMember(1, VertexAttribPointerType.Int)]
++   private readonly int maskingIndex;
+
++   public MyCustomVertex(IRenderer renderer)
++   {
++       this = default;
++       maskingIndex = renderer.CurrentMaskingIndex;
++   }
+
+    public readonly bool Equals(MyCustomVertex other) =>
+        Position.Equals(other.Position)
++       && maskingIndex == other.maskingIndex;
+}
+```
+
+### Non-masking fragment shaders must use non-masking vertex shaders
+
+Any usages of `VertexShaderDescriptor.TEXTURE_2` as a vertex shader in-combination with a non-masking fragment shader (i.e. one that does not use the built-in `sh_Masking.h` particle), should be updated to use `VertexShaderDescriptor.TEXTURE_2_NO_MASKING` instead.
+
+### `IRenderer.PushScissorOffset()`/`IRenderer.PopScissorOffset()` have been removed
+
+The way masking applies scissor has changed such that this no longer has any use.
+
+### `MaskingInfo` layout has changed
+
+- `ScreenSpaceAABB` renamed to `ScreenSpaceScissorArea`.
+- `MaskingRect` renamed to `MaskingArea`
+- `ToScissorSpace` added. If `ScreenSpaceScissorArea` truly represents a screen-space area, set this to `Matrix3.Identity`, otherwise set it to convert vertex coordinate inputs to the appropriate coordinate space of `ScreenSpaceScissorArea`.
+
 ## [2023.720.0](https://github.com/ppy/osu-framework/releases/tag/2023.720.0)
 
 ### Source generators will now only run on release builds
