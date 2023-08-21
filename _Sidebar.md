@@ -15,7 +15,7 @@
  * [Transforms and tweening](/ppy/osu-framework/wiki/Transforms-and-Tweening)
  * [Coordinate and Layout System](/ppy/osu-framework/wiki/Coordinate-and-Layout-System)
  * [Localisation](/ppy/osu-framework/wiki/Localisation)
- * [Environment variables](/ppy/osu-framework/wiki/Environment_variables)
+ * [Environment variables](/ppy/osu-framework/wiki/Environment-variables)
  * [Frequently Asked Questions / Common Scenarios](/ppy/osu-framework/wiki/Common-Scenarios)
 ## Testing
  * [Development and Testing](/ppy/osu-framework/wiki/Development-and-Testing)
