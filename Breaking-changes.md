@@ -96,7 +96,7 @@ osu!framework source generators are made to optimise builds at runtime (mostly b
 
 This should not result in a noticeable change in runtime performance during debug, but will reduce compilation times by over 50% in most cases. This is valuable during debug as the most common case is frequently building / hot reloading for quick iteration.
 
-# [2023.712.0](https://github.com/ppy/osu-framework/releases/tag/2023.712.0)
+# [2023.714.0](https://github.com/ppy/osu-framework/releases/tag/2023.714.0)
 
 ## `GameHost.GetClipboard()` is obsolete
 
