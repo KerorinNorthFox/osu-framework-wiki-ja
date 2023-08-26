@@ -26,3 +26,13 @@ Selects the graphics surface that the renderer should use. Valid values are:
 - `metal` (only on Apple operating systems)
 - `direct3d11` (only on Windows operating systems)
 - `vulkan` (except Apple operating systems)
+
+# `OSU_FRAME_STATISTICS_VIA_TOUCH`
+
+Whether to allow access to framework overlays via touch input. When set to `1` (default):
+
+- Double-click on any area on the bottom right corner of the screen to cycle between frame statistics display (and also make it visible from hidden state).
+- Tap with a single finger to expand the frame statistics display when in full state (similar to holding Ctrl).
+- Tap with a second finger to freeze the frame statistics display (similar to holding Shift).
+
+Note that this only works in debug builds. Disable for debug builds by setting to `0`.
