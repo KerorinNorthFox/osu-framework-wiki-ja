@@ -27,6 +27,14 @@ Selects the graphics surface that the renderer should use. Valid values are:
 - `direct3d11` (only on Windows operating systems)
 - `vulkan` (except Apple operating systems)
 
+# `OSU_GRAPHICS_NO_SSBO`
+
+Enables/disables use of [Shader Storage Buffer Objects](https://www.khronos.org/opengl/wiki/Shader_Storage_Buffer_Object). When disabled, the game falls back to [Uniform Buffer Objects](https://www.khronos.org/opengl/wiki/Uniform_Buffer_Object) that are more limited in functionality but more broadly supported.
+
+Valid values are:
+- `0` - Disabled
+- `1` - Enabled
+
 # `OSU_FRAME_STATISTICS_VIA_TOUCH`
 
 Whether to allow access to framework overlays via touch input. When set to `1` (default):
