@@ -2,6 +2,14 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2023.914.0](https://github.com/ppy/osu-framework/releases/tag/2023.914.0)
+
+## Masking-related breaking changes from [2023.822.0](https://github.com/ppy/osu-framework/releases/tag/2023.822.0) have been reverted
+
+After pushing the SSBO masking changes to users, it turned out that the change [was not an unambiguous performance win as originally hoped](https://github.com/ppy/osu/issues/24751), and as such has been reverted for now in order to avoid diverting focus further away from more important concerns.
+
+In response, framework consumers need to revert any and all changes incurred by the aforementioned release. It is advised to keep the changes somewhere around, however, as the SSBO concept may be revisited at a later date.
+
 # [2023.904.0](https://github.com/ppy/osu-framework/releases/tag/2023.904.0)
 
 ## `Storage.Move()` will overwrite file at target destination if present
