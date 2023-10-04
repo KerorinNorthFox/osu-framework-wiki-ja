@@ -6,7 +6,7 @@ This page serves to give a list of all breaking/major changes.
 
 ## `DecoupleableInterpolatingFramedClock` is obsoleted. Use `DecouplingClock` instead
 
-See #6001 for more details on a migration path.
+See [this PR](https://github.com/ppy/osu-framework/pull/6001) for more details on a migration path.
 
 # [2023.914.0](https://github.com/ppy/osu-framework/releases/tag/2023.914.0)
 
