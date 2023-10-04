@@ -2,6 +2,12 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2023.1004.1](https://github.com/ppy/osu-framework/releases/tag/2023.1004.1)
+
+## `DecoupleableInterpolatingFramedClock` is obsoleted. Use `DecouplingClock` instead
+
+See #6001 for more details on a migration path.
+
 # [2023.914.0](https://github.com/ppy/osu-framework/releases/tag/2023.914.0)
 
 ## Masking-related breaking changes from [2023.822.0](https://github.com/ppy/osu-framework/releases/tag/2023.822.0) have been reverted
