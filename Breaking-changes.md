@@ -2,6 +2,58 @@ Occasionally we will make changes which require consumers of the framework to ma
 
 This page serves to give a list of all breaking/major changes.
 
+# [2023.1213.0](https://github.com/ppy/osu-framework/releases/tag/2023.1213.0)
+
+## `IParseable.Parse()` has received an `IFormatProvider` argument
+
+This is provided to better treat input when typed by end users, by allowing the ability to respect their regional number settings.
+
+Existing usages of `IParseable.Parse()` should pass `CultureInfo.InvariantCulture` to preserve behaviour, including usages of `IBindable.Parse()`:
+
+```diff
+  Bindable<int> bindable = new Bindable<int>();
+- bindable.Parse(5);
++ bindable.Parse(5, CultureInfo.InvariantCulture);
+```
+
+## `DrawNode.Draw()` is no longer exposed publicly
+
+`Draw()` is now `protected` to match the signature of `DrawOpaqueInternal()`. `DrawNode`s which draw others no need to do so via a separate (provided) method.
+
+```diff
+- public override void Draw(IRenderer renderer)
++ protected override void Draw(IRenderer renderer)
+  {
+      base.Draw(renderer);
+
+-     other.Draw(renderer);
++     DrawOther(other, renderer);
+  }
+```
+
+## `Dropdown` requires a search bar to be implemented
+
+All `Dropdown`s may now be searched, which requires them to implement a search bar component. Sample implementation:
+
+```csharp
+public partial class MyDropdownHeader : DropdownHeader
+{
+    protected override DropdownSearchBar CreateSearchBar() => new MyDropdownSearchBar();
+
+    public partial class MyDropdownSearchBar : DropdownSearchBar
+    {
+        protected override void PopIn() => this.FadeIn();
+
+        protected override void PopOut() => this.FadeOut();
+
+        protected override TextBox CreateTextBox() => new MyTextBox
+        {
+            PlaceholderText = "type to search"
+        };
+    }
+}
+```
+
 # [2023.1004.1](https://github.com/ppy/osu-framework/releases/tag/2023.1004.1)
 
 ## `DecoupleableInterpolatingFramedClock` is obsoleted. Use `DecouplingClock` instead
