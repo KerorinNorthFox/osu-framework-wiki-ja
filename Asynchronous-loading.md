@@ -1,18 +1,20 @@
-osu!framework puts a lot of focus on non-blocking loading, striving to never block the interface threads at any point. It is therefore recommended (and in some cases forced) that you use async patterns when loading components.
+# 非同期読み込み
 
-# Preloading components
+osu!frameworkはノンブロッキング読み込みに重点を置き、いかなる時点でもインターフェイススレッドをブロックしないように努めています。したがって、コンポーネントをロードするときに非同期パターンを使用することが推奨されます (場合によっては強制されます)。
 
-It is recommended that any larger components are preloaded ahead of time. For instance, after a user has arrived on a menu screen, loading could begin on the next screen(s) that will be displayed.
+# コンポーネントの事前読み込み
 
-The simplest method to load a component in the background is by calling `LoadComponentAsync()` from inside a `Drawable`. This method also exposes a callback which can be used to perform an action when loading completes, which can be useful for showing a newly loading component as soon as it is ready.
+大きなコンポーネントは事前にプリロードすることをお勧めします。たとえば、ユーザーがメニュー画面に到達した後、表示される次の画面で読み込みが開始される可能性があります。
 
-Instantly using the component:
+バックグラウンドでコンポーネントを読み込む最も簡単な方法は、`Drawable`内から `LoadComponentAsync()`を呼び出すことです。このメソッドは、読み込み完了時にアクションを実行するために使用できるコールバックも公開します。これは、準備ができたらすぐに新しく読み込むコンポーネントを表示するのに役立ちます。
+
+コンポーネントを即座に使用:
 
 ```csharp
 LoadComponentAsync(new MyComponent(), Add);
 ```
 
-Preloading for future use:
+将来の使用のためにプリロード:
 
 ```csharp
 var myComponent = new MyComponent();
@@ -21,14 +23,14 @@ LoadComponentAsync(myComponent);
 
 // ...
 
-Add(myComponent); // note that this will cause a blocking load if the async load has not yet completed.
+Add(myComponent); // 非同期ロードがまだ完了していない場合、これによりロードのブロッキングが発生することに注意してください。
 ```
 
-This method returns a `Task` which can be blocked on with `Task.Wait()` if you need custom blocking behaviour.
+このメソッドは、カスタムのブロック動作が必要な場合に`Task.Wait()`でブロックできる`Task`を返します。
 
-# Asynchronous chaining with `[BackgroundDependencyLoader]`
+# `[BackgroundDependencyLoader]`による非同期チェーン
 
-When a component is loaded, it will attempt to load all nested children that have `ShouldBeAlive == true`. To make use of this chaining, ensure that all loading code is either in the `ctor` or a private method marked with the `[BackgroundDependencyLoader]` attribute. The latter is recommended as it avoids a potential overhead when constructing new instances of the component that aren't nested in an asynchronous load.
+コンポーネントがロードされると、`ShouldBeAlive == true`を持つネストされた子をすべてロードしようとします。このチェーンを利用するには、すべての読み込みコードが`ctor`または`[BackgroundDependencyLoader]`属性でマークされたプライベート メソッドのいずれかにあることを確認してください。後者は、非同期ロードにネストされていないコンポーネントの新しいインスタンスを構築する際の潜在的なオーバーヘッドを回避するため、推奨されます。
 
 ```csharp
 public class MainComponent : CompositeDrawable
@@ -37,7 +39,7 @@ public class MainComponent : CompositeDrawable
     private void load()
     {
         Child = new NestedComponent();
-        // this could also be in the ctor if required, but generally use BDL wherever possible for maximum efficiency.
+        // 必要に応じてこれをctor内に含めることもできますが、通常は効率を最大化するために可能な限りBDLを使用します。
     }
 }
 
@@ -51,15 +53,15 @@ public class NestedComponent : Drawable
 }
 ```
 
-The following call could then be used to load `MainComponent` and `NestedComponent` asynchronously, only adding MainCompoent when the nested tree is completely loaded.
+次に、次の呼び出しを使用して`MainComponent`と`NestedComponent`を非同期的にロードし、ネストされたツリーが完全にロードされたときに`MainCompoent`のみを追加します。
 
 ```csharp
 LoadComponentAsync(new MainComponent(), Add);
 ```
 
-# Overriding pre-packaged asynchronous behaviour
+# 事前にパッケージ化された非同期動作のオーバーライド
 
-Some classes come with pre-built asynchronous behaviours. One example is `Screen`, which automatically loads a child screen that is `Push`ed if it is not already in a loaded state. Overriding such asynchronous behaviour can be achieved as mentioned above, by manually blocking on a preload call:
+一部のクラスには、事前に構築された非同期動作が付属しています。一例として`Screen`があります。これは、まだロードされた状態でない場合に`Push`された子画面を自動的にロードします。このような非同期動作をオーバーライドするには、前述のように、プリロード呼び出しを手動でブロックすることで実現できます。
 
 ```csharp
 var blocking = new BlockingScreen();
@@ -68,16 +70,16 @@ LoadComponentAsync(blocking).Wait();
 screenStack.Push(blocking);
 ```
 
-# Long-running load components (online retrieval etc.)
+# 長時間読み込まれるコンポーネント (オンラインでの検索など)
 
-The special attribute `[LongRunningLoad]` exists to mark components which require loads that take a long time (generally anything >100ms). This is usually a drawable which is retrieving a texture (or other content) from a network source. By attaching this to a class, you can ensure that all usage of that class is correctly loaded in an asynchronous context.
+特別な属性`[LongRunningLoad]`は、長時間 (通常は 100 ミリ秒を超える) かかるロードを必要とするコンポーネントをマークするために存在します。これは通常、ネットワークソースからテクスチャ (またはその他のコンテンツ) を取得するドローアブルです。これをクラスにアタッチすると、そのクラスのすべての使用法が非同期コンテキストで正しく読み込まれることを保証できます。
 
-There are two important things to note about this attribute:
+この属性については、次の 2 つの重要な点に注意してください。
 
-## Marked components will run in their own segregated thread pool
+## マークされたコンポーネントは、独自の分離されたスレッド プールで実行される
 
-This avoids any potential of thread pool saturation by network requests or otherwise. Normal components loaded via `LoadComponentAsync()` will be unaffected by `LongRunningLoad` components.
+これにより、ネットワーク要求などによるスレッドプールの飽和の可能性が回避されます。`LoadComponentAsync()`経由でロードされた通常のコンポーネントは、`LongRunningLoad`コンポーネントの影響を受けません。
 
-## Marked components must be a top-level async load
+## マークされたコンポーネントはトップレベルの非同期ロードである必要がある
 
-In order to avoid `[LongRunningLoad]` components accidentally ending up on the standard async load thread pool, they must always be run *directly* via `LoadComponentAsync()`. An exception will be thrown if this is not the case.
+`[LongRunningLoad]`コンポーネントが誤って標準の非同期読み込みスレッドプールに置かれることを避けるために、コンポーネントは常に`LoadComponentAsync()`経由で直接実行する必要があります。そうでない場合は、例外がスローされます。

@@ -1,39 +1,44 @@
-In osu!framework, we support dependency injection at a `Drawable` level. Internally, this is done via `DependencyContainer`s, which are passed down the hierarchy and can be overridden at any point for further customisation (or replacement) by a child.
+# 依存性の注入
 
-The general usage for this is to fulfill a dependency that can come from a parent (potentially many levels above the point of usage). It is important to understand the general concept of [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) before reading on.
+osu!framework では、`Drawable`レベルでの依存性の注入をサポートしています。これは内部的には、`DependencyContainers`を介して行われます。`DependencyContainers`は階層の下に渡され、子によるさらなるカスタマイズ (または置換) のためにいつでもオーバーライドできます。
 
-# Implementation
+これの一般的な使用法は、親 (使用時点よりもさらに上のレベルにある可能性があります) から得られる依存性を満たすことです。読み進める前に、[依存性の挿入](https://ja.wikipedia.org/wiki/%E4%BE%9D%E5%AD%98%E6%80%A7%E3%81%AE%E6%B3%A8%E5%85%A5)の一般的な概念を理解することが重要です。
 
-osu!framework's dependency injection mechanism heavily leans on C# attributes, namely `[Cached]`, `[Resolved]`, and `[BackgroundDependencyLoader]`. Setting the dependencies up is done via one of two pathways: source generation and reflection. Understanding this is key, as the source generation pathway benefits from compile-time optimisations, but requires consumers to adjust their code accordingly.
+# 実装
 
-## Source generation
+osu!framework の依存性注入メカニズムは、C#属性、つまり`[Cached]`、`[Resolved]`、および`[BackgroundDependencyLoader]`に大きく依存しています。
+依存関係の設定は、ソースジェネレーションとリフレクションという2つの経路のいずれかを介して行われます。
+ソースジェネレーションパスウェイはコンパイル時の最適化から恩恵を受けますが、利用者はそれに応じてコードを調整する必要があるため、これを理解することが重要です。
 
-Since the 2022.1126.0 release, the primary supported implementation of dependency injection relies on [source generators](https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview). The primary implications of this for framework consumers are as follows:
+## ソースジェネレーター
 
-- For the source generator-based dependency injection to work, `Drawable` classes must be `partial` so that the source generator can inject the DI machinery into the class. Non-compliant drawables will raise the [`OFSG001`](https://github.com/ppy/osu-framework/blob/e5f1aabc22f2f149f48c4fd9ca7c6f8381b00ec0/osu.Framework.SourceGeneration/Analysers/DiagnosticRules.cs#L14-L21) code inspection.
-- In more complicated custom DI usages, if it is desired to `.Inject()` dependencies into a custom non-drawable class, it must implement the marker [`IDependencyInjectionCandidate`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Allocation/IDependencyInjectionCandidate.cs) interface.
+2022.1126.0 リリース以降、主にサポートされている依存性注入の実装は[source generators](https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/source-generators-overview)に依存しています。これがフレームワーク利用者に与える主な影響は次のとおりです:
 
-The implementation of the source generator can be viewed [here](https://github.com/ppy/osu-framework/blob/master/osu.Framework.SourceGeneration/Generators/Dependencies/DependencyInjectionSourceGenerator.cs).
+- ソースジェネレーターベースの依存性注入が機能するには、ソースジェネレーターが DI機構をクラスに注入できるように、`Drawable`クラスが`partial`である必要があります。非準拠のドローアブルでは、[OFSG001](https://github.com/ppy/osu-framework/blob/e5f1aabc22f2f149f48c4fd9ca7c6f8381b00ec0/osu.Framework.SourceGeneration/Analysers/DiagnosticRules.cs#L14-L21)コード インスペクションが発生します。
+- より複雑なカスタム DI の使用法で、依存関係をカスタム非描画クラスに`.Inject()`する必要がある場合は、マーカー[`IDependencyInjectionCandidate`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Allocation/IDependencyInjectionCandidate.cs)インターフェイスを実装する必要があります。
 
-For a fast compile-run cycle, source generators are by default only ran on release builds. Debug builds will use the reflection pathway as a fallback.
 
-## Reflection
+ソースジェネレーターの実装は[ここ](https://github.com/ppy/osu-framework/blob/master/osu.Framework.SourceGeneration/Generators/Dependencies/DependencyInjectionSourceGenerator.cs)で見ることができます。
 
-The original, legacy implementation of dependency injection heavily uses reflection. It will be used if user drawables are not marked `partial`, as the source generator cannot attach its own code to such drawables.
+コンパイルと実行のサイクルを高速化するために、ソースジェネレーターはデフォルトでリリースビルドでのみ実行されます。デバッグビルドでは、フォールバックとしてリフレクションパスウェイが使用されます。
 
-Since the source generator pathway was introduced, this implementation is supported for backwards compatibility, but generally not recommended for new projects.
+## リフレクション
 
-# Storing and retrieving dependencies
+依存性注入の元のレガシー実装では、リフレクションが多用されています。ソースジェネレーターはそのようなドローアブルに独自のコードをアタッチできないため、ユーザーのドローアブルが`partial`としてマークされていない場合に使用されます。
 
-There are a few ways dependencies can be **cached** (stored) and **resolved** (retrieved):
+ソースジェネレーターパスウェイが導入されて以来、この実装は下位互換性のためにサポートされていますが、通常は新しいプロジェクトには推奨されません。
 
-## `[Cached]` on drawable members
+# 依存性の保存と取得
 
-This is the simplest implementation.
+依存関係を**キャッシュ** (保存) し、**解決** (取得) する方法はいくつかあります。
+
+## ドローアブルのメンバーでの`[Cache]`
+
+これは最も単純な実装です。
 
 ```csharp
 /// <summary>
-/// A class which caches something for use by children.
+/// 子が使用するために何かをキャッシュするクラス
 /// </summary>
 public partial class MyGame : Game
 {
@@ -59,7 +64,7 @@ public partial class MyGame : Game
 }
 
 /// <summary>
-/// A component that consumed the cached class.
+/// キャッシュされたクラスを消費したコンポーネント
 /// </summary>
 public partial class MyComponent : CompositeDrawable
 {
@@ -78,7 +83,7 @@ public partial class MyComponent : CompositeDrawable
 }
 
 /// <summary>
-/// A class which is to be cached via DI.
+/// DI経由でキャッシュされるクラス
 /// </summary>
 public class MyStore
 {
@@ -86,15 +91,15 @@ public class MyStore
 }
 ```
 
-Members marked with either of these attributes are cached or resolved in their respective classes before the [`[BackgroundDependencyLoader]`](#using-BackgroundDependencyLoader-to-resolve)-annotated method is run.
+これらの属性のいずれかでマークされたメンバーは、`[BackgroundDependencyLoader]`アノテーション付きメソッドが実行される前に、それぞれのクラスでキャッシュまたは解決されます。
 
-## Using `[BackgroundDependencyLoader]` to resolve
+## 解決に`[BackgroundDependencyLoader]`を使用する
 
-This can be useful if you want to ensure everything happens in the (potentially asynchronous) `load()` method.
+これは、すべてが (非同期の可能性がある) `load()`メソッドで確実に行われるようにしたい場合に便利です。
 
 ```csharp
 /// <summary>
-/// A class which caches something for use by children.
+/// 子が使用するために何かをキャッシュするクラス
 /// </summary>
 public partial class MyGame : Game
 {
@@ -120,7 +125,7 @@ public partial class MyGame : Game
 }
 
 /// <summary>
-/// A component that consumed the cached class.
+/// キャッシュされたクラスを消費したコンポーネント
 /// </summary>
 public partial class MyComponent : CompositeDrawable
 {
@@ -135,7 +140,7 @@ public partial class MyComponent : CompositeDrawable
 }
 
 /// <summary>
-/// An class which is to be cached via DI.
+/// DI経由でキャッシュされるクラス
 /// </summary>
 public class MyStore
 {
@@ -143,13 +148,13 @@ public class MyStore
 }
 ```
 
-## Using `CreateChildDependencies()` to cache
+## キャッシュに`CreateChildDependencies()`を使用する
 
-Some more advanced scenarios may require use of this method instead of the `[Cached]` attribute, such as if late initialisation of the cacheable objects is required.
+キャッシュ可能なオブジェクトの遅延初期化が必要な場合など、より高度なシナリオでは、`[Cached]`属性の代わりにこのメソッドの使用が必要になる場合があります。
 
 ```csharp
 /// <summary>
-/// A class which caches something for use by children.
+/// 子が使用するために何かをキャッシュするクラス
 /// </summary>
 public partial class MyGame : Game
 {
@@ -181,9 +186,9 @@ public partial class MyGame : Game
 }
 ```
 
-Note that the `DependencyContainer` class exposes two methods for caching dependencies:
+`DependencyContainer`クラスは、依存関係をキャッシュするための 2 つのメソッドを公開していることに注意してください:
 
-- `.Cache()` will always cache the dependency using its *runtime, most derived type*. The implications of this are demonstrated by the following example:
+- `.Cache()`は常に、ランタイムの最も派生した型を使用して依存関係をキャッシュします。これが意味することは、次の例で示されています:
 
     ```csharp
     public abstract class BaseDependency { }
@@ -211,7 +216,7 @@ Note that the `DependencyContainer` class exposes two methods for caching depend
     }
     ```
 
-- `.CacheAs<T>()` will cache the dependency using its *declared* type, as demonstrated by the following example:
+- `.CacheAs<T>()`は、次の例で示すように、宣言された型を使用して依存関係をキャッシュします:
 
     ```csharp
     public abstract class BaseDependency { }
@@ -239,11 +244,11 @@ Note that the `DependencyContainer` class exposes two methods for caching depend
     }
     ```
 
-## `[Cached]` on drawable classes
+## ドローアブルクラスでの`[Cache]`
 
-Drawable classes themselves can be annotated with the `[Cached]` attribute. In that case, the attribute is interpreted such that all instances of the drawable class will cache themselves to all of their children.
+Drawable クラス自体に`[Cached]`属性の注釈を付けることができます。その場合、属性は、ドローアブルクラスのすべてのインスタンスがそのすべての子にキャッシュされるように解釈されます。
 
-The caching will use the type _at the point of declaration_. To illustrate, given the following structure:
+キャッシュでは宣言時点の型が使用されます。たとえば、次の構造があるとします:
 
 ```csharp
 [Cached]
@@ -252,15 +257,15 @@ public partial class A : Drawable { }
 public partial class B : A { }
 ```
 
-the following things will happen:
+次のようなことが起こります:
 
-- Instances of `A` will cache themselves to their children using type `A`.
-- Instances of `B` will cache themselves to their children using type `A`.
-- Instances of `B` will **not** cache themselves to their children using type `B`. For that to happen, the `[Cached]` attribute would have to be repeated on type `B`.
+- `A`のインスタンスは、タイプ`A`を使用して自身を子にキャッシュします。
+- `B`のインスタンスは、タイプ`A`を使用して自身を子にキャッシュします。
+- `B`のインスタンスは、タイプ`B`を使用して自身を子にキャッシュしません。そのためには、`[Cached]`属性をタイプ`B`で繰り返す必要があります。
 
-## `[Cached]` on interfaces implemented by a drawable class
+## ドローアブルクラスによって実装されたインターフェイスの`[Cache]`
 
-A variant of type-based caching above is available via interfaces. Interfaces can be annotated with `[Cached]`; every `Drawable` will cache itself to its children using every interface type annotated with `[Cached]` that it implements. As an example:
+上記のタイプベースのキャッシュの変形は、インターフェイス経由で利用できます。インターフェイスには`[Cached]`の注釈を付けることができます。すべての`Drawable`は、実装する`[Cached]`の注釈が付けられたすべてのインターフェイスタイプを使用して、自身をその子にキャッシュします。例として:
 
 ```csharp
 [Cached]
@@ -274,8 +279,8 @@ public interface IThirdInterface : ISecondInterface { }
 public partial class Dependency : Drawable, IFirstInterface, IThirdInterface { }
 ```
 
-all instances of `Dependency`:
+`Dependency`のすべてのインスタンスは:
 
-- will cache themselves to children as `IFirstInterface`,
-- will cache themselves to children as `ISecondInterface` (transitively via `IThirdInterface`),
-- will **not** cache themselves to children as `IThirdInterface` (as, analogously to classes, `[Cached]` is only valid on types it is explicitly put on)
+- 自分自身を`IFirstInterface`として子にキャッシュします。
+- 自分自身を`ISecondInterface`として子にキャッシュします (`IThirdInterface`を介して推移的に)。
+- 自分自身を`IThirdInterface`として子にキャッシュ**しません** (クラスと同様に、`[Cached]`は明示的に配置された型でのみ有効です)

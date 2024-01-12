@@ -1,26 +1,28 @@
-With regard to threading, osu!framework games can run in two modes:
+# Threading
 
-* In _multi-threaded_ execution mode, the game is ran on four main threads:
+スレッドに関しては、osu!framework ゲームは 2 つのモードで実行できます。
 
-    1. The input thread:
-        - usually runs at 1000Hz
-        - interfaces with the windowing toolkit used (SDL2 by default, osuTK also available)
-        - responsible for handling input events and forwarding them to components/drawables
-    2. The audio thread:
-        - usually runs at 1000Hz
-        - interfaces with the audio subsystem of the OS via the BASS audio library
-    3. The update thread:
-        - usually runs at twice the framerate limit (which can be toggled using the `FrameSync` framework setting, or the <kbd>Ctrl</kbd>+<kbd>F7</kbd> shortcut)
-        - is responsible for running update code (`UpdateSubTree()`, `Update()`) for all components in the game's drawable hierarchy
-    4. The draw thread:
-        - runs at the framerate limit specified
-        - dispatches draw calls to the GPU (currently using OpenGL, more backends planned in the future)
+* マルチスレッド実行モードでは、ゲームは4つのメインスレッドで実行されます:
 
-* In _single-thread_ execution mode, the four threads above run on one OS thread in an interleaved fashion.
+    1. 入力スレッド:
+        - 通常は1000Hzで動作
+        - 使用されるウィンドウツールキットとのインターフェイス (デフォルトでは SDL2、osuTK も利用可能)
+        - 入力イベントの処理とコンポーネント/ドローアブルへの転送を担当。
+    2. オーディオスレッド:
+        - 通常は1000Hzで動作
+        - BASSオーディオライブラリを介してOSのオーディオサブシステムを持つインターフェイス。
+    3. 更新スレッド:
+        - 通常、フレームレート制限の2倍で実行される (これは、`FrameSync`フレームワーク設定または <kbd>Ctrl</kbd>+<kbd>F7</kbd>ショートカットを使用して切り替えることができる)
+        - ゲームのドローアブル階層内のすべてのコンポーネントの更新コード (`updateSubTree()`、`Update()`) を実行する責任がある。
+    4. 描画スレッド:
+        - 指定されたフレームレート制限で実行される
+        - 描画呼び出しをGPUにディスパッチする (現在はOpenGLを使用しているが、将来的にはさらに多くのバックエンドが予定されている)
 
-The threading mode can be set using the `ExecutionMode` framework setting, or using the <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>F7</kbd> shortcut.
+* シングルスレッド実行モードでは、上記の4つのスレッドが1つのOSスレッド上でインターリーブ方式で実行されます。
 
-Note that in either mode, it is possible that other tasks, such as asynchronous loads of drawables via `CompositeDrawable.LoadComponentAsync()` (see [docs on asynchronous loading](https://github.com/ppy/osu-framework/wiki/Asynchronous-loading)), or `Task`s running on the .NET runtime's thread pool, can use additional OS threads.
+スレッドモードは、`ExecutionMode`フレームワーク設定を使用するか、<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>F7</kbd>ショートカットを使用して設定できます。
+
+どちらのモードでも、`CompositeDrawable.LoadComponentAsync()`によるドローアブルの非同期読み込み ([非同期読み込みに関するドキュメント](./Asynchronous-loading.md)を参照) や.NET ランタイムのスレッド プールで実行されている`Task`などの他のタスクが追加の OS スレッドを使用できる可能性があることに注意してください。
 
 # Scheduling
 
