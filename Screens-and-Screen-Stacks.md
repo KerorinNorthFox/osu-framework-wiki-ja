@@ -1,17 +1,19 @@
-osu!framework utilizes and implements a [`Screen`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Screens/IScreen.cs) concept. Screens let us specify single "views" that can be stacked on with other screens, or exited to reveal screens stacked underneath. 
+# 画面と画面スタック
 
-Visually, imagine stacking one sheet of paper on top of another. The forward facing sheet is shown to the user, while other screens remain underneath it ready to be resumed.
+osu!framework は、[`Screen`](https://github.com/ppy/osu-framework/blob/master/osu.Framework/Screens/IScreen.cs)の概念を利用して実装します。スクリーンを使用すると、他のスクリーンと重ね合わせたり、終了して下に重ねられたスクリーンを表示したりできる単一の「ビュー」を指定できます。
 
-Only one screen can be active at a time within a single screen stack. However, multiple different screen stacks may exist to layer screens on top of one another. 
+視覚的には、1 枚の紙を別の紙の上に重ねることを想像してください。前向きのシートがユーザーに表示されますが、他の画面はその下に残り、いつでも再開できるようになります。
 
-* [Creating a new screen stack](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks#creating-a-new-screen-stack)
-* [Creating a new screen](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks#creating-a-new-screen)
-* [Handling screen transitions](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks#handling-screen-transitions)
-  * [Example](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks#example)
+単一の画面スタック内で一度にアクティブにできるのは 1 つの画面だけです。ただし、複数の異なる画面スタックが存在して、画面を互いに重ね合わせることができます。
 
-# Creating a screen stack
+* [# 画面スタックの作成](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks#creating-a-new-screen-stack)
+* [新しい画面の作成](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks#creating-a-new-screen)
+* [画面遷移の処理](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks#handling-screen-transitions)
+  * [例](https://github.com/ppy/osu-framework/wiki/Screens-and-Screen-Stacks#example)
 
-Simply add a new instance of a screen stack into your draw hierarchy.
+# 画面スタックの作成
+
+画面スタックの新しいインスタンスを描画階層に追加するだけです。
 
 ```csharp
 private ScreenStack awesomeScreenStack = null!;
@@ -23,11 +25,11 @@ private void load()
 }
 ```
 
-# Creating a new screen
+# 新しい画面の作成
 
-When a screen stack is first initialized, it will be empty. We will need to create a screen before it has anything that can be shown to the user. 
+画面スタックが最初に初期化されるとき、それは空です。ユーザーに表示できるものを含める前に、画面を作成する必要があります。
 
-`Screen`s can be populated with content by adding `Drawable`s to it, like is the case with any other `CompositeDrawable`.
+他の`CompositeDrawable`の場合と同様に、`Screen`に`Drawable`を追加することで、コンテンツを追加できます。
 
 ```csharp
 public partial class AwesomeScreen : Screen
@@ -44,20 +46,20 @@ public partial class AwesomeScreen : Screen
 }
 ```
 
-If this screen is the first screen you are pushing to the stack, you should push it to the stack directly using `ScreenStack.Push()`. If you already have a screen in the stack, you can also push to the screen using `Screen.Push()`.
+この画面がスタックにプッシュする最初の画面である場合は、`ScreenStack.Push()`を使用してスタックに直接プッシュする必要があります。スタックにすでに画面がある場合は、`Screen.Push()`を使用して画面にプッシュすることもできます。
 
-# Handling screen transitions
+# 画面遷移の処理
 
-Screens contain the following methods that are invoked whenever a screen change involving it would occur:
+画面には、それに伴う画面変更が発生するたびに呼び出される次のメソッドが含まれています:
 
-* `OnEntering(ScreenTransitionEvent)` - Invoked when the screen is added to the top of the stack using `Screen.Push()`.
-* `OnExiting(ScreenExitEvent)` - Invoked when the screen is exited for the screen under it using `Screen.Exit()`. The return value can be used to cancel the exit process, which is useful in flows like showing confirmation dialogs to the user.
-* `OnResuming(ScreenTransitionEvent)` - Invoked when the screen is made the active screen as a result of the current screen being exited.
-* `OnSuspending(ScreenTransitionEvent)` - Invoked when another screen is pushed to the top of the stack, replacing this one.
+* `OnEntering(ScreenTransitionEvent)` - `Screen.Push()`を使用して画面がスタックの先頭に追加されるときに呼び出されます。
+* `OnExiting(ScreenExitEvent)` - `Screen.Exit()`を使用して、その下の画面の画面が終了するときに呼び出されます。戻り値を使用して終了プロセスをキャンセルできます。これは、ユーザーに確認ダイアログを表示するようなフローで役立ちます。
+* `OnResuming(ScreenTransitionEvent)` - 現在の画面が終了した結果、画面がアクティブ画面になったときに呼び出されます。
+* `OnSuspending(ScreenTransitionEvent)` - 別の画面がスタックの最上位にプッシュされ、この画面と置き換わるときに呼び出されます。
 
-## Example
+## 例
 
-We can take care of inwards screen related transitions inside the screen we're transitioning into using the `OnEntering()` and `OnResuming()` methods. The `FadeInFromZero()` method is great for fading in a new screen, whereas `FadeIn()` would let us adjust the fade from any alpha the screen may already be at.
+`OnEntering()`メソッドと`OnResuming()`メソッドを使用して、遷移先の画面内で内側への画面関連の遷移を処理できます。`FadeInFromZero()`メソッドは新しい画面のフェードインに最適ですが、`FadeIn()`メソッドを使用すると、画面がすでにあるアルファからフェードを調整できます。
 
 ```csharp
 public override void OnEntering(ScreenTransitionEvent e)
