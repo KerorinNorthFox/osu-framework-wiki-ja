@@ -1,4 +1,6 @@
-Input handling follows a topological model whereby the top-most (visually) `Drawable` handles input prior to anything else in the game. Hierarchically between a single parent-child relationship, the child handles input before the parent.
+# 入力イベントの処理
+
+入力処理はトポロジー モデルに従い、最上位 (視覚的に) `Drawable`がゲーム内の他のものよりも先に入力を処理します。単一の親子関係の間の階層では、子は親よりも前に入力を処理します。
 
 ```
 Parent              < Handler #4
@@ -7,13 +9,13 @@ Parent              < Handler #4
         Child_2_1   < Handler #1
 ```
 
-# Positional vs non-positional input
+# 位置的入力 vs 非位置的入力
 
-"Positional" input refers to any input that depends on a screen-space position (e.g. hover). "Non-positional" input refers to any other input (e.g. a button press).
+「位置的」入力とは、画面空間の位置に依存する入力 (ホバーなど) を指します。 「非位置的」入力とは、その他の入力 (ボタンの押下など) を指します。
 
-## Individual event handlers
+## 個々のイベントハンドラ
 
-### Positional
+### 位置的
 
 ```csharp
 protected virtual bool OnMouseMove(MouseMoveEvent e);
@@ -41,7 +43,7 @@ protected virtual bool OnTabletPenButtonPress(TabletPenButtonPressEvent e);
 protected virtual void OnTabletPenButtonRelease(TabletPenButtonReleaseEvent e);
 ```
 
-### Non-positional
+### 非位置的
 
 ```csharp
 protected virtual bool OnKeyDown(KeyDownEvent e);
@@ -58,16 +60,16 @@ protected virtual bool OnTabletAuxiliaryButtonPress(TabletAuxiliaryButtonPressEv
 protected virtual void OnTabletAuxiliaryButtonRelease(TabletAuxiliaryButtonReleaseEvent e);
 ```
 
-These event handlers should be used when singular events are to be handled.
+これらのイベントハンドラーは、単一のイベントを処理する場合に使用する必要があります。
 
-The boolean return value indicates whether the event should continue being propagated to other `Drawable`s in the scene graph.  
+bool値の戻り値は、イベントがシーングラフ内の他の`Drawable`に伝播され続ける必要があるかどうかを示します。
 
-> **Example:**
-> If a child did not want its parent to receive an `OnHover()` event, it should override `OnHover()` to return `true`.
+> **例:**
+> 子が親に`OnHover()`イベントを受信させたくない場合は、`OnHover()`をオーバーライドして true を返す必要があります。
 
-`OnHoverLost()` is an exception which is unconditionally invoked on every un-hovered `Drawable`.
+`OnHoverLost()`は、ホバーされていないすべての`Drawable`に対して無条件に呼び出される例外です。
 
-**Example:**
+**例:**
 ```csharp
 protected override bool OnClick(ClickEvent e)
 {
@@ -76,60 +78,60 @@ protected override bool OnClick(ClickEvent e)
 }
 ```
 
-Input handlers that correspond to continuations/resolutions of previous input, such as `OnMouseUp()`, `OnDragEnd()`, `OnKeyUp()`, etc., will only fire on drawables that registered to handle the original input by returning `true` - for the examples above, that would be `OnMouseDown()`, `OnDragStart()`, `OnKeyDown()`, etc. Those events cannot be suppressed.
+`OnMouseUp()`、`OnDragEnd()`、`OnKeyUp()`など、前の入力の継続/解決に対応する入力ハンドラーは、true を返すことによって元の入力を処理するように登録されたドローアブルに対してのみ起動します。上記の例では、それは、`OnMouseDown()`、`OnDragStart()`、`OnKeyDown()`などです。これらのイベントは抑制できません。
 
-# Aggregate event handler
+# 集約イベントハンドラ
 
 ```csharp
 protected virtual bool Handle(UIEvent e);
 ```
 
-This event handler should be used when groups of events with identical implementations are to be handled.
+このイベントハンドラーは、同一の実装を持つイベントのグループを処理する場合に使用する必要があります。
 
-This counts as both a positional and non-positional event handler and works well when combined with the `HandleNonPositionalInput` and `HandlePositionalInput` properties described below.
+これは、位置的イベントハンドラーと非位置的イベントハンドラーの両方としてカウントされ、以下で説明する`HandleNonPositionalInput`プロパティおよび`HandlePositionalInput`プロパティと組み合わせると適切に機能します。
 
-> **Example**
+> **例**
 > ```csharp
 > protected override bool Handle(UIEvent e)
 > {
 >     switch (e)
 >     {
 >         case MouseEvent _:
->             // Stop all mouse events from being handled by other Drawables
+>             // 他の Drawable によるすべてのマウスイベントの処理を停止します
 >             return true;
 >
 >         default:
->             // Let other Drawables handle everything else
+>             // 他のすべてを他の Drawable に処理させます
 >             return false;
 >     }
 > }
 > ```
 
-# Controlling whether input is to be handled
+# 入力を処理するかどうかの制御
 
-By default, any `Drawable` that implements the handlers described above will receive all events appropriate for the types of input listed.
+デフォルトでは、上記のハンドラーを実装するすべての`Drawable`は、リストされている入力の種類に適したすべてのイベントを受け取ります。
 
 ```csharp
 public virtual bool HandleNonPositionalInput;
 public virtual bool HandlePositionalInput;
 ```
 
-The above properties are provided to control whether a `Drawable` should receive the types of input events.
+上記のプロパティは、`Drawable`が入力イベントのタイプを受け取るかどうかを制御するために提供されます。
 
-> **Example:**
-> If a `Drawable` did not want to handle any click, drag, and hover events at some point, it could achieve this by overriding `HandlePositionalInput` to return `false`.
+> **例:**
+> `Drawable`がある時点でクリック、ドラッグ、ホバー イベントを処理したくない場合は、`HandlePositionalInput`をオーバーライドして`false`を返すことでこれを実現できます。
 
-> **Warning:**
-> Overriding the above properties will cause the `Drawable` to be _considered_ for (but not necessarily receive) that type of input, and thus serves as an anti-optimisation if the intention is to make the `Drawable` not considered for that type of input.
+> **警告:**
+> 上記のプロパティをオーバーライドすると、`Drawable`はそのタイプの入力に対して考慮されるようになります (ただし、必ずしも受け取る必要はありません)。そのため、`Drawable`がそのタイプの入力に対して考慮されないようにすることが意図されている場合は、最適化対策として機能します。
 
-If a parent should control whether itself or its children should be considered for a type of input at all, the following properties are provided to control the behaviour:
+親が、それ自身またはその子を入力の種類として考慮するかどうかを制御する必要がある場合、動作を制御するために次のプロパティが提供されます:
 
 ```csharp
 public virtual bool PropagateNonPositionalInputSubTree;
 public virtual bool PropagatePositionalInputSubTree;
 ```
 
-**Example:**
+**例:**
 ```csharp
 class MyContainer : FillFlowContainer
 {
@@ -139,12 +141,12 @@ class MyContainer : FillFlowContainer
             Add(new Button { Size = new Vector2(50) });
     }
 
-    // Whoah! The buttons we added are just for show, they don't actually handle clicks!
+    // おっと！追加したボタンは見せかけだけであり、実際にはクリックを処理しません。
     public override bool PropagatePositionalInputSubTree => false;
 }
 ```
 
-# Receiving and handling focus
+# フォーカスの受け取りと処理
 
 ```csharp
 public virtual bool RequestsFocus;
@@ -154,19 +156,19 @@ protected virtual void OnFocus(FocusEvent e);
 protected virtual void OnFocusLost(FocusLostEvent e);
 ```
 
-Focus may be received via both positional and non-positional input. A `Drawable` with `AcceptsFocus = false` will never receive focus.
+フォーカスは、位置的入力と非位置的入力の両方を介して受信できます。 `AcceptsFocus = false`の`Drawable`はフォーカスを受け取りません。
 
-## Positional
+## 位置的
 
-A `Drawable` receives focus when `OnClick()` returns `true`.
+`OnClick()`が`true`を返すと、`Drawable`はフォーカスを受け取ります。
 
-## Non-positional
+## 非位置的
 
-The top-most `Drawable` with `RequestsFocus = true` and `HandleNonPostionalInput = true` will receive focus if nothing else has focus.
+他にフォーカスがない場合は、`RequestsFocus = true`および`HandleNonPositionalInput = true`の最上位の`Drawable`がフォーカスを受け取ります。
 
-The `OnFocusLost()` method is unconditionally invoked on the un-focused `Drawable`.
+`OnFocusLost()`メソッドは、フォーカスされていない`Drawable`に対して無条件に呼び出されます。
 
-> **Example:**
+> **例:**
 > ```csharp
 > class MyDrawable : CompositeDrawable
 > {
@@ -178,9 +180,9 @@ The `OnFocusLost()` method is unconditionally invoked on the un-focused `Drawabl
 > }
 > ```
 
-# Input event hierarchy
+# 入力イベント階層
 
-The following hierarchical relationship of input events can be useful to know when drilling down with the [aggregate event handler](#Aggregate-event-handler).
+入力イベントの次の階層関係は、集約イベントハンドラーを使用してドリルダウンするときに知っておくと役立ちます。
 
 ```mermaid
 classDiagram
